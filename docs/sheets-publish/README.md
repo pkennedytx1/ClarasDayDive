@@ -32,8 +32,8 @@ In **GitHub → Settings → Secrets and variables → Actions → New repositor
 |--------|----------|---------|
 | `GOOGLE_SHEET_ID` | Yes | Workbook ID (or full Sheets URL) |
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | Yes | Full service account key JSON (same as local sync) |
-| `AWS_ACCESS_KEY_ID` | Yes | IAM user for `sst deploy` |
-| `AWS_SECRET_ACCESS_KEY` | Yes | IAM secret for deploy |
+| `AWS_ACCESS_KEY_ID` | Yes | IAM access key — **Secret** (recommended) or **Variable** |
+| `AWS_SECRET_ACCESS_KEY` | Yes | IAM secret key — must be a **Secret** |
 | `GOOGLE_CALENDAR_ID` | No | Only if events come from Google Calendar |
 
 **Optional variable** (Settings → Variables → Actions):

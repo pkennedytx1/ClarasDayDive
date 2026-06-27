@@ -32,8 +32,8 @@ Replace `YOUR_ORG/claras-day-dive` with your repo.
 |--------|-----------------|
 | `GOOGLE_SHEET_ID` | Sheet URL ID: `1ywKxum0DWOoP64laC6yWJ4wNQEEwVjYJA97cOuGj5u0` |
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | Full JSON from `claras-sync-key.json` (one line is fine) |
-| `AWS_ACCESS_KEY_ID` | IAM user used for local `npm run deploy` |
-| `AWS_SECRET_ACCESS_KEY` | Same IAM user |
+| `AWS_ACCESS_KEY_ID` | IAM access key — **Secret** (recommended) or **Variable** |
+| `AWS_SECRET_ACCESS_KEY` | IAM secret key — must be a **Secret** |
 
 Optional later: `GOOGLE_CALENDAR_ID` (skip for now if events are sheet-only).
 
