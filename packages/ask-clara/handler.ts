@@ -26,8 +26,10 @@ import {
   FALLBACK_ANSWER,
   REFUSAL_OFF_TOPIC,
   REFUSAL_OVER_BUDGET,
+  REFUSAL_RATE_LIMIT,
 } from './prompts.js';
 import { retrieveChunks } from './retrieve.js';
+import { checkRateLimit } from './rate-limit.js';
 import type { AskRequest, AskResponse, ChatMessage, TokenUsage } from './types.js';
 
 const HISTORY_TURN_LIMIT = 4;
@@ -152,7 +154,7 @@ async function invokeMainModel(
 /**
  * Ask Clara Lambda handler for API Gateway HTTP API (v2).
  *
- * Rate limiting (10 req/min/IP) is enforced at API Gateway in Task 8 — not in this handler.
+ * Guardrails: rate limit → input validation → blocklist → budget → classifier → RAG → main LLM → output filter.
  */
 export async function handler(
   event: APIGatewayProxyEventV2,
@@ -160,6 +162,16 @@ export async function handler(
   const request = parseRequestBody(event.body);
   if (!request) {
     return jsonResponse(400, { error: 'Invalid request body' });
+  }
+
+  const tableName = getUsageTableName();
+  const clientIp =
+    event.requestContext?.http?.sourceIp ??
+    event.headers?.['x-forwarded-for']?.split(',')[0]?.trim() ??
+    'unknown';
+
+  if (!(await checkRateLimit(tableName, clientIp))) {
+    return refusedResponse(REFUSAL_RATE_LIMIT);
   }
 
   const validationError = validateInput(request.message);
@@ -170,7 +182,6 @@ export async function handler(
   const message = sanitizeInput(request.message);
   const history = capHistory(request.history);
   const modelId = getModelId();
-  const tableName = getUsageTableName();
   const budgetUsd = getBudgetLimitUsd();
 
   if (blocklistCheck(message)) {
@@ -184,7 +195,7 @@ export async function handler(
   }
 
   const bedrock = new BedrockRuntimeClient({
-    region: process.env.AWS_REGION ?? 'us-east-1',
+    region: process.env.AWS_REGION ?? 'us-east-2',
   });
 
   let totalInputTokens = 0;

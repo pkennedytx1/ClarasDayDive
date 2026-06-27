@@ -1,4 +1,3 @@
-import { BrandMark } from '@/components/BrandMark';
 import { Reveal } from '@/components/Reveal';
 import { SearchBar } from '@/components/SearchBar';
 import { getSiteContent } from '@/lib/content';
@@ -11,7 +10,6 @@ export function AskClara() {
       <div className="container ask-clara">
         <Reveal>
           <header className="ask-clara__head">
-            <BrandMark asset="icon-c" size={52} className="ask-clara__mark" loading="lazy" />
             <p className="eyebrow eyebrow--teal">{site.search.sectionEyebrow}</p>
             <h2 id="ask-clara-heading" className="display-lg ask-clara__title">
               {site.search.sectionTitle}

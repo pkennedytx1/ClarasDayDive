@@ -6,12 +6,18 @@ export default $config({
       name: 'claras-day-dive',
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       home: 'aws',
+      providers: {
+        aws: {
+          region: 'us-east-2',
+        },
+      },
     };
   },
   async run() {
     const usage = new sst.aws.Dynamo('AskClaraUsage', {
       fields: { pk: 'string' },
       primaryIndex: { hashKey: 'pk' },
+      ttl: 'expiresAt',
     });
 
     const askClara = new sst.aws.Function('AskClara', {
@@ -19,6 +25,7 @@ export default $config({
       runtime: 'nodejs20.x',
       link: [usage],
       environment: {
+        AWS_REGION: 'us-east-2',
         ASK_CLARA_MONTHLY_BUDGET_USD: '5',
         BEDROCK_MODEL_ID: 'amazon.nova-lite-v1:0',
         ASK_CLARA_USAGE_TABLE: usage.name,
@@ -34,6 +41,7 @@ export default $config({
         allowHeaders: ['Content-Type'],
         allowOrigins: [
           'https://clarasdaydive.com',
+          'https://d19sxc1xcbgypp.cloudfront.net',
           'http://localhost:5173',
           'http://localhost:4173',
         ],

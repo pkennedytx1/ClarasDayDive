@@ -1,5 +1,4 @@
 import { Reveal } from '@/components/Reveal';
-import { Icon } from '@/components/Icon';
 import { getSiteContent } from '@/lib/content';
 
 export function Contact() {
@@ -11,12 +10,12 @@ export function Contact() {
     <section id="contact" className="section section--contact" aria-labelledby="contact-heading">
       <div className="container contact-grid">
         <Reveal>
-          <div>
+          <div className="contact-intro">
             <p className="eyebrow eyebrow--teal">Book the bar</p>
             <h2 id="contact-heading" className="display-lg">
-              Plan your party
+              Plan your event
             </h2>
-            <p className="lead">
+            <p className="lead contact-intro__lead">
               Birthdays, send-offs, slow Sunday socials — drop us a line and we'll get back to you.
             </p>
             <img
@@ -41,11 +40,9 @@ export function Contact() {
 
             <div className="contact-card__links">
               <a href={mailto} className="contact-card__link">
-                <Icon name="mail" size={20} aria-hidden="true" />
                 {contact.email}
               </a>
               <a href={tel} className="contact-card__link">
-                <Icon name="phone" size={20} aria-hidden="true" />
                 {contact.phone}
               </a>
             </div>

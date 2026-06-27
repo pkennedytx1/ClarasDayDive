@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { BrandMark } from '@/components/BrandMark';
 import { CalendarExplorer } from '@/components/CalendarExplorer';
 import { EventActions } from '@/components/EventActions';
 import { Reveal } from '@/components/Reveal';
@@ -15,18 +14,9 @@ export function Events() {
 
   return (
     <section id="events" className="section section--events section--compact" aria-labelledby="events-heading">
-      <BrandMark
-        asset="symbol"
-        variant="bw"
-        size={160}
-        className="events-watermark"
-        loading="lazy"
-      />
-
       <div className="container events-layout">
         <Reveal>
           <header className="events-banner">
-            <BrandMark asset="icon-c" size={56} className="events-banner__mark" loading="lazy" />
             <div>
               <p className="eyebrow eyebrow--cream">On the calendar</p>
               <h2 id="events-heading" className="display-lg display-lg--light">

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BrandMark } from '@/components/BrandMark';
 import { Reveal } from '@/components/Reveal';
 import { getDrinksContent } from '@/lib/content';
 
@@ -19,7 +18,6 @@ export function Drinks() {
                 The drinks menu
               </h2>
             </div>
-            <BrandMark asset="symbol" size={48} className="section-head__mark" loading="lazy" />
           </header>
         </Reveal>
 

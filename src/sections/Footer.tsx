@@ -1,5 +1,3 @@
-import { BrandMark } from '@/components/BrandMark';
-import { Icon } from '@/components/Icon';
 import { LegalLinks } from '@/components/LegalLinks';
 import { getSiteContent } from '@/lib/content';
 
@@ -11,13 +9,12 @@ export function Footer() {
       <div className="container site-footer__grid">
         <div>
           <div className="site-footer__brand">
-            <BrandMark asset="icon-c" size={40} className="site-footer__icon" loading="lazy" />
             <img
               src="/assets/wordmark-color.png"
               alt="Clara's Day Dive"
               className="site-footer__wordmark"
-              width={200}
-              height={48}
+              width={280}
+              height={72}
               loading="lazy"
               decoding="async"
             />
@@ -44,8 +41,8 @@ export function Footer() {
           <p className="site-footer__line" itemProp="addressLocality">
             {site.location.city}
           </p>
-          <a href={site.social.instagram} aria-label="Clara's Day Dive on Instagram" style={{ display: 'inline-flex', color: 'var(--clr-ink)', marginTop: '0.5rem' }}>
-            <Icon name="instagram" size={22} />
+          <a href={site.social.instagram} className="site-footer__line site-footer__social">
+            Instagram →
           </a>
         </div>
 

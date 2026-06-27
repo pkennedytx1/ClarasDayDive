@@ -1,5 +1,8 @@
 import type { KnowledgeChunk } from './types.js';
 
+export const REFUSAL_RATE_LIMIT =
+  "Easy there — one sec. Try again in a moment, or ask the bar team when you're in.";
+
 export const REFUSAL_OFF_TOPIC =
   "I'm only here for drinks and what's on at Clara's — ask me about the menu, patio, or hours.";
 

@@ -98,11 +98,6 @@ export function SearchBar({
           submit();
         }}
       >
-        <span className="search-bar__icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2l1.6 4.9a5 5 0 0 0 3.5 3.5L22 12l-4.9 1.6a5 5 0 0 0-3.5 3.5L12 22l-1.6-4.9a5 5 0 0 0-3.5-3.5L2 12l4.9-1.6a5 5 0 0 0 3.5-3.5L12 2z" />
-          </svg>
-        </span>
         <label htmlFor="clara-search" className="visually-hidden">
           {placeholder}
         </label>

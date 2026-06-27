@@ -60,22 +60,22 @@ Fix any secret or AWS permission errors before wiring the sheet button.
 
 ## 4. Create a GitHub token for Apps Script
 
-Apps Script needs a token that can trigger workflows on your repo.
+Apps Script triggers the **Publish site** workflow (same as **Run workflow** in GitHub).
 
 ### Fine-grained PAT (recommended)
 
-1. GitHub → **Settings → Developer settings → Personal access tokens → Fine-grained tokens**.
-2. **Generate new token**.
-3. Repository access: **Only select repositories** → your `claras-day-dive` repo.
-4. Permissions:
+1. GitHub → **Settings → Developer settings → Fine-grained tokens** → **Generate new token**
+2. **Repository access:** Only **`ClarasDayDive`**
+3. **Repository permissions:**
    - **Actions:** Read and write
-   - **Contents:** Read-only
-   - **Metadata:** Read-only
-5. Copy the token — you will paste it once into Apps Script properties.
+   - **Metadata:** Read-only (auto)
+4. Copy the token → paste into Apps Script **`GITHUB_TOKEN`**
 
-### Classic PAT (alternative)
+### Classic PAT (if fine-grained still 403s)
 
-Classic token with **`repo`** scope (private repos) or **`public_repo`** (public repos).
+1. **Developer settings → Personal access tokens → Tokens (classic)**
+2. Check scope **`repo`** (or **`public_repo`** if the repo is public)
+3. Copy `ghp_…` → **`GITHUB_TOKEN`**
 
 Store the token securely. Do **not** put it in the Sheet or commit it to git.
 
@@ -131,7 +131,7 @@ The GitHub Actions tab shows progress:
 | Menu missing after reload | Re-open the sheet; confirm Apps Script saved and `onOpen` exists |
 | `Publish not configured` | Set `GITHUB_TOKEN` and `GITHUB_REPO` in Script properties |
 | GitHub 404 | Wrong `GITHUB_REPO`, or token lacks access to that repo |
-| GitHub 403 | Token missing **Actions: Read and write** |
+| GitHub 403 | Token missing **Actions: Read and write** (fine-grained), or use classic **`repo`** scope |
 | Workflow not listed | Push `.github/workflows/publish.yml` to the default branch |
 | Sync fails in Action | Check `GOOGLE_SHEET_ID` and service account JSON; sheet shared with service account |
 | Deploy fails in Action | Check AWS secrets and IAM permissions; Bedrock model access enabled |

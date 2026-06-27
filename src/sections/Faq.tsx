@@ -1,4 +1,3 @@
-import { BrandMark } from '@/components/BrandMark';
 import { Reveal } from '@/components/Reveal';
 import { getFaqContent } from '@/lib/content';
 
@@ -16,7 +15,6 @@ export function Faq() {
                 Questions, answered
               </h2>
             </div>
-            <BrandMark asset="icon-c" variant="bw" size={44} className="section-head__mark section-head__mark--muted" loading="lazy" />
           </header>
         </Reveal>
 

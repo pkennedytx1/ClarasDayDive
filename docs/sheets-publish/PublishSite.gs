@@ -4,12 +4,14 @@
  * Setup: see docs/sheets-publish/README.md
  *
  * Script properties (Project settings → Script properties):
- *   GITHUB_TOKEN  — GitHub PAT with repo + workflow dispatch access
- *   GITHUB_REPO   — owner/repo (e.g. simplifi/claras-day-dive)
+ *   GITHUB_TOKEN  — GitHub PAT (see README for permissions)
+ *   GITHUB_REPO   — owner/repo (e.g. pkennedytx1/ClarasDayDive)
  */
 
 var MENU_NAME = "Clara's Day Dive";
 var MENU_ITEM = 'Publish site';
+var WORKFLOW_FILE = 'publish.yml';
+var DEFAULT_BRANCH = 'main';
 
 function onOpen() {
   SpreadsheetApp.getUi()
@@ -21,13 +23,13 @@ function onOpen() {
 function publishSite() {
   var ui = SpreadsheetApp.getUi();
   var props = PropertiesService.getScriptProperties();
-  var token = props.getProperty('GITHUB_TOKEN');
-  var repo = props.getProperty('GITHUB_REPO');
+  var token = String(props.getProperty('GITHUB_TOKEN') || '').trim();
+  var repo = String(props.getProperty('GITHUB_REPO') || '').trim();
 
   if (!token || !repo) {
     ui.alert(
       'Publish not configured',
-      'Ask your developer to set GITHUB_TOKEN and GITHUB_REPO in Apps Script project properties.\n\nSee docs/sheets-publish/README.md in the repo.',
+      'Set GITHUB_TOKEN and GITHUB_REPO in Apps Script project properties.\n\nSee docs/sheets-publish/README.md',
       ui.ButtonSet.OK
     );
     return;
@@ -36,7 +38,7 @@ function publishSite() {
   if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) {
     ui.alert(
       'Invalid GITHUB_REPO',
-      'GITHUB_REPO must look like owner/repo (e.g. myorg/claras-day-dive).',
+      'GITHUB_REPO must look like owner/repo (e.g. pkennedytx1/ClarasDayDive).',
       ui.ButtonSet.OK
     );
     return;
@@ -52,24 +54,18 @@ function publishSite() {
     return;
   }
 
-  var url = 'https://api.github.com/repos/' + repo + '/dispatches';
-  var payload = {
-    event_type: 'publish-site',
-    client_payload: {
-      source: 'google-sheets',
-      spreadsheet_id: SpreadsheetApp.getActiveSpreadsheet().getId(),
-      triggered_at: new Date().toISOString(),
-    },
-  };
+  // workflow_dispatch — same as "Run workflow" in GitHub Actions UI
+  var url =
+    'https://api.github.com/repos/' +
+    repo +
+    '/actions/workflows/' +
+    WORKFLOW_FILE +
+    '/dispatches';
+  var payload = { ref: DEFAULT_BRANCH };
 
   var response = UrlFetchApp.fetch(url, {
     method: 'post',
-    headers: {
-      Authorization: 'Bearer ' + token,
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'Content-Type': 'application/json',
-    },
+    headers: githubHeaders_(token),
     payload: JSON.stringify(payload),
     muteHttpExceptions: true,
   });
@@ -89,7 +85,17 @@ function publishSite() {
 
   ui.alert(
     'Publish failed (' + code + ')',
-    response.getContentText() || 'No response body. Check the token, repo name, and that the GitHub workflow exists.',
+    response.getContentText() ||
+      'Check GITHUB_TOKEN permissions (Actions: Read and write) and GITHUB_REPO.',
     ui.ButtonSet.OK
   );
+}
+
+function githubHeaders_(token) {
+  return {
+    Authorization: 'Bearer ' + token,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json',
+  };
 }
