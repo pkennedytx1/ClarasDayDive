@@ -1,0 +1,5 @@
+title,tag,body,icon,hours,website_url,order_url,sort_order,active
+Bird Bird Biscuit,Food truck,"Biscuits, sandwiches, and breakfast on the patio — weekdays.",food-truck,Mon–Fri · 8am–2pm,https://birdbirdbiscuit.com,https://birdbirdbiscuit.com,1,TRUE
+Veracruz All Natural,Food truck,"Tacos, migas, and aguas frescas out back on weekends.",food-truck,Sat–Sun · 9am–3pm,https://veracruztacos.com,https://veracruztacos.com,2,TRUE
+Morning coffee,Til noon,"Local roast, cold brew on tap, and a flat white that holds up to the heat.",coffee,Daily · 8am–12pm,,,3,TRUE
+The patio,Open late,"Shaded, dog-friendly, string lights overhead. Open till midnight when the weather plays nice.",sun,Daily · bar hours,,,4,TRUE

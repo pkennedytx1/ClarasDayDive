@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "icon": "food-truck",
+      "tone": "cream",
+      "tag": "Food truck",
+      "title": "Bird Bird Biscuit",
+      "body": "Biscuits, sandwiches, and breakfast on the patio — weekdays.",
+      "hours": "Mon–Fri · 8am–2pm",
+      "websiteUrl": "https://birdbirdbiscuit.com",
+      "orderUrl": "https://birdbirdbiscuit.com"
+    },
+    {
+      "icon": "food-truck",
+      "tone": "white",
+      "tag": "Food truck",
+      "title": "Veracruz All Natural",
+      "body": "Tacos, migas, and aguas frescas out back on weekends.",
+      "hours": "Sat–Sun · 9am–3pm",
+      "websiteUrl": "https://veracruztacos.com",
+      "orderUrl": "https://veracruztacos.com"
+    },
+    {
+      "icon": "coffee",
+      "tone": "white",
+      "tag": "Til noon",
+      "title": "Morning coffee",
+      "body": "Local roast, cold brew on tap, and a flat white that holds up to the heat.",
+      "hours": "Daily · 8am–12pm"
+    },
+    {
+      "icon": "sun",
+      "tone": "white",
+      "tag": "Open late",
+      "title": "The patio",
+      "body": "Shaded, dog-friendly, string lights overhead. Open till midnight when the weather plays nice.",
+      "hours": "Daily · bar hours"
+    }
+  ]
+}

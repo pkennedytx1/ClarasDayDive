@@ -1,0 +1,59 @@
+/* Clara's Day Dive — Color tokens
+   A retro-playful Austin dive bar palette: warm cream paper, deep rose, penguin ink,
+   sage + teal accents, dusty-pink drink, butter-yellow sun. Aperol-era poster warmth. */
+:root {
+  /* ---- Brand core (raw) ---- */
+  --clr-cream:        #EDE5CF;  /* warm paper base */
+  --clr-cream-deep:   #E4D9BC;  /* slightly toasted cream for layering */
+  --clr-rose:         #C2556A;  /* deep rose — primary accent */
+  --clr-rose-deep:    #A8455A;  /* pressed / darker rose */
+  --clr-ink:          #1C1C1A;  /* near-black penguin ink — type */
+  --clr-sage:         #7A9B7C;  /* sage green — secondary labels */
+  --clr-sage-deep:    #5E7E61;  /* darker sage for text on cream */
+  --clr-teal:         #2CAAA0;  /* teal — callouts */
+  --clr-teal-deep:    #1E8980;  /* pressed teal */
+
+  /* ---- Supporting (pulled from the illustrations) ---- */
+  --clr-pink:         #E0A6AC;  /* dusty rose — the drink fill */
+  --clr-pink-soft:    #EFCDD0;  /* pale pink wash */
+  --clr-butter:       #EBE2A6;  /* butter-yellow sun glow */
+  --clr-gold:         #B08D3F;  /* antique gold — scarf border / fine rules */
+  --clr-white:        #FBF8F0;  /* warm paper-white (never pure #fff) */
+
+  /* ---- Ink tints ---- */
+  --clr-ink-80:  rgba(28, 28, 26, 0.80);
+  --clr-ink-60:  rgba(28, 28, 26, 0.60);
+  --clr-ink-40:  rgba(28, 28, 26, 0.40);
+  --clr-ink-15:  rgba(28, 28, 26, 0.15);
+  --clr-ink-08:  rgba(28, 28, 26, 0.08);
+
+  /* ---- Semantic surface aliases ---- */
+  --surface-page:     var(--clr-cream);     /* default page background */
+  --surface-alt:      var(--clr-white);     /* alternating full-bleed section */
+  --surface-card:     var(--clr-white);     /* cards on cream */
+  --surface-card-alt: var(--clr-cream);     /* cards on white */
+  --surface-ink:      var(--clr-ink);       /* dark/footer sections */
+  --surface-rose:     var(--clr-rose);      /* feature / hero block */
+  --surface-teal:     var(--clr-teal);      /* callout block */
+
+  /* ---- Semantic text aliases ---- */
+  --text-strong:   var(--clr-ink);          /* headlines, body on light */
+  --text-body:     var(--clr-ink-80);       /* paragraph copy */
+  --text-muted:    var(--clr-ink-60);       /* captions, meta */
+  --text-label:    var(--clr-sage-deep);    /* eyebrow / secondary labels */
+  --text-on-dark:  var(--clr-cream);        /* text on ink/rose/teal */
+  --text-on-dark-muted: rgba(237, 229, 207, 0.66);
+
+  /* ---- Semantic accent aliases ---- */
+  --accent-primary: var(--clr-rose);        /* primary actions, links */
+  --accent-callout: var(--clr-teal);        /* highlights, callouts */
+  --accent-label:   var(--clr-sage);        /* tags, secondary chips */
+
+  /* ---- Lines & borders ---- */
+  --border-hairline: var(--clr-ink-15);     /* default rule on cream */
+  --border-strong:   var(--clr-ink);        /* poster-style hard border */
+  --border-gold:     var(--clr-gold);       /* decorative antique rule */
+
+  /* ---- Focus ---- */
+  --focus-ring: var(--clr-teal);
+}

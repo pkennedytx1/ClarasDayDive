@@ -1,0 +1,82 @@
+<!-- @dsCard group="Website" viewport="1180x760" name="Single-page bar site" subtitle="Hero + AI search, drinks, what's here, events, contact" -->
+<!-- @startingPoint section="Website" subtitle="Clara's full single-page bar website" viewport="1180x900" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clara's Day Dive — East Austin coupe bar &amp; patio</title>
+<meta name="description" content="Dive in for a day drink. Clara's Day Dive is an East Austin coupe bar and patio with cold drinks, rotating food trucks, morning coffee, and live events." />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--clr-cream); }
+  section { scroll-margin-top: 76px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+
+  <script type="text/babel" src="icons.jsx" data-presets="react"></script>
+  <script type="text/babel" src="Hero.jsx" data-presets="react"></script>
+  <script type="text/babel" src="Drinks.jsx" data-presets="react"></script>
+  <script type="text/babel" src="WhatsHere.jsx" data-presets="react"></script>
+  <script type="text/babel" src="Events.jsx" data-presets="react"></script>
+  <script type="text/babel" src="Contact.jsx" data-presets="react"></script>
+  <script type="text/babel" src="Footer.jsx" data-presets="react"></script>
+
+  <script type="text/babel" data-presets="react">
+    function Site() {
+      const { NavBar } = window.ClaraSDayDiveDesignSystem_09d2bb;
+      const [scrolled, setScrolled] = React.useState(false);
+      React.useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 24);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+      const go = (id) => { window.location.hash = id; };
+      const Hero = window.CDDHero, Drinks = window.CDDDrinks, WhatsHere = window.CDDWhatsHere,
+            Events = window.CDDEvents, Contact = window.CDDContact, Footer = window.CDDFooter;
+      return (
+        <React.Fragment>
+          <NavBar
+            logoSrc="../../assets/wordmark-color.png"
+            scrolled={scrolled}
+            links={[
+              { label: 'Drinks', href: '#drinks' },
+              { label: "What's Here", href: '#here' },
+              { label: 'Events', href: '#events' },
+              { label: 'Visit', href: '#contact' },
+            ]}
+            ctaLabel="Book the bar"
+            onCta={() => go('contact')}
+          />
+          <Hero />
+          <Drinks />
+          <WhatsHere />
+          <Events />
+          <Contact />
+          <Footer />
+        </React.Fragment>
+      );
+    }
+    window.__Site = Site;
+  </script>
+  <script>
+    (function mount() {
+      var ready = window.__Site && window.CDDHero && window.CDDDrinks && window.CDDWhatsHere &&
+                  window.CDDEvents && window.CDDContact && window.CDDFooter &&
+                  window.ClaraSDayDiveDesignSystem_09d2bb;
+      if (!ready) { setTimeout(mount, 30); return; }
+      ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(window.__Site));
+    })();
+  </script>
+
+</body>
+</html>

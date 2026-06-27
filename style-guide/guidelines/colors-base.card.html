@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Base & Ink" subtitle="Warm cream paper, paper-white, penguin ink — never pure black/white" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--clr-cream); padding: 22px; }
+  .row { display: flex; gap: 14px; }
+  .sw { flex: 1; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .chip { height: 86px; border: 1px solid var(--clr-ink-08); border-bottom: none; }
+  .meta { background: var(--clr-white); padding: 8px 11px; }
+  .name { font-size: 13px; font-weight: 600; color: var(--clr-ink); }
+  .hex { font-size: 12px; color: var(--clr-ink-60); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--clr-cream)"></div><div class="meta"><div class="name">Cream · page base</div><div class="hex">#EDE5CF</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--clr-cream-deep)"></div><div class="meta"><div class="name">Cream · toasted</div><div class="hex">#E4D9BC</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--clr-white)"></div><div class="meta"><div class="name">Paper White</div><div class="hex">#FBF8F0</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--clr-ink)"></div><div class="meta"><div class="name">Penguin Ink · type</div><div class="hex">#1C1C1A</div></div></div>
+  </div>
+</body>
+</html>

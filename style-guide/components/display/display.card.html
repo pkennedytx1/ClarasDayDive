@@ -1,0 +1,61 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Display — Eyebrow, Badge, Tag, Card" subtitle="Labels, status pills, filter chips, paper cards" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--clr-cream); padding: 26px; color: var(--clr-ink); }
+  .grid { display: flex; flex-direction: column; gap: 18px; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel" data-presets="react">
+    const { Eyebrow, Badge, Tag, Card } = window.ClaraSDayDiveDesignSystem_09d2bb;
+    function Demo() {
+      return (
+        <div className="grid">
+          <div className="row">
+            <Eyebrow color="sage">What's pouring</Eyebrow>
+            <span style={{opacity:.3}}>·</span>
+            <Eyebrow color="teal">Events</Eyebrow>
+          </div>
+          <div className="row">
+            <Badge tone="rose">New</Badge>
+            <Badge tone="teal">Seasonal</Badge>
+            <Badge tone="sage">House</Badge>
+            <Badge tone="butter">21+</Badge>
+            <Badge tone="outline">Sold out</Badge>
+          </div>
+          <div className="row">
+            <Tag active>All</Tag>
+            <Tag>Spritz</Tag>
+            <Tag>Martini</Tag>
+            <Tag>Zero-proof</Tag>
+          </div>
+          <div className="cards">
+            <Card interactive>
+              <Eyebrow color="teal">Patio</Eyebrow>
+              <h3 style={{margin:'6px 0 4px',fontFamily:'var(--font-display)',fontStyle:'italic'}}>Open till midnight</h3>
+              <p style={{margin:0,fontSize:14,color:'var(--clr-ink-60)'}}>Shaded, dog-friendly, string lights.</p>
+            </Card>
+            <Card tone="rose">
+              <Eyebrow color="cream">Today</Eyebrow>
+              <h3 style={{margin:'6px 0 4px',fontFamily:'var(--font-display)',fontStyle:'italic'}}>Frosé hour, 3–6</h3>
+              <p style={{margin:0,fontSize:14,color:'rgba(237,229,207,.8)'}}>Half-off the pink stuff.</p>
+            </Card>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+  </script>
+</body>
+</html>

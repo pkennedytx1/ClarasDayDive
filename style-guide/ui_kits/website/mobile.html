@@ -1,0 +1,68 @@
+<!-- @dsCard group="Website" viewport="900x880" name="Mobile (390px)" subtitle="The single-page site in an iPhone frame — mobile-first layout" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clara's Day Dive — Mobile preview</title>
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--clr-cream-deep);
+    display: flex; align-items: flex-start; justify-content: center;
+    gap: clamp(28px, 6vw, 72px); flex-wrap: wrap;
+    padding: 40px 24px 56px; box-sizing: border-box;
+    font-family: var(--font-body);
+  }
+  .intro { max-width: 320px; padding-top: 24px; }
+  .intro .eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--clr-teal-deep); }
+  .intro h1 { font-family: var(--font-display); font-style: italic; font-weight: 800; font-size: 40px; line-height: 1.05; letter-spacing: -0.02em; color: var(--clr-ink); margin: 12px 0 14px; }
+  .intro p { font-size: 16px; line-height: 1.55; color: var(--clr-ink-80); margin: 0 0 18px; }
+  .intro ul { margin: 0; padding-left: 18px; color: var(--clr-ink-60); font-size: 15px; line-height: 1.7; }
+  .intro li strong { color: var(--clr-ink); font-weight: 600; }
+
+  /* iPhone bezel */
+  .phone {
+    width: 414px; flex-shrink: 0;
+    background: var(--clr-ink);
+    border-radius: 56px;
+    padding: 12px;
+    box-shadow: 0 30px 70px rgba(28,28,26,0.28), 0 8px 22px rgba(28,28,26,0.18);
+  }
+  .screen {
+    position: relative;
+    width: 390px; height: 800px;
+    background: var(--clr-cream);
+    border-radius: 46px; overflow: hidden;
+  }
+  .notch {
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 122px; height: 33px; background: var(--clr-ink); border-radius: 20px; z-index: 3;
+  }
+  .screen iframe {
+    width: 390px; height: 800px; border: none; display: block; background: var(--clr-cream);
+  }
+</style>
+</head>
+<body>
+  <div class="intro">
+    <div class="eyebrow">Mobile-first · 390px</div>
+    <h1>Designed from the phone up.</h1>
+    <p>Every section reflows to a single column at 390px. The live site is embedded at true mobile width on the right.</p>
+    <ul>
+      <li><strong>Nav</strong> collapses to a hamburger sheet under 768px.</li>
+      <li><strong>Hero search</strong> stays prominent — full-width pill.</li>
+      <li><strong>What's Here</strong> &amp; <strong>Events</strong> stack to one card per row.</li>
+      <li><strong>Contact form</strong> drops to a single column.</li>
+    </ul>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <iframe src="index.html" title="Clara's Day Dive mobile" scrolling="yes"></iframe>
+    </div>
+  </div>
+</body>
+</html>

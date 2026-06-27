@@ -1,0 +1,8 @@
+/* Clara's Day Dive — Webfonts
+   Display: Playfair Display (italic for headline flourish)
+   Body/UI: DM Sans
+   Script accent: Grand Hotel (closest Google match to the custom "Clara's" wordmark script)
+   NOTE: the actual logo lettering is hand-drawn custom type — use the logo PNGs for the
+   wordmark itself; Grand Hotel only approximates that energy for incidental script moments.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..600&family=Grand+Hotel&display=swap');

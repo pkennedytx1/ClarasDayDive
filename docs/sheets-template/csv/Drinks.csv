@@ -1,0 +1,7 @@
+name,category,price,description,badge,sort_order,active
+Clara's Spritz,Spritz,11,"Aperol, prosecco, a twist of grapefruit oil.",House,1,TRUE
+Limoncello Fizz,Spritz,12,"Limoncello, soda, lemon, a little thyme.",,2,TRUE
+Frozen Negroni,Frozen,13,"Campari, gin, sweet vermouth — slushied.",Seasonal,3,TRUE
+Frosé,Frozen,12,"Rosé, strawberry, lemon. Dangerously easy.",,4,TRUE
+Coupe Martini,Classic,14,"Gin or vodka, dry, lemon or olive.",,5,TRUE
+Penguin Punch,Zero-proof,9,"Frozen, very pink, all the fun, none of the buzz.",No ABV,6,TRUE

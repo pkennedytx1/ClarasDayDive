@@ -1,0 +1,47 @@
+/* Clara's Day Dive — Typography tokens
+   Display: Playfair Display (italic for the editorial headline flourish)
+   Body/UI:  DM Sans
+   Script:   Grand Hotel (incidental retro-script accents only — prefer the logo art) */
+:root {
+  /* ---- Families ---- */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif; /* @kind font */
+  --font-body:    'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; /* @kind font */
+  --font-script:  'Grand Hotel', 'Brush Script MT', cursive; /* @kind font */
+
+  /* ---- Fluid display scale (mobile-first; clamps to desktop) ---- */
+  /* hero headline */
+  --fs-display-xl: clamp(3.25rem, 11vw, 6.5rem); /* @kind font */
+  /* section headline */
+  --fs-display-lg: clamp(2.5rem, 8vw, 4.5rem); /* @kind font */
+  /* sub-section */
+  --fs-display-md: clamp(2rem, 6vw, 3.25rem); /* @kind font */
+  /* card heading */
+  --fs-display-sm: clamp(1.6rem, 4.5vw, 2.25rem); /* @kind font */
+
+  /* ---- Body & UI scale ---- */
+  --fs-xl:   1.5rem; /* @kind font */
+  --fs-lg:   1.25rem; /* @kind font */
+  --fs-md:   1.0625rem; /* @kind font */
+  --fs-sm:   0.9375rem; /* @kind font */
+  --fs-xs:   0.8125rem; /* @kind font */
+  --fs-eyebrow: 0.78rem; /* @kind font */
+
+  /* ---- Weights ---- */
+  --fw-regular: 400; /* @kind font */
+  --fw-medium:  500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold: 700; /* @kind font */
+  --fw-display: 800; /* @kind font */
+
+  /* ---- Line heights ---- */
+  --lh-tight:   1.04; /* @kind font */
+  --lh-snug:    1.18; /* @kind font */
+  --lh-normal:  1.55; /* @kind font */
+  --lh-relaxed: 1.7; /* @kind font */
+
+  /* ---- Letter spacing ---- */
+  --ls-tight:   -0.02em; /* @kind font */
+  --ls-normal:  0; /* @kind font */
+  --ls-eyebrow: 0.16em; /* @kind font */
+  --ls-wide:    0.05em; /* @kind font */
+}

@@ -1,0 +1,4 @@
+day_group,display_label,opens,closes,sort_order,active
+Monday-Thursday,Mon–Thu · 3pm–12am,15:00,00:00,1,TRUE
+Friday,Fri · 12pm–2am,12:00,02:00,2,TRUE
+Saturday-Sunday,Sat–Sun · 11am–2am,11:00,02:00,3,TRUE

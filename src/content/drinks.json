@@ -1,0 +1,50 @@
+{
+  "categories": [
+    "All",
+    "Classic",
+    "Frozen",
+    "Spritz",
+    "Zero-proof"
+  ],
+  "items": [
+    {
+      "cat": "Spritz",
+      "name": "Clara's Spritz",
+      "price": "$11",
+      "desc": "Aperol, prosecco, a twist of grapefruit oil.",
+      "badge": "House"
+    },
+    {
+      "cat": "Spritz",
+      "name": "Limoncello Fizz",
+      "price": "$12",
+      "desc": "Limoncello, soda, lemon, a little thyme."
+    },
+    {
+      "cat": "Frozen",
+      "name": "Frozen Negroni",
+      "price": "$13",
+      "desc": "Campari, gin, sweet vermouth — slushied.",
+      "badge": "Seasonal"
+    },
+    {
+      "cat": "Frozen",
+      "name": "Frosé",
+      "price": "$12",
+      "desc": "Rosé, strawberry, lemon. Dangerously easy."
+    },
+    {
+      "cat": "Classic",
+      "name": "Coupe Martini",
+      "price": "$14",
+      "desc": "Gin or vodka, dry, lemon or olive."
+    },
+    {
+      "cat": "Zero-proof",
+      "name": "Penguin Punch",
+      "price": "$9",
+      "desc": "Frozen, very pink, all the fun, none of the buzz.",
+      "badge": "No ABV"
+    }
+  ]
+}

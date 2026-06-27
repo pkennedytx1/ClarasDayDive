@@ -1,0 +1,35 @@
+<!-- @dsCard group="Spacing" viewport="700x180" name="Radii & Shadows" subtitle="Soft friendly corners + warm-tinted elevation" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--clr-cream); padding: 24px 28px; color: var(--clr-ink); }
+  .wrap { display: flex; gap: 28px; align-items: center; }
+  .group { display: flex; gap: 14px; align-items: flex-end; }
+  .box { width: 64px; height: 64px; background: var(--clr-white); border: 1.5px solid var(--clr-ink); display: flex; align-items: flex-end; justify-content: center; }
+  .box span { font-size: 11px; color: var(--clr-ink-60); padding-bottom: 4px; }
+  .sh { width: 84px; height: 64px; background: var(--clr-white); border-radius: var(--radius-md); display: flex; align-items: flex-end; justify-content: center; }
+  .sh span { font-size: 11px; color: var(--clr-ink-60); padding-bottom: 4px; }
+  .divider { width: 1px; align-self: stretch; background: var(--clr-ink-15); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="group">
+      <div class="box" style="border-radius:var(--radius-sm)"><span>sm 8</span></div>
+      <div class="box" style="border-radius:var(--radius-md)"><span>md 14</span></div>
+      <div class="box" style="border-radius:var(--radius-lg)"><span>lg 22</span></div>
+      <div class="box" style="border-radius:var(--radius-pill);width:84px"><span>pill</span></div>
+    </div>
+    <div class="divider"></div>
+    <div class="group">
+      <div class="sh" style="box-shadow:var(--shadow-sm)"><span>sm</span></div>
+      <div class="sh" style="box-shadow:var(--shadow-md)"><span>md</span></div>
+      <div class="sh" style="box-shadow:var(--shadow-lg)"><span>lg</span></div>
+      <div class="sh" style="box-shadow:var(--shadow-rose)"><span>rose</span></div>
+    </div>
+  </div>
+</body>
+</html>

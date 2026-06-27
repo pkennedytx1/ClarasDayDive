@@ -1,0 +1,210 @@
+/* Hero — split layout, framed illustration (mockup) */
+.hero {
+  background: var(--clr-cream);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: center;
+  padding-block: clamp(2rem, 5vw, 4rem);
+}
+
+.hero__copy {
+  order: 1;
+}
+
+/* Framed illustration — gold border + mat + maroon art window */
+.hero__frame {
+  margin: 0;
+  width: min(100%, 20rem);
+  padding: clamp(0.5rem, 1.5vw, 0.625rem);
+  border: 2px solid var(--clr-gold);
+  background: var(--clr-white);
+  box-shadow: var(--shadow-md);
+}
+
+.hero__frame-bg {
+  background: #8f3a4a;
+  padding: clamp(0.875rem, 2.5vw, 1.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__symbol {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero__frame figcaption {
+  margin: 0;
+  padding: 0.875rem 0.375rem 0.25rem;
+  text-align: center;
+}
+
+.hero__frame-cta {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  background: var(--clr-ink);
+  color: var(--clr-cream);
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: background var(--dur-base) var(--ease-out);
+}
+
+.hero__frame-cta:hover,
+.hero__frame-cta:focus-visible {
+  background: var(--clr-rose-deep);
+}
+
+.hero__visual {
+  order: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.hero__eyebrow-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.hero__rule {
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--clr-ink-15);
+  margin-bottom: 0.875rem;
+}
+
+.hero__eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-eyebrow);
+  color: var(--clr-sage-deep);
+}
+
+.hero__headline {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: var(--fs-display-xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--clr-ink);
+  max-width: 11ch;
+}
+
+.hero__accent {
+  font-style: italic;
+  color: var(--clr-rose);
+}
+
+.hero__lead {
+  margin: 0 0 2rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-lg);
+  line-height: 1.55;
+  color: var(--clr-ink-80);
+  max-width: 38ch;
+}
+
+.hero__meta {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--clr-ink-40);
+}
+
+@media (min-width: 900px) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2.5rem, 4vw, 4rem);
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .hero__visual {
+    justify-content: flex-end;
+  }
+
+  .hero__frame {
+    width: min(100%, 22rem);
+  }
+}
+
+/* Ask Clara — own section, flat clean bg */
+.section--ask {
+  background: var(--clr-white);
+  border-top: 1px solid var(--clr-ink-08);
+  border-bottom: 1px solid var(--clr-ink-08);
+}
+
+.ask-clara {
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.ask-clara__head {
+  margin-bottom: 1.75rem;
+}
+
+.ask-clara__mark {
+  width: 3.25rem;
+  height: auto;
+  margin: 0 auto 0.875rem;
+}
+
+.ask-clara__head .eyebrow {
+  margin-bottom: 0.625rem;
+}
+
+.ask-clara__title {
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+/* Section backgrounds */
+.section--menu {
+  background: var(--clr-cream);
+}
+
+.section--here {
+  background: var(--clr-cream);
+}
+
+.section--events {
+  position: relative;
+  overflow: hidden;
+  background: var(--clr-cream);
+}
+
+.section--faq {
+  background: var(--clr-white);
+}
+
+.section--contact {
+  background: var(--clr-ink);
+  color: var(--clr-cream);
+}
+
+.section--contact .display-lg {
+  color: var(--clr-cream);
+}
+
+.section--contact .lead {
+  color: var(--clr-cream);
+  opacity: 0.78;
+}

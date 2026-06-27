@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "start": "2026-07-18T19:00:00-05:00",
+      "end": "2026-07-18T22:00:00-05:00",
+      "month": "JUL",
+      "day": "18",
+      "tag": "Live music",
+      "title": "Patio vinyl night",
+      "timeLabel": "7–10pm · Free",
+      "desc": "Soul & disco on the turntable, frosé specials all night."
+    },
+    {
+      "start": "2026-07-24T12:00:00-05:00",
+      "end": "2026-07-24T17:00:00-05:00",
+      "month": "JUL",
+      "day": "24",
+      "tag": "Market",
+      "title": "Makers & shakers market",
+      "timeLabel": "12–5pm · Free",
+      "desc": "Local makers out front, spritz flight inside."
+    },
+    {
+      "start": "2026-08-02T16:00:00-05:00",
+      "end": "2026-08-02T18:00:00-05:00",
+      "month": "AUG",
+      "day": "02",
+      "tag": "Tasting",
+      "title": "Low-ABV happy hour",
+      "timeLabel": "4–6pm · $25",
+      "desc": "Six sessionable pours, guided by Clara herself.",
+      "ticketUrl": "https://example.com/rsvp"
+    }
+  ],
+  "hostNote": "Want to host something on our patio? Reach out below — we'd love to hear your idea."
+}

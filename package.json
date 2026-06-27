@@ -1,0 +1,33 @@
+{
+  "name": "claras-day-dive",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "sync:content": "node scripts/sync-from-sheets.mjs",
+    "copy:knowledge": "node scripts/copy-knowledge.mjs",
+    "build": "node scripts/sync-from-sheets.mjs && node scripts/generate-calendar.mjs && node scripts/generate-seo.mjs && node scripts/copy-knowledge.mjs && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "deploy": "node scripts/copy-knowledge.mjs && sst deploy",
+    "dev:sst": "sst dev"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.750.0",
+    "@aws-sdk/client-dynamodb": "^3.750.0",
+    "googleapis": "^173.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.147",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "sst": "^3.6.28",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3"
+  }
+}

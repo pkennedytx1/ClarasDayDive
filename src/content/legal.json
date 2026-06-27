@@ -1,0 +1,251 @@
+{
+  "policies": [
+    {
+      "slug": "privacy",
+      "path": "/privacy",
+      "title": "Privacy Policy",
+      "metaDescription": "How Clara's Day Dive collects, uses, and protects your personal information.",
+      "lastUpdated": "2026-06-25",
+      "sections": [
+        {
+          "heading": "Overview",
+          "paragraphs": [
+            "Clara's Day Dive (\"we,\" \"us,\" or \"our\") respects your privacy. This policy explains what information we collect when you visit clarasdaydive.com, contact us about events, or interact with our site — and how we use it.",
+            "This policy applies to our website only. It does not cover third-party sites we link to (such as Instagram)."
+          ]
+        },
+        {
+          "heading": "Information we collect",
+          "paragraphs": [
+            "We collect minimal information to operate our site and respond to inquiries:"
+          ],
+          "list": [
+            "Contact details you provide by email or phone (name, email address, phone number, event details).",
+            "Technical data collected automatically: browser type, device type, general location (city/region), pages visited, and referring URL.",
+            "Cookies and similar technologies described in our Cookie Policy."
+          ]
+        },
+        {
+          "heading": "How we use information",
+          "list": [
+            "Respond to event and booking inquiries.",
+            "Improve our website and understand how guests find us.",
+            "Comply with legal obligations.",
+            "Protect against fraud or misuse of our services."
+          ]
+        },
+        {
+          "heading": "What we do not do",
+          "paragraphs": [
+            "We do not sell your personal information. We do not share contact details with third parties for their marketing purposes."
+          ]
+        },
+        {
+          "heading": "Data retention",
+          "paragraphs": [
+            "We keep inquiry emails and related correspondence as long as needed to manage your request and for reasonable business records, unless a longer period is required by law."
+          ]
+        },
+        {
+          "heading": "Your choices",
+          "list": [
+            "You may request access to or correction of personal information we hold about you.",
+            "You may ask us to delete inquiry records where we are not required to retain them.",
+            "You can control cookies through your browser settings (see Cookie Policy)."
+          ]
+        },
+        {
+          "heading": "Children",
+          "paragraphs": [
+            "Our website and bar are intended for guests 21 and older. We do not knowingly collect information from anyone under 21."
+          ]
+        },
+        {
+          "heading": "Contact",
+          "paragraphs": [
+            "Privacy questions? Email us at events@example.com (update with your official privacy contact before launch)."
+          ]
+        },
+        {
+          "heading": "Changes",
+          "paragraphs": [
+            "We may update this policy from time to time. The \"Last updated\" date at the top of this page will reflect the latest version."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "terms",
+      "path": "/terms",
+      "title": "Terms of Use",
+      "metaDescription": "Terms and conditions for using the Clara's Day Dive website.",
+      "lastUpdated": "2026-06-25",
+      "sections": [
+        {
+          "heading": "Agreement",
+          "paragraphs": [
+            "By accessing clarasdaydive.com, you agree to these Terms of Use. If you do not agree, please do not use the site.",
+            "These terms apply to all visitors. Separate terms may apply to private events booked with us directly."
+          ]
+        },
+        {
+          "heading": "About our site",
+          "paragraphs": [
+            "This website provides information about Clara's Day Dive — our drinks menu, hours, location, events, and how to contact us about bookings. Menu items, prices, hours, and events are subject to change without notice."
+          ]
+        },
+        {
+          "heading": "Acceptable use",
+          "paragraphs": ["You agree not to:"],
+          "list": [
+            "Use the site for any unlawful purpose.",
+            "Attempt to gain unauthorized access to our systems or data.",
+            "Scrape, crawl, or overload the site in a way that interferes with its operation.",
+            "Misrepresent your affiliation with Clara's Day Dive."
+          ]
+        },
+        {
+          "heading": "AI search feature",
+          "paragraphs": [
+            "The \"Ask Clara\" search on our homepage provides general drink and venue suggestions for entertainment. It is not professional advice. Availability, pricing, and service may vary. Always confirm details with our staff in person."
+          ]
+        },
+        {
+          "heading": "Intellectual property",
+          "paragraphs": [
+            "All content on this site — including logos, illustrations, text, and design — is owned by Clara's Day Dive or used with permission. You may not copy, reproduce, or distribute our branding without written consent."
+          ]
+        },
+        {
+          "heading": "Disclaimer",
+          "paragraphs": [
+            "This site is provided \"as is.\" We make reasonable efforts to keep information accurate but do not guarantee completeness or uninterrupted access. Clara's Day Dive is a licensed establishment serving alcohol to guests 21+ with valid ID."
+          ]
+        },
+        {
+          "heading": "Limitation of liability",
+          "paragraphs": [
+            "To the fullest extent permitted by Texas law, Clara's Day Dive is not liable for indirect, incidental, or consequential damages arising from your use of this website."
+          ]
+        },
+        {
+          "heading": "Governing law",
+          "paragraphs": [
+            "These terms are governed by the laws of the State of Texas. Disputes shall be resolved in Travis County, Texas, unless otherwise required by applicable law."
+          ]
+        },
+        {
+          "heading": "Contact",
+          "paragraphs": [
+            "Questions about these terms? Email events@example.com."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "accessibility",
+      "path": "/accessibility",
+      "title": "Accessibility Statement",
+      "metaDescription": "Clara's Day Dive commitment to digital and physical accessibility.",
+      "lastUpdated": "2026-06-25",
+      "sections": [
+        {
+          "heading": "Our commitment",
+          "paragraphs": [
+            "Clara's Day Dive is committed to making our website and venue welcoming to as many guests as possible. We aim to meet or exceed WCAG 2.1 Level AA guidelines for our digital presence and provide reasonable accommodations at our bar and patio."
+          ]
+        },
+        {
+          "heading": "Website accessibility",
+          "paragraphs": [
+            "We designed this site mobile-first with accessibility in mind, including:"
+          ],
+          "list": [
+            "Semantic HTML structure and logical heading order.",
+            "Keyboard-navigable menus and visible focus indicators.",
+            "Text alternatives for meaningful images.",
+            "Sufficient color contrast on primary text and interactive elements.",
+            "Skip navigation link to main content.",
+            "Respect for prefers-reduced-motion settings."
+          ]
+        },
+        {
+          "heading": "Known limitations",
+          "paragraphs": [
+            "Some brand illustrations are decorative or artistic and may not convey information in text form. Our custom wordmark is rendered as images in places; we provide text alternatives where the logo carries meaning.",
+            "We are actively improving accessibility. If you encounter a barrier on our site, please tell us — we want to fix it."
+          ]
+        },
+        {
+          "heading": "Physical accessibility",
+          "paragraphs": [
+            "Our patio is ground-level with shaded seating. If you have questions about entry, seating, or accommodations for a visit or private event, contact us before you arrive and we will do our best to help."
+          ]
+        },
+        {
+          "heading": "Feedback and assistance",
+          "paragraphs": [
+            "We welcome accessibility feedback. Contact us at events@example.com or (512) 555-0100 (update before launch). Please include the page URL or describe the issue you experienced. We aim to respond within a few business days."
+          ]
+        },
+        {
+          "heading": "Third-party content",
+          "paragraphs": [
+            "Links to external services (such as Instagram) are governed by those providers' accessibility practices."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cookies",
+      "path": "/cookies",
+      "title": "Cookie Policy",
+      "metaDescription": "How Clara's Day Dive uses cookies and similar technologies on our website.",
+      "lastUpdated": "2026-06-25",
+      "sections": [
+        {
+          "heading": "What are cookies?",
+          "paragraphs": [
+            "Cookies are small text files stored on your device when you visit a website. They help sites remember preferences and understand how visitors use pages."
+          ]
+        },
+        {
+          "heading": "How we use cookies",
+          "paragraphs": [
+            "Our site uses a minimal set of cookies and local storage:"
+          ],
+          "list": [
+            "Essential cookies required for basic site functionality and security.",
+            "Analytics cookies (if enabled) to understand traffic patterns in aggregate — we do not use this data to identify you personally.",
+            "Preference storage in your browser (for example, dismissed notices) where applicable."
+          ]
+        },
+        {
+          "heading": "Third-party cookies",
+          "paragraphs": [
+            "We load fonts from Google Fonts, which may set cookies or collect usage data according to Google's policies. Embedded social links (Instagram) are plain links, not embeds, and do not set cookies on our site."
+          ]
+        },
+        {
+          "heading": "Your choices",
+          "paragraphs": [
+            "You can block or delete cookies through your browser settings. Blocking all cookies may affect how some parts of the site work.",
+            "To opt out of Google Analytics (if we enable it), use Google's opt-out tools or your browser's \"Do Not Track\" setting."
+          ]
+        },
+        {
+          "heading": "Updates",
+          "paragraphs": [
+            "We may update this Cookie Policy when our site changes. See the date at the top of this page for the latest version."
+          ]
+        },
+        {
+          "heading": "Contact",
+          "paragraphs": [
+            "Questions? Email events@example.com."
+          ]
+        }
+      ]
+    }
+  ]
+}

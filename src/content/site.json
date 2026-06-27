@@ -1,0 +1,117 @@
+{
+  "name": "Clara's Day Dive",
+  "tagline": "Dive in for a day drink.",
+  "description": "A neighborhood coupe bar with cold drinks, good shade, and a rotating cast of food trucks. Sun's out, penguins in.",
+  "hero": {
+    "meta": "№ 01 — Open till midnight, seven days"
+  },
+  "seo": {
+    "siteUrl": "https://clarasdaydive.com",
+    "title": "Clara's Day Dive — East Austin Coupe Bar & Patio",
+    "description": "Dive in for a day drink at Clara's Day Dive — an East Austin coupe bar and patio with spritzes, frozen cocktails, food trucks, morning coffee, and live events.",
+    "longDescription": "Clara's Day Dive is an East Austin coupe bar and patio at 1814 E Cesar Chavez St. We pour day drinks, Aperol spritzes, frozen frosé, and zero-proof Penguin Punch on a dog-friendly patio with rotating food trucks and morning coffee. Open afternoons through late night.",
+    "keywords": [
+      "East Austin bar",
+      "coupe bar Austin",
+      "day drink Austin",
+      "patio bar Austin",
+      "spritz bar",
+      "food trucks Austin bar",
+      "Clara's Day Dive"
+    ],
+    "geo": {
+      "latitude": 30.2588,
+      "longitude": -97.7264
+    },
+    "priceRange": "$$"
+  },
+  "location": {
+    "eyebrow": "East Austin · Coupe bar & patio",
+    "address": "1814 E Cesar Chavez St",
+    "city": "Austin, TX 78702",
+    "region": "TX",
+    "postalCode": "78702",
+    "country": "US"
+  },
+  "hours": [
+    "Mon–Thu · 3pm–12am",
+    "Fri · 12pm–2am",
+    "Sat–Sun · 11am–2am"
+  ],
+  "hoursStructured": [
+    {
+      "days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday"
+      ],
+      "opens": "15:00",
+      "closes": "0:00"
+    },
+    {
+      "days": [
+        "Friday"
+      ],
+      "opens": "12:00",
+      "closes": "2:00"
+    },
+    {
+      "days": [
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "11:00",
+      "closes": "2:00"
+    }
+  ],
+  "social": {
+    "instagram": "https://instagram.com/"
+  },
+  "contact": {
+    "coordinatorName": "Your event coordinator",
+    "coordinatorRole": "Events & private bookings",
+    "email": "events@example.com",
+    "phone": "(512) 555-0100",
+    "responseTime": "We typically reply within a day."
+  },
+  "search": {
+    "sectionEyebrow": "Ask Clara",
+    "sectionTitle": "Not sure what to order?",
+    "placeholder": "what should I drink today?",
+    "buttonLabel": "Dive in",
+    "suggestions": [
+      "Something pink & frozen",
+      "Low-ABV spritz",
+      "What's on the patio?"
+    ],
+    "responses": {
+      "Something pink & frozen": "Try the Penguin Punch — frozen, very pink, zero-proof. Or a Frosé if you want the buzz.",
+      "Low-ABV spritz": "Clara's Spritz: Aperol, prosecco, a twist of grapefruit. Sessionable all afternoon.",
+      "What's on the patio?": "Shade, string lights, dog bowls, and Bird Bird Biscuit til 2. Open till midnight."
+    },
+    "fallback": "Clara says: come on in — we'll pour you something good."
+  },
+  "nav": {
+    "links": [
+      {
+        "label": "Drinks",
+        "href": "#drinks"
+      },
+      {
+        "label": "What's Here",
+        "href": "#here"
+      },
+      {
+        "label": "Events",
+        "href": "#events"
+      },
+      {
+        "label": "Visit",
+        "href": "#contact"
+      }
+    ],
+    "ctaLabel": "Book the bar",
+    "ctaHref": "#contact"
+  }
+}
