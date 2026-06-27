@@ -28,13 +28,14 @@ Use your actual org/repo name everywhere below.
 
 In **GitHub → Settings → Secrets and variables → Actions → New repository secret**, add:
 
-| Secret | Required | Purpose |
-|--------|----------|---------|
-| `GOOGLE_SHEET_ID` | Yes | Workbook ID (or full Sheets URL) |
-| `GOOGLE_SERVICE_ACCOUNT_JSON` | Yes | Full service account key JSON (same as local sync) |
-| `AWS_ACCESS_KEY_ID` | Yes | IAM access key — **Secret** (recommended) or **Variable** |
-| `AWS_SECRET_ACCESS_KEY` | Yes | IAM secret key — must be a **Secret** |
-| `GOOGLE_CALENDAR_ID` | No | Only if events come from Google Calendar |
+| Name | Secret or Variable? | Notes |
+|------|---------------------|-------|
+| `GOOGLE_SHEET_ID` | **Either** | Not sensitive — Variable is fine |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | **Secret only** | Contains private key — never use Variable |
+| `GOOGLE_CALENDAR_ID` | **Either** | Optional; not sensitive |
+| `AWS_ACCESS_KEY_ID` | **Either** | Secret recommended |
+| `AWS_SECRET_ACCESS_KEY` | **Secret only** | |
+| `AWS_REGION` | **Variable** | e.g. `us-east-1` |
 
 **Optional variable** (Settings → Variables → Actions):
 
