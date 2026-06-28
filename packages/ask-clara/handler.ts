@@ -222,21 +222,6 @@ export async function handler(
     }
 
     const chunks = retrieveChunks(message, knowledgeData.chunks);
-    if (chunks.length === 0) {
-      const classifierCost = estimateCost(
-        modelId,
-        classification.usage.inputTokens,
-        classification.usage.outputTokens,
-      );
-      await recordUsage(
-        tableName,
-        classifierCost,
-        classification.usage.inputTokens,
-        classification.usage.outputTokens,
-      );
-      return refusedResponse(REFUSAL_OFF_TOPIC);
-    }
-
     const systemPrompt = buildSystemPrompt(chunks);
     const main = await invokeMainModel(
       bedrock,

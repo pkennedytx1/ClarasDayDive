@@ -28,6 +28,14 @@ function extractKeywords(...texts) {
   return [...new Set(words.filter((w) => w.length > 2 && !STOP_WORDS.has(w)))];
 }
 
+function parseKeywordList(raw) {
+  if (!raw) return [];
+  return String(raw)
+    .split(',')
+    .map((k) => k.trim().toLowerCase())
+    .filter(Boolean);
+}
+
 function readJson(name) {
   const path = join(contentDir, name);
   if (!existsSync(path)) return null;
@@ -159,6 +167,17 @@ export function generateKnowledge(dir = contentDir) {
         keywords: extractKeywords(suggestion, response, 'clara', 'recommend', 'order'),
       });
     }
+  }
+
+  const claraKnowledge = readJson('clara-knowledge.json');
+  for (const item of claraKnowledge?.items ?? []) {
+    const extra = parseKeywordList(item.keywords);
+    chunks.push({
+      id: `knowledge-${slugify(item.topic)}`,
+      type: 'knowledge',
+      text: `${item.topic}: ${item.fact}`,
+      keywords: [...new Set([...extractKeywords(item.topic, item.fact, ...extra), ...extra])],
+    });
   }
 
   return { chunks };

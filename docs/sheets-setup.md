@@ -19,6 +19,7 @@ Staff edit site content in a Google Sheet. The build syncs that sheet into `src/
    - `WhatsHere`
    - `FAQ`
    - `AskClara`
+   - `Knowledge` (optional — Ask Clara venue facts; see below)
 3. Copy the column headers from [sheets-template/README.md](./sheets-template/README.md) into row 1 of each tab.
 4. Fill in content starting at row 2.
 
@@ -222,6 +223,22 @@ Row 1: `suggestion` | `response` | `sort_order` | `active`
 
 - Chips shown on the Ask Clara section
 - Exact chip matches use canned `response` with zero Bedrock cost
+
+### `Knowledge` (optional)
+
+Row 1: `topic` | `fact` | `keywords` | `sort_order` | `active`
+
+Ask Clara-only venue facts — **not** shown on the public FAQ page. Each row becomes a RAG chunk so Clara can answer practical questions (restrooms, parking, coat check, etc.).
+
+| Column | Required | Notes |
+|--------|----------|-------|
+| `topic` | Yes | Short label (e.g. `Restrooms`, `Parking`) |
+| `fact` | Yes | What Clara should know — warm, conversational |
+| `keywords` | No | Comma-separated extra match words (e.g. `bathroom,wc,parking lot`) |
+| `sort_order` | No | Lower numbers first in sync |
+| `active` | No | `FALSE` to hide |
+
+If this tab is missing from an older workbook, sync still succeeds (empty knowledge).
 
 ---
 

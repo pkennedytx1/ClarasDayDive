@@ -617,6 +617,63 @@
         "recommend",
         "order"
       ]
+    },
+    {
+      "id": "knowledge-restrooms",
+      "type": "knowledge",
+      "text": "Restrooms: The restrooms are toward the back of the bar — head past the bar and up the steps to the deck. You'll find them behind the wall on the right.",
+      "keywords": [
+        "restrooms",
+        "toward",
+        "back",
+        "bar",
+        "head",
+        "past",
+        "steps",
+        "deck",
+        "you'll",
+        "find",
+        "them",
+        "behind",
+        "wall",
+        "right",
+        "restroom",
+        "bathroom",
+        "toilet",
+        "where",
+        "wc",
+        "where is the bathroom"
+      ]
+    },
+    {
+      "id": "knowledge-parking",
+      "type": "knowledge",
+      "text": "Parking: The gravel lot next to Lucky Duck is shared — you're welcome to park there when you visit Clara's. Street parking on Cesar Chavez works too.",
+      "keywords": [
+        "parking",
+        "gravel",
+        "lot",
+        "next",
+        "lucky",
+        "duck",
+        "shared",
+        "you're",
+        "welcome",
+        "park",
+        "there",
+        "when",
+        "visit",
+        "clara's",
+        "street",
+        "cesar",
+        "chavez",
+        "works",
+        "too",
+        "car",
+        "where",
+        "lucky duck",
+        "where do i park"
+      ]
     }
   ]
 }

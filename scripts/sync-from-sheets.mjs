@@ -8,7 +8,8 @@ import { fetchCalendarEvents, normalizeCalendarId } from './lib/google-calendar-
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const contentDir = join(root, 'src/content');
 
-const TABS = ['_Settings', 'Hours', 'Drinks', 'Events', 'WhatsHere', 'FAQ', 'AskClara'];
+const TABS = ['_Settings', 'Hours', 'Drinks', 'Events', 'WhatsHere', 'FAQ', 'AskClara', 'Knowledge'];
+const OPTIONAL_TABS = new Set(['Knowledge']);
 
 const DEFAULT_NAV = {
   links: [
@@ -230,11 +231,19 @@ async function fetchSheetTabs(sheetId, credentials) {
   const tabData = {};
 
   for (const tab of TABS) {
-    const res = await sheets.spreadsheets.values.get({
-      spreadsheetId: sheetId,
-      range: `'${tab}'`,
-    });
-    tabData[tab] = parseRows(res.data.values ?? []);
+    try {
+      const res = await sheets.spreadsheets.values.get({
+        spreadsheetId: sheetId,
+        range: `'${tab}'`,
+      });
+      tabData[tab] = parseRows(res.data.values ?? []);
+    } catch (err) {
+      if (OPTIONAL_TABS.has(tab)) {
+        tabData[tab] = [];
+        continue;
+      }
+      throw err;
+    }
   }
 
   return tabData;
@@ -532,6 +541,24 @@ function buildFaqJson(rows, errors) {
   return { items };
 }
 
+function buildClaraKnowledgeJson(rows, errors) {
+  const active = rows.filter(isActive).sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+  const items = [];
+
+  for (const row of active) {
+    requireField(errors, 'Knowledge', row, 'topic', row.topic);
+    requireField(errors, 'Knowledge', row, 'fact', row.fact);
+
+    items.push({
+      topic: String(row.topic).trim(),
+      fact: String(row.fact).trim(),
+      keywords: String(row.keywords ?? '').trim(),
+    });
+  }
+
+  return { items };
+}
+
 function writeJson(name, data) {
   writeFileSync(join(contentDir, name), `${JSON.stringify(data, null, 2)}\n`);
 }
@@ -567,6 +594,7 @@ async function syncFromSheets() {
   const events = await buildEvents(settings, tabs.Events, credentials, errors);
   const whatsHere = buildWhatsHereJson(tabs.WhatsHere, errors);
   const faq = buildFaqJson(tabs.FAQ, errors);
+  const claraKnowledge = buildClaraKnowledgeJson(tabs.Knowledge ?? [], errors);
 
   if (errors.length) {
     reportErrors(errors);
@@ -578,6 +606,7 @@ async function syncFromSheets() {
   writeJson('events.json', events);
   writeJson('whats-here.json', whatsHere);
   writeJson('faq.json', faq);
+  writeJson('clara-knowledge.json', claraKnowledge);
 
   const knowledge = writeKnowledge();
   console.log('Wrote src/content/site.json');
@@ -585,6 +614,7 @@ async function syncFromSheets() {
   console.log('Wrote src/content/events.json');
   console.log('Wrote src/content/whats-here.json');
   console.log('Wrote src/content/faq.json');
+  console.log('Wrote src/content/clara-knowledge.json');
   console.log(`Wrote src/content/knowledge.json (${knowledge.chunks.length} chunks)`);
   console.log('Sync complete (legal.json unchanged)');
 }
@@ -595,7 +625,7 @@ syncFromSheets().catch((err) => {
     console.error('Sync failed: spreadsheet not found or not shared with the service account.');
     console.error('  • Use only the Sheet ID or full URL in GOOGLE_SHEET_ID');
     console.error('  • Share the sheet with the service account email as Viewer');
-    console.error('  • Confirm tab names: _Settings, Hours, Drinks, Events, WhatsHere, FAQ, AskClara');
+    console.error('  • Confirm tab names: _Settings, Hours, Drinks, Events, WhatsHere, FAQ, AskClara, Knowledge (optional)');
   } else {
     console.error('Sync failed:', msg);
   }
