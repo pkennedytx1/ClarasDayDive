@@ -11,6 +11,12 @@ const contentDir = join(root, 'src/content');
 
 const TABS = ['_Settings', 'Hours', 'Drinks', 'Events', 'WhatsHere', 'FAQ', 'AskClara', 'Knowledge'];
 const OPTIONAL_TABS = new Set(['Knowledge']);
+const OPTIONAL_SETTINGS_KEYS = new Set([
+  'instagram_url',
+  'facebook_url',
+  'tiktok_url',
+  'google_business_url',
+]);
 
 const DEFAULT_NAV = {
   links: [
@@ -260,8 +266,10 @@ function buildSettingsMap(rows, errors) {
   const map = {};
   for (const row of rows) {
     if (!requireField(errors, '_Settings', row, 'key', row.key)) continue;
-    if (!requireField(errors, '_Settings', row, 'value', row.value)) continue;
-    map[row.key.trim()] = String(row.value).trim();
+    const key = row.key.trim();
+    const valueOptional = OPTIONAL_SETTINGS_KEYS.has(key);
+    if (!valueOptional && !requireField(errors, '_Settings', row, 'value', row.value)) continue;
+    map[key] = String(row.value ?? '').trim();
   }
   return map;
 }
