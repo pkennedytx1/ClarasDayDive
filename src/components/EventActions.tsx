@@ -5,6 +5,7 @@ import { buildIcsContent } from '@/lib/ics';
 interface EventActionsProps {
   event: SiteEvent;
   location: string;
+  variant?: 'stacked' | 'inline';
 }
 
 function downloadIcs(event: SiteEvent, location: string) {
@@ -18,41 +19,74 @@ function downloadIcs(event: SiteEvent, location: string) {
   URL.revokeObjectURL(url);
 }
 
-export function EventActions({ event, location }: EventActionsProps) {
-  const googleUrl = buildGoogleCalendarUrl(event, location);
+function TicketLink({ event }: { event: SiteEvent }) {
+  if (!event.ticketUrl) return null;
 
   return (
-    <div className="event-actions">
-      <div className="event-actions__calendar">
-        <span className="event-actions__label">Add to calendar</span>
-        <div className="event-actions__links">
-          <button
-            type="button"
-            className="event-actions__btn btn btn--secondary"
-            onClick={() => downloadIcs(event, location)}
-          >
-            Download .ics
-          </button>
-          <a
-            href={googleUrl}
-            className="event-actions__btn btn btn--secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Google Calendar
-          </a>
-        </div>
-      </div>
-      {event.ticketUrl && (
+    <a
+      href={event.ticketUrl}
+      className="here-item__link here-item__link--order"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Get tickets / RSVP →
+      <span className="visually-hidden">
+        {' '}
+        for {event.title} (opens in a new tab)
+      </span>
+    </a>
+  );
+}
+
+function CalendarButtons({
+  event,
+  googleUrl,
+  onDownload,
+}: {
+  event: SiteEvent;
+  googleUrl: string;
+  onDownload: () => void;
+}) {
+  const groupId = `event-calendar-${event.start.replace(/[^a-z0-9]/gi, '-')}-${event.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+  return (
+    <div className="event-actions__calendar" role="group" aria-labelledby={groupId}>
+      <p id={groupId} className="event-actions__hint">
+        Add to your calendar
+      </p>
+      <div className="here-item__links">
+        <button
+          type="button"
+          className="here-item__link"
+          onClick={onDownload}
+        >
+          Download calendar event
+        </button>
         <a
-          href={event.ticketUrl}
-          className="event-actions__btn event-actions__btn--ticket btn btn--primary"
+          href={googleUrl}
+          className="here-item__link"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Get tickets / RSVP →
+          Add to Google Calendar
+          <span className="visually-hidden">
+            {' '}
+            for {event.title} (opens in a new tab)
+          </span>
         </a>
-      )}
+      </div>
+    </div>
+  );
+}
+
+export function EventActions({ event, location, variant = 'stacked' }: EventActionsProps) {
+  const googleUrl = buildGoogleCalendarUrl(event, location);
+  const handleDownload = () => downloadIcs(event, location);
+
+  return (
+    <div className={`event-actions${variant === 'inline' ? ' event-actions--inline' : ''}`}>
+      <TicketLink event={event} />
+      <CalendarButtons event={event} googleUrl={googleUrl} onDownload={handleDownload} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { MouseEvent } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { useNavScrollHide } from '@/hooks/useNavScrollHide';
 import { handleAnchorClick } from '@/lib/scroll';
 
@@ -17,6 +18,8 @@ interface NavBarProps {
 export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
   const [open, setOpen] = useState(false);
   const hidden = useNavScrollHide(open);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     document.body.classList.toggle('is-nav-open', open);
@@ -28,8 +31,21 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
     return () => document.body.classList.remove('is-nav-hidden');
   }, [hidden]);
 
+  useEffect(() => {
+    if (!open) return;
+    const firstLink = sheetRef.current?.querySelector<HTMLElement>('a');
+    firstLink?.focus();
+  }, [open]);
+
+  const close = () => {
+    setOpen(false);
+    toggleRef.current?.focus();
+  };
+
+  useFocusTrap(sheetRef, open, close);
+
   const navigate = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-    handleAnchorClick(event, href, () => setOpen(false));
+    handleAnchorClick(event, href, close);
   };
 
   const isActive = (href: string) => activeHref === href;
@@ -60,10 +76,12 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
         </nav>
 
         <button
+          ref={toggleRef}
           type="button"
           className={`site-nav__toggle${open ? ' is-open' : ''}`}
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
+          aria-controls="mobile-nav-sheet"
           onClick={() => setOpen((o) => !o)}
         >
           <span className="site-nav__toggle-icon" aria-hidden="true">
@@ -74,7 +92,12 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
         </button>
       </div>
 
-      <div className={`site-nav__sheet-wrap${open ? ' is-open' : ''}`} aria-hidden={!open}>
+      <div
+        ref={sheetRef}
+        id="mobile-nav-sheet"
+        className={`site-nav__sheet-wrap${open ? ' is-open' : ''}`}
+        aria-hidden={!open}
+      >
         <div className="site-nav__sheet-inner">
           <nav className="site-nav__sheet" aria-label="Mobile">
             {links.map((l) => (

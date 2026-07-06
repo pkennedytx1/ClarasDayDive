@@ -1,3 +1,6 @@
+# LLMs: https://clarasdaydive.com/llms.txt
+# Knowledge: https://clarasdaydive.com/knowledge.txt
+
 User-agent: *
 Allow: /
 
@@ -14,6 +17,12 @@ User-agent: anthropic-ai
 Allow: /
 
 User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://clarasdaydive.com/sitemap.xml

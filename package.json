@@ -7,7 +7,8 @@
     "dev": "vite",
     "sync:content": "node scripts/sync-from-sheets.mjs",
     "copy:knowledge": "node scripts/copy-knowledge.mjs",
-    "build": "node scripts/sync-from-sheets.mjs && node scripts/generate-calendar.mjs && node scripts/generate-seo.mjs && node scripts/copy-knowledge.mjs && tsc --noEmit && vite build",
+    "build": "node scripts/sync-from-sheets.mjs && node scripts/generate-seo.mjs && node scripts/check-a11y.mjs && node scripts/copy-knowledge.mjs && tsc --noEmit && vite build",
+    "check:a11y": "node scripts/check-a11y.mjs",
     "preview": "vite preview",
     "deploy": "node scripts/copy-knowledge.mjs && sst deploy",
     "dev:sst": "sst dev"
@@ -15,6 +16,8 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.750.0",
     "@aws-sdk/client-dynamodb": "^3.750.0",
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/playfair-display": "^5.2.8",
     "googleapis": "^173.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

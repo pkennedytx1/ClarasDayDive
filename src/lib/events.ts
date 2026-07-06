@@ -10,6 +10,14 @@ export interface SiteEvent {
   ticketUrl?: string;
 }
 
+/** Hide events once their end time has passed (America/Chicago ISO strings from sync). */
+export function filterUpcomingEvents(items: SiteEvent[], now: Date = new Date()): SiteEvent[] {
+  const cutoff = now.getTime();
+  return items
+    .filter((event) => new Date(event.end).getTime() > cutoff)
+    .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+}
+
 export function toDateKey(iso: string): string {
   return iso.slice(0, 10);
 }

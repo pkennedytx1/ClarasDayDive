@@ -23,8 +23,10 @@
       "latitude": 30.2588,
       "longitude": -97.7264
     },
-    "priceRange": "$$"
+    "priceRange": "$$",
+    "ogImage": "/assets/scarf.jpg"
   },
+  "mapsUrl": "https://maps.google.com/?q=1814+E+Cesar+Chavez+St,+Austin,+TX+78702",
   "location": {
     "eyebrow": "East Austin · Coupe bar & patio",
     "address": "1814 E Cesar Chavez St",
@@ -47,7 +49,7 @@
         "Thursday"
       ],
       "opens": "15:00",
-      "closes": "0:00"
+      "closes": "23:59"
     },
     {
       "days": [
@@ -66,7 +68,11 @@
     }
   ],
   "social": {
-    "instagram": "https://instagram.com/"
+    "instagram": "https://instagram.com/clarasdaydive",
+    "facebook": "https://facebook.com/clarasdaydive",
+    "tiktok": "https://tiktok.com/@clarasdaydive",
+    "googleBusiness": "",
+    "googleMaps": "https://maps.google.com/?q=1814+E+Cesar+Chavez+St,+Austin,+TX+78702"
   },
   "contact": {
     "coordinatorName": "Your event coordinator",
@@ -105,6 +111,10 @@
       {
         "label": "Events",
         "href": "#events"
+      },
+      {
+        "label": "FAQ",
+        "href": "#faq"
       },
       {
         "label": "Visit",

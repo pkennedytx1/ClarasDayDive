@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, type KeyboardEvent, useState } from 'react';
 import { Reveal } from '@/components/Reveal';
 import { getDrinksContent } from '@/lib/content';
 
@@ -6,10 +6,27 @@ export function Drinks() {
   const drinks = getDrinksContent();
   const [filter, setFilter] = useState('All');
   const shown = filter === 'All' ? drinks.items : drinks.items.filter((d) => d.cat === filter);
+  const panelId = useId();
+
+  const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home' && e.key !== 'End') return;
+    e.preventDefault();
+    const tabs = e.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+    if (!tabs?.length) return;
+    let next = index;
+    if (e.key === 'ArrowRight') next = (index + 1) % tabs.length;
+    if (e.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+    if (e.key === 'Home') next = 0;
+    if (e.key === 'End') next = tabs.length - 1;
+    const tab = tabs[next];
+    tab?.focus();
+    tab?.click();
+  };
 
   return (
     <section id="drinks" className="section section--menu section--compact" aria-labelledby="drinks-heading">
       <div className="container">
+        <div className="section-rail">
         <Reveal>
           <header className="section-head section-head--brand">
             <div>
@@ -23,22 +40,36 @@ export function Drinks() {
 
         <Reveal delay={80}>
           <div className="tag-list" role="tablist" aria-label="Filter drinks by category">
-            {drinks.categories.map((c) => (
-              <button
-                key={c}
-                type="button"
-                role="tab"
-                aria-selected={filter === c}
-                className={`tag${filter === c ? ' is-active' : ''}`}
-                onClick={() => setFilter(c)}
-              >
-                {c}
-              </button>
-            ))}
+            {drinks.categories.map((c, i) => {
+              const tabId = `${panelId}-tab-${c}`;
+              return (
+                <button
+                  key={c}
+                  id={tabId}
+                  type="button"
+                  role="tab"
+                  aria-selected={filter === c}
+                  aria-controls={`${panelId}-panel`}
+                  tabIndex={filter === c ? 0 : -1}
+                  className={`tag${filter === c ? ' is-active' : ''}`}
+                  onClick={() => setFilter(c)}
+                  onKeyDown={(e) => onTabKeyDown(e, i)}
+                >
+                  {c}
+                </button>
+              );
+            })}
           </div>
         </Reveal>
 
-        <div className="menu-list" itemScope itemType="https://schema.org/Menu">
+        <div
+          id={`${panelId}-panel`}
+          role="tabpanel"
+          aria-labelledby={`${panelId}-tab-${filter}`}
+          className="menu-list"
+          itemScope
+          itemType="https://schema.org/Menu"
+        >
           <meta itemProp="name" content="Clara's Day Dive drinks menu" />
           {shown.map((d, i) => (
             <Reveal key={d.name} stagger={i} delay={120}>
@@ -60,6 +91,7 @@ export function Drinks() {
               </article>
             </Reveal>
           ))}
+        </div>
         </div>
       </div>
     </section>

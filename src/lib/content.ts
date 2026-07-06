@@ -9,6 +9,7 @@ import events from '@/content/events.json';
 import whatsHere from '@/content/whats-here.json';
 import faq from '@/content/faq.json';
 import legal from '@/content/legal.json';
+import { filterUpcomingEvents } from './events';
 
 export type { SiteEvent } from './events';
 
@@ -29,7 +30,10 @@ export function getDrinksContent(): DrinksContent {
 }
 
 export function getEventsContent(): EventsContent {
-  return events;
+  return {
+    ...events,
+    items: filterUpcomingEvents(events.items),
+  };
 }
 
 export function getWhatsHereContent(): WhatsHereContent {

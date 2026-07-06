@@ -16,6 +16,7 @@
   /* ---- Layout ---- */
   --container:      1180px;  /* max content width */
   --container-prose: 720px;  /* readable measure */
+  --section-rail:    52rem;   /* drinks, what's here, events — shared column */
   --gutter:         clamp(1.25rem, 5vw, 4rem); /* @kind spacing */
   --section-y:      clamp(3.5rem, 9vw, 8rem); /* @kind spacing */
 

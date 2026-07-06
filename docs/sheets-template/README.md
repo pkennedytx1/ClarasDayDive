@@ -45,15 +45,17 @@ key | value
 | `region` | TX |
 | `postal_code` | 78702 |
 | `country` | US |
-| `instagram_url` | https://instagram.com/… |
+| `instagram_url` | Optional — full profile URL; leave blank to hide icon |
+| `facebook_url` | Optional — full profile URL; leave blank to hide icon |
+| `tiktok_url` | Optional — full profile URL; leave blank to hide icon |
 | `contact_name` | Your event coordinator |
 | `contact_role` | Events & private bookings |
 | `contact_email` | events@example.com |
 | `contact_phone` | (512) 555-0100 |
 | `contact_response_time` | We typically reply within a day. |
 | `events_host_note` | Want to host something on our patio?… |
-| `google_calendar_id` | Optional — Google Calendar ID for events (see [sheets-setup.md](../sheets-setup.md#6-google-calendar-for-events)) |
-| `events_source` | Optional — `sheet`, `calendar`, or `both` (defaults to `calendar` when `google_calendar_id` is set) |
+| `events_source` | `sheet` (default) — or `calendar` for calendar-only; avoid `both` |
+| `google_calendar_id` | Optional — calendar-only sync or import-from-calendar |
 | `ask_clara_eyebrow` | Ask Clara |
 | `ask_clara_title` | Not sure what to order? |
 | `ask_clara_placeholder` | what should I drink today? |
@@ -62,8 +64,11 @@ key | value
 | `seo_site_url` | https://clarasdaydive.com |
 | `seo_title` | Clara's Day Dive — East Austin Coupe Bar & Patio |
 | `seo_description` | Dive in for a day drink… |
+| `seo_og_image` | `/assets/scarf.jpg` — social share image path |
+| `maps_url` | Google Maps link for directions |
+| `google_business_url` | Optional — Google Business Profile URL for schema |
 
-Both columns are required on every row.
+Both columns are required on every row. **Optional keys** (`instagram_url`, `facebook_url`, `tiktok_url`, `google_business_url`) can be left with an empty `value` cell — the site hides those icons/links until you fill them in.
 
 ---
 
@@ -118,7 +123,7 @@ No schema change, no extra configuration.
 
 ## `Events`
 
-Events can come from this tab, **Google Calendar**, or both — controlled by `_Settings` keys `google_calendar_id` and `events_source`. See [sheets-setup.md](../sheets-setup.md#6-google-calendar-for-events).
+**Default: edit the Events tab.** One source for the site — sheet **or** calendar, not both. Staff guide: [sheets-events.md](../sheets-events.md).
 
 **Row 1 headers:**
 

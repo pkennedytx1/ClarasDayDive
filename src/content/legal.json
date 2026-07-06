@@ -5,7 +5,7 @@
       "path": "/privacy",
       "title": "Privacy Policy",
       "metaDescription": "How Clara's Day Dive collects, uses, and protects your personal information.",
-      "lastUpdated": "2026-06-25",
+      "lastUpdated": "2026-07-06",
       "sections": [
         {
           "heading": "Overview",
@@ -21,23 +21,43 @@
           ],
           "list": [
             "Contact details you provide by email or phone (name, email address, phone number, event details).",
-            "Technical data collected automatically: browser type, device type, general location (city/region), pages visited, and referring URL.",
-            "Cookies and similar technologies described in our Cookie Policy."
+            "Messages you send through Ask Clara, our on-site AI assistant, including your question and a short conversation history (up to four prior turns) to keep replies in context.",
+            "Technical data collected automatically by our hosting provider: browser type, device type, general location (city/region), pages visited, and referring URL.",
+            "Fonts are loaded from our own servers. We do not use advertising cookies or third-party analytics on this site today."
+          ]
+        },
+        {
+          "heading": "Ask Clara (AI assistant)",
+          "paragraphs": [
+            "When you use Ask Clara, your message and recent chat history are sent to our secure API, which uses Amazon Web Services (AWS) Bedrock to generate a response. We use this data only to answer your question and improve the reliability of the service.",
+            "Ask Clara does not require an account. We do not use your chat messages to train public AI models. Chat requests may be logged temporarily for abuse prevention and cost monitoring, then discarded.",
+            "Do not share sensitive personal information (such as payment details or government IDs) in Ask Clara. For private event bookings, use the contact email or phone listed on our site."
           ]
         },
         {
           "heading": "How we use information",
           "list": [
             "Respond to event and booking inquiries.",
+            "Provide Ask Clara drink and venue suggestions.",
             "Improve our website and understand how guests find us.",
             "Comply with legal obligations.",
             "Protect against fraud or misuse of our services."
           ]
         },
         {
+          "heading": "Service providers",
+          "paragraphs": [
+            "We use trusted service providers to run our website:"
+          ],
+          "list": [
+            "Amazon Web Services (AWS) — site hosting, API, and Ask Clara AI processing (Bedrock).",
+            "Google Workspace or your email provider — if you contact us directly by email."
+          ]
+        },
+        {
           "heading": "What we do not do",
           "paragraphs": [
-            "We do not sell your personal information. We do not share contact details with third parties for their marketing purposes."
+            "We do not sell your personal information. We do not share contact details or Ask Clara messages with third parties for their marketing purposes."
           ]
         },
         {
@@ -50,7 +70,8 @@
           "heading": "Your choices",
           "list": [
             "You may request access to or correction of personal information we hold about you.",
-            "You may ask us to delete inquiry records where we are not required to retain them.",
+            "You may ask us to delete inquiry or Ask Clara records where we are not required to retain them.",
+            "California residents may request information about data we collect — contact us using the email on our Contact section.",
             "You can control cookies through your browser settings (see Cookie Policy)."
           ]
         },
@@ -63,7 +84,7 @@
         {
           "heading": "Contact",
           "paragraphs": [
-            "Privacy questions? Email us at events@example.com (update with your official privacy contact before launch)."
+            "Privacy questions? Email the address listed in our Contact section or call during business hours."
           ]
         },
         {
@@ -79,7 +100,7 @@
       "path": "/terms",
       "title": "Terms of Use",
       "metaDescription": "Terms and conditions for using the Clara's Day Dive website.",
-      "lastUpdated": "2026-06-25",
+      "lastUpdated": "2026-07-06",
       "sections": [
         {
           "heading": "Agreement",
@@ -137,7 +158,7 @@
         {
           "heading": "Contact",
           "paragraphs": [
-            "Questions about these terms? Email events@example.com."
+            "Questions about these terms? Use the contact email listed on our website."
           ]
         }
       ]
@@ -147,7 +168,7 @@
       "path": "/accessibility",
       "title": "Accessibility Statement",
       "metaDescription": "Clara's Day Dive commitment to digital and physical accessibility.",
-      "lastUpdated": "2026-06-25",
+      "lastUpdated": "2026-07-06",
       "sections": [
         {
           "heading": "Our commitment",
@@ -185,7 +206,7 @@
         {
           "heading": "Feedback and assistance",
           "paragraphs": [
-            "We welcome accessibility feedback. Contact us at events@example.com or (512) 555-0100 (update before launch). Please include the page URL or describe the issue you experienced. We aim to respond within a few business days."
+            "We welcome accessibility feedback. Contact us using the email or phone in our Contact section. Please include the page URL or describe the issue you experienced. We aim to respond within a few business days."
           ]
         },
         {
@@ -201,7 +222,7 @@
       "path": "/cookies",
       "title": "Cookie Policy",
       "metaDescription": "How Clara's Day Dive uses cookies and similar technologies on our website.",
-      "lastUpdated": "2026-06-25",
+      "lastUpdated": "2026-07-06",
       "sections": [
         {
           "heading": "What are cookies?",
@@ -212,25 +233,25 @@
         {
           "heading": "How we use cookies",
           "paragraphs": [
-            "Our site uses a minimal set of cookies and local storage:"
+            "Our site uses a minimal set of technologies:"
           ],
           "list": [
-            "Essential cookies required for basic site functionality and security.",
-            "Analytics cookies (if enabled) to understand traffic patterns in aggregate — we do not use this data to identify you personally.",
-            "Preference storage in your browser (for example, dismissed notices) where applicable."
+            "Essential cookies from our hosting provider required for basic site delivery and security.",
+            "Self-hosted web fonts — typography files served from our domain, not from Google.",
+            "We do not use advertising cookies, third-party analytics, or cross-site tracking on this site today."
           ]
         },
         {
-          "heading": "Third-party cookies",
+          "heading": "Third-party services",
           "paragraphs": [
-            "We load fonts from Google Fonts, which may set cookies or collect usage data according to Google's policies. Embedded social links (Instagram) are plain links, not embeds, and do not set cookies on our site."
+            "Instagram and food-truck partner links are plain links, not embeds — they do not set cookies on our site. Ask Clara sends your message to our AWS API; see our Privacy Policy for details."
           ]
         },
         {
           "heading": "Your choices",
           "paragraphs": [
             "You can block or delete cookies through your browser settings. Blocking all cookies may affect how some parts of the site work.",
-            "To opt out of Google Analytics (if we enable it), use Google's opt-out tools or your browser's \"Do Not Track\" setting."
+            "If we add analytics in the future, we will update this policy and provide an opt-out mechanism."
           ]
         },
         {
@@ -242,7 +263,7 @@
         {
           "heading": "Contact",
           "paragraphs": [
-            "Questions? Email events@example.com."
+            "Questions? Use the contact email listed on our website."
           ]
         }
       ]

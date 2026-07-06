@@ -130,7 +130,6 @@ export async function fetchCalendarEvents(credentials, calendarIdInput, errors) 
 
   const calendar = google.calendar({ version: 'v3', auth });
   const timeMin = new Date();
-  timeMin.setMonth(timeMin.getMonth() - 1);
 
   const items = [];
   let pageToken;

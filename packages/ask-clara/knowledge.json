@@ -90,7 +90,7 @@
     {
       "id": "hours-monday-tuesday-wednesday-thursday",
       "type": "hours",
-      "text": "Monday, Tuesday, Wednesday, Thursday: opens 15:00, closes 0:00.",
+      "text": "Monday, Tuesday, Wednesday, Thursday: opens 15:00, closes 23:59.",
       "keywords": [
         "monday",
         "tuesday",
@@ -347,7 +347,7 @@
     {
       "id": "faq-can-i-book-claras-day-dive-for-a-private-event",
       "type": "faq",
-      "text": "Q: Can I book Clara's Day Dive for a private event? A: Yes. We host birthdays",
+      "text": "Q: Can I book Clara's Day Dive for a private event? A: Yes. We host birthdays, send-offs, and patio gatherings. Reach out to our event coordinator by email or phone — details are on the Book the bar section of our website.",
       "keywords": [
         "book",
         "clara's",
@@ -358,6 +358,19 @@
         "yes",
         "host",
         "birthdays",
+        "send",
+        "offs",
+        "patio",
+        "gatherings",
+        "reach",
+        "out",
+        "coordinator",
+        "email",
+        "phone",
+        "details",
+        "bar",
+        "section",
+        "website",
         "faq"
       ]
     },

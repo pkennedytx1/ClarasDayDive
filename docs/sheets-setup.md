@@ -138,30 +138,43 @@ Row 1: `name` | `category` | `price` | `description` | `badge` | `sort_order` | 
 
 ### `Events`
 
-Events can come from the **`Events` sheet tab**, **Google Calendar**, or **both** (see [§6 Google Calendar for events](#6-google-calendar-for-events)).
+**Default: sheet only.** Staff edit the **Events** tab; publish updates the site. Full guide: [sheets-events.md](./sheets-events.md).
+
+Use **one source** — sheet **or** Google Calendar, not both. To draft in Google Calendar but publish from the sheet, use **Import events from calendar** in the Apps Script menu (optional).
 
 **Sheet tab — row 1:** `title` | `start_datetime` | `end_datetime` | `tag` | `time_label` | `description` | `ticket_url` | `sort_order` | `active`
 
+- Set `_Settings` `events_source` to `sheet` (default) — omit `google_calendar_id`
 - Datetimes: `YYYY-MM-DD HH:MM` in **America/Chicago**
 - `month` / `day` on the site are derived at sync — do not enter them in the sheet
 - `ticket_url` optional → "Get tickets / RSVP →" when present
 
 ---
 
-## 6. Google Calendar for events
+## 6. Google Calendar for events (optional — usually not needed)
 
-If staff already maintain events in Google Calendar, point sync at that calendar instead of (or in addition to) the `Events` tab.
+> **Recommendation:** Use the **Events** sheet tab only. See [sheets-events.md](./sheets-events.md).
 
-### Setup
+Google Calendar integration is for teams that **only** want to edit a shared calendar and **not** maintain the Events tab. It is **not** required for launch.
+
+**One source per publish:** `events_source` is `sheet` **or** `calendar`. Avoid `both` (duplicate events).
+
+### Calendar-only setup
 
 1. Enable **Google Calendar API** in the same GCP project as the service account (see [§2](#2-google-service-account-setup)).
 2. In Google Calendar, open **Settings → Integrate calendar** for the events calendar and copy the **Calendar ID** (often an `@group.calendar.google.com` address).
 3. **Share the calendar** with the service account email (**See all event details** is enough).
 4. In `_Settings`, add:
    - `google_calendar_id` — calendar ID, embed URL, or public iCal URL
-   - `events_source` — `calendar` (default when calendar ID is set), `sheet`, or `both`
+   - `events_source` — `calendar`
 
-When `google_calendar_id` is set and `events_source` is omitted, sync uses **Google Calendar only**.
+When `events_source` is omitted, sync uses the **Events sheet tab** (`sheet`). Google Calendar is used only when `events_source` is explicitly set to `calendar`.
+
+### Import calendar → sheet (recommended if you use GCal to draft)
+
+Keep `events_source` = `sheet`. Run **Clara's Day Dive → Import events from calendar** in the workbook, review the Events tab, then **Publish site**. See [sheets-events.md](./sheets-events.md#import-google-calendar--events-sheet-optional).
+
+Install: add [`ImportCalendarEvents.gs`](./sheets-publish/ImportCalendarEvents.gs) to the Apps Script project (menu item is in `PublishSite.gs`).
 
 ### Field mapping
 
@@ -199,7 +212,6 @@ All guest-facing calendar features read the same `events.json` after sync — **
 
 - Events list on the homepage
 - **View all events →** Calendar Explorer modal
-- **Subscribe to calendar** (build-time `/calendar/claras-day-dive.ics`)
 - Per-event **Download .ics** and **Google Calendar** links
 - **Get tickets / RSVP →** when a ticket URL is present
 

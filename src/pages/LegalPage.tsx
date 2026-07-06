@@ -51,7 +51,16 @@ export function LegalPage() {
   if (!policy) {
     return (
       <>
-        <SeoHead title="Page not found" description="The requested page could not be found." path="/404" includeSchema={false} />
+        <SeoHead
+          title="Page not found"
+          description="The requested page could not be found."
+          path={pathname}
+          includeSchema={false}
+          noindex
+        />
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <LegalHeader />
         <main id="main" className="legal-page">
           <div className="container legal-page__content">
@@ -87,6 +96,11 @@ export function LegalPage() {
       <main id="main" className="legal-page">
         <div className="container legal-page__content">
           <header className="legal-page__head">
+            <nav className="legal-page__crumb" aria-label="Breadcrumb">
+              <Link to="/">Home</Link>
+              <span aria-hidden="true"> → </span>
+              <span>{policy.title}</span>
+            </nav>
             <p className="eyebrow">Legal</p>
             <h1 className="display-lg">{policy.title}</h1>
             <p className="legal-page__updated">Last updated {formattedDate}</p>

@@ -176,18 +176,26 @@
   font-size: clamp(2rem, 6vw, 3rem);
 }
 
+.ask-clara__privacy {
+  margin: 1rem auto 0;
+  max-width: 36ch;
+  font-size: var(--fs-sm);
+}
+
+.ask-clara__privacy a {
+  color: var(--clr-teal-deep);
+}
+
 /* Section backgrounds */
 .section--menu {
   background: var(--clr-cream);
 }
 
 .section--here {
-  background: var(--clr-cream);
+  background: var(--clr-white);
 }
 
 .section--events {
-  position: relative;
-  overflow: hidden;
   background: var(--clr-cream);
 }
 

@@ -26,6 +26,10 @@ export function AskClara() {
             fallback={site.search.fallback}
             centered
           />
+          <p className="ask-clara__privacy body-muted">
+            Ask Clara uses AI to answer from our menu and venue info. Messages are processed per our{' '}
+            <a href="/privacy">Privacy Policy</a>.
+          </p>
         </Reveal>
       </div>
     </section>

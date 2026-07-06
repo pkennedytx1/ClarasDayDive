@@ -7,10 +7,13 @@
 - **Type:** Coupe bar, cocktail bar, patio bar
 - **Tagline:** Dive in for a day drink.
 - **Neighborhood:** East Austin, Texas
+- **Age policy:** 21+ with valid ID
 
 ## Location
 - **Address:** 1814 E Cesar Chavez St, Austin, TX 78702
 - **Coordinates:** 30.2588, -97.7264
+- **Directions:** https://maps.google.com/?q=1814+E+Cesar+Chavez+St,+Austin,+TX+78702
+- **Dog-friendly patio:** Yes
 
 ## Hours
 - Mon–Thu · 3pm–12am
@@ -20,7 +23,10 @@
 ## Contact
 - **Events email:** events@example.com
 - **Events phone:** (512) 555-0100
-- **Instagram:** https://instagram.com/
+- **Instagram:** https://instagram.com/clarasdaydive
+- **Facebook:** https://facebook.com/clarasdaydive
+- **TikTok:** https://tiktok.com/@clarasdaydive
+- **Book private events:** https://clarasdaydive.com/#contact
 
 ## About
 Clara's Day Dive is an East Austin coupe bar and patio at 1814 E Cesar Chavez St. We pour day drinks, Aperol spritzes, frozen frosé, and zero-proof Penguin Punch on a dog-friendly patio with rotating food trucks and morning coffee. Open afternoons through late night.
@@ -38,6 +44,10 @@ Clara's Day Dive is an East Austin coupe bar and patio at 1814 E Cesar Chavez St
 - **Makers & shakers market** (JUL 24): 12–5pm · Free. Local makers out front, spritz flight inside.
 - **Low-ABV happy hour** (AUG 02): 4–6pm · $25. Six sessionable pours, guided by Clara herself.
 
+## Venue facts
+- **restrooms:** Restrooms: The restrooms are toward the back of the bar — head past the bar and up the steps to the deck. You'll find them behind the wall on the right.
+- **parking:** Parking: The gravel lot next to Lucky Duck is shared — you're welcome to park there when you visit Clara's. Street parking on Cesar Chavez works too.
+
 ## Frequently asked questions
 ### What is Clara's Day Dive?
 Clara's Day Dive is a neighborhood coupe bar and patio in East Austin, Texas. We serve day drinks, spritzes, frozen cocktails, and zero-proof options in a warm, retro-playful setting with rotating food trucks and morning coffee.
@@ -52,10 +62,14 @@ Monday through Thursday 3pm to midnight; Friday noon to 2am; Saturday and Sunday
 We host rotating food trucks — Bird Bird Biscuit on weekdays and Veracruz tacos on weekends — plus morning coffee until noon.
 
 ### Can I book Clara's Day Dive for a private event?
-Yes. We host birthdays
+Yes. We host birthdays, send-offs, and patio gatherings. Reach out to our event coordinator by email or phone — details are on the Book the bar section of our website.
 
 ### What drinks is Clara's Day Dive known for?
 House favorites include Clara's Spritz (Aperol, prosecco, grapefruit), frozen Frosé, the Penguin Punch zero-proof slush, and seasonal frozen Negronis.
+
+## Ask Clara
+- On-site AI assistant for drink suggestions and venue questions: https://clarasdaydive.com/#ask-clara
+- Answers are generated from our menu and venue information; confirm details with staff.
 
 ## Legal policies
 - [Privacy Policy](https://clarasdaydive.com/privacy)

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { google } from 'googleapis';
 import { writeKnowledge } from './generate-knowledge.mjs';
 import { fetchCalendarEvents, normalizeCalendarId } from './lib/google-calendar-events.mjs';
+import { filterUpcomingEvents } from './lib/filter-upcoming-events.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const contentDir = join(root, 'src/content');
@@ -16,11 +17,17 @@ const DEFAULT_NAV = {
     { label: 'Drinks', href: '#drinks' },
     { label: "What's Here", href: '#here' },
     { label: 'Events', href: '#events' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Visit', href: '#contact' },
   ],
   ctaLabel: 'Book the bar',
   ctaHref: '#contact',
 };
+
+function mapsUrlFromAddress(address, city) {
+  const q = encodeURIComponent(`${address}, ${city}`);
+  return `https://maps.google.com/?q=${q}`;
+}
 
 const DAY_NAMES = [
   'Sunday',
@@ -316,7 +323,15 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
       keywords: existing.seo?.keywords ?? [],
       geo: existing.seo?.geo ?? { latitude: 30.2588, longitude: -97.7264 },
       priceRange: existing.seo?.priceRange ?? '$$',
+      ogImage: settings.seo_og_image ?? existing.seo?.ogImage ?? '/assets/scarf.jpg',
     },
+    mapsUrl:
+      settings.maps_url ??
+      existing.mapsUrl ??
+      mapsUrlFromAddress(
+        settings.address ?? existing.location?.address ?? '',
+        settings.city ?? existing.location?.city ?? '',
+      ),
     location: {
       eyebrow: settings.location_eyebrow ?? existing.location?.eyebrow ?? '',
       address: settings.address ?? existing.location?.address ?? '',
@@ -329,6 +344,16 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
     hoursStructured,
     social: {
       instagram: settings.instagram_url ?? existing.social?.instagram ?? '',
+      facebook: settings.facebook_url ?? existing.social?.facebook ?? '',
+      tiktok: settings.tiktok_url ?? existing.social?.tiktok ?? '',
+      googleBusiness: settings.google_business_url ?? existing.social?.googleBusiness ?? '',
+      googleMaps:
+        settings.maps_url ??
+        existing.social?.googleMaps ??
+        mapsUrlFromAddress(
+          settings.address ?? existing.location?.address ?? '',
+          settings.city ?? existing.location?.city ?? '',
+        ),
     },
     contact: {
       coordinatorName: settings.contact_name ?? existing.contact?.coordinatorName ?? '',
@@ -449,9 +474,7 @@ async function buildEvents(settings, eventRows, credentials, errors) {
   const calendarId = normalizeCalendarId(
     settings.google_calendar_id || process.env.GOOGLE_CALENDAR_ID || '',
   );
-  const source = String(settings.events_source || (calendarId ? 'calendar' : 'sheet'))
-    .trim()
-    .toLowerCase();
+  const source = String(settings.events_source || 'sheet').trim().toLowerCase();
 
   if (source !== 'sheet' && source !== 'calendar' && source !== 'both') {
     errors.push(`_Settings events_source must be sheet, calendar, or both (got "${source}")`);
@@ -479,7 +502,7 @@ async function buildEvents(settings, eventRows, credentials, errors) {
     items = items.concat(calendarItems);
   }
 
-  items.sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+  items = filterUpcomingEvents(items);
 
   return { items, hostNote };
 }

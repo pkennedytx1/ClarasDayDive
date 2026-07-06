@@ -87,15 +87,18 @@ Store the token securely. Do **not** put it in the Sheet or commit it to git.
 2. **Extensions → Apps Script**.
 3. Delete any placeholder code in `Code.gs`.
 4. Copy the contents of [`PublishSite.gs`](./PublishSite.gs) from this repo into `Code.gs`.
-5. **Project settings** (gear icon) → **Script properties** → Add:
+5. Optional: **File → New → Script file** → paste [`ImportCalendarEvents.gs`](./ImportCalendarEvents.gs) for **Import events from calendar**.
+6. **Project settings** (gear icon) → **Script properties** → Add:
 
    | Property | Value |
    |----------|-------|
    | `GITHUB_TOKEN` | PAT from step 4 |
    | `GITHUB_REPO` | `owner/repo` (e.g. `simplifi/claras-day-dive`) |
 
-6. **Save** the project (Ctrl/Cmd+S).
-7. Reload the spreadsheet — menu **Clara's Day Dive → Publish site** should appear.
+7. **Save** the project (Ctrl/Cmd+S).
+8. Reload the spreadsheet — menu **Clara's Day Dive → Publish site** should appear.
+
+**Events:** Sheet tab is the default source. See [sheets-events.md](../sheets-events.md).
 
 ### First run — authorize the script
 

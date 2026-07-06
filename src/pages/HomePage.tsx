@@ -13,7 +13,7 @@ import { useActiveSection } from '@/hooks/useActiveSection';
 import { scrollToHash } from '@/lib/scroll';
 import { getSiteContent } from '@/lib/content';
 
-const SECTION_IDS = ['#top', '#ask-clara', '#drinks', '#here', '#events', '#contact'];
+const SECTION_IDS = ['#top', '#ask-clara', '#drinks', '#here', '#events', '#faq', '#contact'];
 
 export function HomePage() {
   const site = getSiteContent();
@@ -60,8 +60,8 @@ export function HomePage() {
         <hr className="divider" />
         <Faq />
         <Contact />
-        <Footer />
       </main>
+      <Footer />
     </>
   );
 }

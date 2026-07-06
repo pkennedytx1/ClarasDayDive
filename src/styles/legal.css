@@ -59,6 +59,23 @@
   border-bottom: 1px solid var(--clr-ink-08);
 }
 
+.legal-page__crumb {
+  margin: 0 0 1rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--clr-ink-60);
+}
+
+.legal-page__crumb a {
+  color: var(--clr-teal-deep);
+  text-decoration: none;
+}
+
+.legal-page__crumb a:hover,
+.legal-page__crumb a:focus-visible {
+  text-decoration: underline;
+}
+
 .legal-page__head .eyebrow {
   margin-bottom: 0.625rem;
 }

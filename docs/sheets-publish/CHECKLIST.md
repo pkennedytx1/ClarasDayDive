@@ -1,6 +1,6 @@
 # Publish setup checklist
 
-Use this list in order. Hybrid calendar (`events_source: both`) can wait until publish is live.
+Use this list in order. Events use the **Events sheet tab** by default — see [sheets-events.md](../sheets-events.md).
 
 ---
 
@@ -35,7 +35,7 @@ Replace `YOUR_ORG/claras-day-dive` with your repo.
 | `AWS_ACCESS_KEY_ID` | IAM access key — **Secret** (recommended) or **Variable** |
 | `AWS_SECRET_ACCESS_KEY` | IAM secret key — must be a **Secret** |
 
-Optional later: `GOOGLE_CALENDAR_ID` (skip for now if events are sheet-only).
+Optional later: `GOOGLE_CALENDAR_ID` — only if using calendar-only sync (most teams skip this).
 
 - [ ] **B1.** All four required secrets saved.
 
@@ -58,7 +58,7 @@ Common failures:
 
 - [ ] **C2.** Open the content workbook in Google Sheets.
 
-- [ ] **C3.** **Extensions → Apps Script** → replace `Code.gs` with [`PublishSite.gs`](./PublishSite.gs) from this repo.
+- [ ] **C3.** **Extensions → Apps Script** → paste [`PublishSite.gs`](./PublishSite.gs); optional [`ImportCalendarEvents.gs`](./ImportCalendarEvents.gs).
 
 - [ ] **C4.** **Project settings → Script properties:**
 
@@ -79,9 +79,11 @@ Common failures:
 
 Tell staff:
 
-1. Edit the sheet as usual.
+1. Edit the sheet as usual (**Events** tab for upcoming events).
 2. **Clara's Day Dive → Publish site** when ready to go live.
 3. Wait ~5 minutes; refresh the site.
+
+Events guide: [sheets-events.md](../sheets-events.md)
 
 Track runs: `https://github.com/YOUR_ORG/claras-day-dive/actions`
 
@@ -105,4 +107,5 @@ If both succeed locally, GitHub only needs the same values as secrets.
 ## After publish works
 
 - [ ] Set `seo_site_url` in `_Settings` to the live SST URL, publish once more.
-- [ ] Later: `google_calendar_id` + `events_source: both` for hybrid events.
+- [ ] Add `events_source` = `sheet` in `_Settings` if not already set.
+- [ ] Optional later: Google Calendar import or calendar-only — [sheets-events.md](../sheets-events.md).

@@ -6,6 +6,7 @@ interface SeoHeadProps {
   description?: string;
   path?: string;
   includeSchema?: boolean;
+  noindex?: boolean;
 }
 
 const defaultMeta = getSeoMeta();
@@ -16,6 +17,7 @@ export function SeoHead({
   description = defaultMeta.description,
   path = '/',
   includeSchema = true,
+  noindex = false,
 }: SeoHeadProps) {
   const canonicalUrl = `${defaultMeta.siteUrl}${path === '/' ? '' : path}`;
 
@@ -35,12 +37,15 @@ export function SeoHead({
 
     setMeta('description', description);
     if (includeSchema) setMeta('keywords', defaultMeta.keywords);
-    setMeta('robots', 'index, follow, max-image-preview:large');
+    setMeta('robots', noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large');
     setMeta('og:title', title, true);
     setMeta('og:description', description, true);
     setMeta('og:type', 'website', true);
     setMeta('og:url', canonicalUrl, true);
     setMeta('og:image', defaultMeta.ogImage, true);
+    setMeta('og:image:width', '1200', true);
+    setMeta('og:image:height', '630', true);
+    setMeta('og:image:alt', "Clara's Day Dive — East Austin coupe bar and patio", true);
     setMeta('og:locale', 'en_US', true);
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', title);
@@ -65,7 +70,7 @@ export function SeoHead({
         document.head.appendChild(script);
       });
     }
-  }, [title, description, canonicalUrl, includeSchema]);
+  }, [title, description, canonicalUrl, includeSchema, noindex]);
 
   return null;
 }

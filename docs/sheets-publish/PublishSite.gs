@@ -17,6 +17,8 @@ function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu(MENU_NAME)
     .addItem(MENU_ITEM, 'publishSite')
+    .addSeparator()
+    .addItem('Import events from calendar', 'importEventsFromCalendar')
     .addToUi();
 }
 

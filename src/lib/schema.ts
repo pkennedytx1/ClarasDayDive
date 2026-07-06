@@ -1,9 +1,15 @@
 import site from '@/content/site.json';
 import drinks from '@/content/drinks.json';
-import events from '@/content/events.json';
 import faq from '@/content/faq.json';
+import { getEventsContent } from './content';
 
 const baseUrl = site.seo.siteUrl.replace(/\/$/, '');
+const ogImagePath = site.seo.ogImage ?? '/assets/scarf.jpg';
+const ogImageUrl = ogImagePath.startsWith('http') ? ogImagePath : `${baseUrl}${ogImagePath}`;
+
+function normalizeCloseTime(closes: string): string {
+  return closes === '0:00' ? '23:59' : closes;
+}
 
 function openingHoursSpecification() {
   return site.hoursStructured.flatMap(({ days, opens, closes }) =>
@@ -11,12 +17,54 @@ function openingHoursSpecification() {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: `https://schema.org/${day}`,
       opens,
-      closes,
+      closes: normalizeCloseTime(closes),
     })),
   );
 }
 
+function sameAsLinks(): string[] {
+  return [
+    site.social.instagram,
+    site.social.facebook,
+    site.social.tiktok,
+    site.social.googleBusiness,
+    site.social.googleMaps,
+  ].filter((url): url is string => Boolean(url?.trim()));
+}
+
+function menuSections() {
+  const categories = [...new Set(drinks.items.map((d) => d.cat))];
+  return categories.map((cat) => ({
+    '@type': 'MenuSection',
+    name: cat,
+    hasMenuItem: drinks.items
+      .filter((d) => d.cat === cat)
+      .map((item) => ({
+        '@type': 'MenuItem',
+        name: item.name,
+        description: item.desc,
+        offers: {
+          '@type': 'Offer',
+          price: item.price.replace('$', ''),
+          priceCurrency: 'USD',
+        },
+      })),
+  }));
+}
+
+function eventOffer(event: ReturnType<typeof getEventsContent>['items'][number]) {
+  if (event.ticketUrl) {
+    return { '@type': 'Offer', url: event.ticketUrl, availability: 'https://schema.org/InStock' };
+  }
+  if (/free/i.test(event.timeLabel)) {
+    return { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' };
+  }
+  return undefined;
+}
+
 export function buildJsonLd() {
+  const events = getEventsContent();
+
   const localBusiness = {
     '@context': 'https://schema.org',
     '@type': 'BarOrPub',
@@ -24,12 +72,14 @@ export function buildJsonLd() {
     name: site.name,
     description: site.seo.longDescription,
     url: `${baseUrl}/`,
-    image: `${baseUrl}/assets/logo-combomark-color.png`,
+    image: [ogImageUrl, `${baseUrl}/assets/logo-combomark-color.png`, `${baseUrl}/assets/scarf.jpg`],
     logo: `${baseUrl}/assets/wordmark-color.png`,
     telephone: site.contact.phone,
     email: site.contact.email,
     priceRange: site.seo.priceRange,
     servesCuisine: 'Bar food',
+    petsAllowed: true,
+    acceptsReservations: true,
     address: {
       '@type': 'PostalAddress',
       streetAddress: site.location.address,
@@ -44,25 +94,13 @@ export function buildJsonLd() {
       longitude: site.seo.geo.longitude,
     },
     openingHoursSpecification: openingHoursSpecification(),
-    sameAs: [site.social.instagram],
+    sameAs: sameAsLinks(),
+    hasMap: site.mapsUrl,
     hasMenu: {
       '@type': 'Menu',
       '@id': `${baseUrl}/#menu`,
       name: "Clara's Day Dive drinks menu",
-      hasMenuSection: {
-        '@type': 'MenuSection',
-        name: 'Cocktails',
-        hasMenuItem: drinks.items.map((item) => ({
-          '@type': 'MenuItem',
-          name: item.name,
-          description: item.desc,
-          offers: {
-            '@type': 'Offer',
-            price: item.price.replace('$', ''),
-            priceCurrency: 'USD',
-          },
-        })),
-      },
+      hasMenuSection: menuSections(),
     },
   };
 
@@ -76,7 +114,7 @@ export function buildJsonLd() {
     publisher: { '@id': `${baseUrl}/#business` },
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${baseUrl}/?q={search_term_string}`,
+      target: `${baseUrl}/#ask-clara`,
       'query-input': 'required name=search_term_string',
     },
   };
@@ -95,40 +133,50 @@ export function buildJsonLd() {
     })),
   };
 
-  const eventList = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    '@id': `${baseUrl}/#events`,
-    name: 'Upcoming events at Clara\'s Day Dive',
-    itemListElement: events.items.map((event, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      item: {
-        '@type': 'Event',
-        name: event.title,
-        description: event.desc,
-        startDate: event.start,
-        endDate: event.end,
-        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-        eventStatus: 'https://schema.org/EventScheduled',
-        location: {
-          '@type': 'Place',
-          name: site.name,
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: site.location.address,
-            addressLocality: 'Austin',
-            addressRegion: site.location.region,
-            postalCode: site.location.postalCode,
-            addressCountry: site.location.country,
-          },
-        },
-        organizer: { '@id': `${baseUrl}/#business` },
-      },
-    })),
-  };
+  const eventList =
+    events.items.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          '@id': `${baseUrl}/#events`,
+          name: "Upcoming events at Clara's Day Dive",
+          itemListElement: events.items.map((event, index) => {
+            const offer = eventOffer(event);
+            const item: Record<string, unknown> = {
+              '@type': 'Event',
+              name: event.title,
+              description: event.desc,
+              startDate: event.start,
+              endDate: event.end,
+              eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+              eventStatus: 'https://schema.org/EventScheduled',
+              isAccessibleForFree: /free/i.test(event.timeLabel),
+              location: {
+                '@type': 'Place',
+                name: site.name,
+                address: {
+                  '@type': 'PostalAddress',
+                  streetAddress: site.location.address,
+                  addressLocality: 'Austin',
+                  addressRegion: site.location.region,
+                  postalCode: site.location.postalCode,
+                  addressCountry: site.location.country,
+                },
+              },
+              organizer: { '@id': `${baseUrl}/#business` },
+            };
+            if (offer) item.offers = offer;
+            if (event.ticketUrl) item.url = event.ticketUrl;
+            return {
+              '@type': 'ListItem',
+              position: index + 1,
+              item,
+            };
+          }),
+        }
+      : null;
 
-  return [localBusiness, webSite, faqPage, eventList];
+  return [localBusiness, webSite, faqPage, eventList].filter(Boolean);
 }
 
 export function getSeoMeta() {
@@ -137,6 +185,6 @@ export function getSeoMeta() {
     description: site.seo.description,
     keywords: site.seo.keywords.join(', '),
     siteUrl: baseUrl,
-    ogImage: `${baseUrl}/assets/logo-combomark-color.png`,
+    ogImage: ogImageUrl,
   };
 }

@@ -7,6 +7,7 @@ export function WhatsHere() {
   return (
     <section id="here" className="section section--here section--compact" aria-labelledby="here-heading">
       <div className="container">
+        <div className="section-rail">
         <Reveal>
           <header className="section-head section-head--brand">
             <div>
@@ -37,6 +38,7 @@ export function WhatsHere() {
                           rel="noopener noreferrer"
                         >
                           Visit website →
+                          <span className="visually-hidden"> (opens in new tab)</span>
                         </a>
                       )}
                       {t.orderUrl && (
@@ -47,6 +49,7 @@ export function WhatsHere() {
                           rel="noopener noreferrer"
                         >
                           Order now
+                          <span className="visually-hidden"> (opens in new tab)</span>
                         </a>
                       )}
                     </div>
@@ -55,6 +58,7 @@ export function WhatsHere() {
               </article>
             </Reveal>
           ))}
+        </div>
         </div>
       </div>
     </section>

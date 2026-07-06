@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { filterUpcomingEvents } from './lib/filter-upcoming-events.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const contentDir = join(root, 'src/content');
@@ -50,7 +51,8 @@ function readJson(name) {
 export function generateKnowledge(dir = contentDir) {
   const site = JSON.parse(readFileSync(join(dir, 'site.json'), 'utf8'));
   const drinks = JSON.parse(readFileSync(join(dir, 'drinks.json'), 'utf8'));
-  const events = JSON.parse(readFileSync(join(dir, 'events.json'), 'utf8'));
+  const eventsRaw = JSON.parse(readFileSync(join(dir, 'events.json'), 'utf8'));
+  const events = { ...eventsRaw, items: filterUpcomingEvents(eventsRaw.items) };
   const whatsHere = JSON.parse(readFileSync(join(dir, 'whats-here.json'), 'utf8'));
   const faq = JSON.parse(readFileSync(join(dir, 'faq.json'), 'utf8'));
 
