@@ -195,6 +195,10 @@
   background: var(--clr-white);
 }
 
+.section--gallery {
+  background: var(--clr-cream);
+}
+
 .section--events {
   background: var(--clr-cream);
 }

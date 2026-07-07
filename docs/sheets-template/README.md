@@ -6,7 +6,7 @@ Use this reference when creating **Clara's Day Dive — Site Content** in Google
 
 ---
 
-## Workbook tabs (8 total — 7 required + 1 optional)
+## Workbook tabs (9 total — 7 required + 2 optional)
 
 | Tab name | Purpose |
 |----------|---------|
@@ -15,6 +15,7 @@ Use this reference when creating **Clara's Day Dive — Site Content** in Google
 | `Drinks` | Menu items and filter categories |
 | `Events` | Upcoming events and calendar |
 | `WhatsHere` | "What's here" feature cards |
+| `Photos` | Gallery images (optional — section hidden when empty) |
 | `FAQ` | Frequently asked questions (shown on site) |
 | `AskClara` | Suggestion chips and canned replies |
 | `Knowledge` | Ask Clara venue facts (restrooms, parking, etc.) — optional |
@@ -67,8 +68,10 @@ key | value
 | `seo_og_image` | `/assets/scarf.jpg` — social share image path |
 | `maps_url` | Google Maps link for directions |
 | `google_business_url` | Optional — Google Business Profile URL for schema |
+| `gallery_eyebrow` | On the patio — gallery section label (optional if no photos) |
+| `gallery_title` | A day at Clara's — gallery section heading (optional if no photos) |
 
-Both columns are required on every row. **Optional keys** (`instagram_url`, `facebook_url`, `tiktok_url`, `google_business_url`) can be left with an empty `value` cell — the site hides those icons/links until you fill them in.
+Both columns are required on every row. **Optional keys** (`instagram_url`, `facebook_url`, `tiktok_url`, `google_business_url`, `gallery_eyebrow`, `gallery_title`) can be left with an empty `value` cell — the site hides those icons/links until you fill them in. Gallery section copy uses defaults when photos exist but these keys are blank.
 
 ---
 
@@ -169,6 +172,35 @@ title | tag | body | icon | hours | website_url | order_url | sort_order | activ
 
 ---
 
+## `Photos` (optional)
+
+Upload photos to a shared **Google Drive folder**, then paste each share link here. On publish, images are downloaded, optimized to WebP, and served from the site. If no active rows exist, the gallery section and nav link are hidden.
+
+**Row 1 headers:**
+
+```
+sort_order | active | image_url | alt_text | caption
+```
+
+| Column | Required | Notes |
+|--------|----------|-------|
+| `sort_order` | Yes | Lower numbers appear first |
+| `active` | Yes | `FALSE` to hide without deleting the row |
+| `image_url` | Yes | Google Drive share URL or any public `https://` image URL |
+| `alt_text` | Yes | Short description for screen readers (accessibility) |
+| `caption` | No | Optional caption shown below the image |
+
+**Staff workflow:**
+
+1. Upload to the shared Drive folder (**Clara's Day Dive — Site Photos**).
+2. Share → **Anyone with the link → Viewer**, copy link.
+3. Add a row with `image_url`, `alt_text`, and `sort_order`.
+4. Publish site.
+
+Section heading copy comes from `_Settings` keys `gallery_eyebrow` and `gallery_title` (defaults: "The vibe" / "Photos").
+
+---
+
 ## `FAQ`
 
 **Row 1 headers:**
@@ -241,6 +273,7 @@ Paste into row 1 of each tab:
 | `Drinks` | `name` \| `category` \| `price` \| `description` \| `badge` \| `sort_order` \| `active` |
 | `Events` | `title` \| `start_datetime` \| `end_datetime` \| `tag` \| `time_label` \| `description` \| `ticket_url` \| `sort_order` \| `active` |
 | `WhatsHere` | `title` \| `tag` \| `body` \| `icon` \| `hours` \| `website_url` \| `order_url` \| `sort_order` \| `active` |
+| `Photos` | `sort_order` \| `active` \| `image_url` \| `alt_text` \| `caption` |
 | `FAQ` | `question` \| `answer` \| `sort_order` \| `active` |
 | `AskClara` | `suggestion` \| `response` \| `sort_order` \| `active` |
 | `Knowledge` | `topic` \| `fact` \| `keywords` \| `sort_order` \| `active` |

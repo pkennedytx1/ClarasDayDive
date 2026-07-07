@@ -5,17 +5,20 @@ import { google } from 'googleapis';
 import { writeKnowledge } from './generate-knowledge.mjs';
 import { fetchCalendarEvents, normalizeCalendarId } from './lib/google-calendar-events.mjs';
 import { filterUpcomingEvents } from './lib/filter-upcoming-events.mjs';
+import { buildGalleryJson } from './lib/optimize-gallery-images.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const contentDir = join(root, 'src/content');
 
-const TABS = ['_Settings', 'Hours', 'Drinks', 'Events', 'WhatsHere', 'FAQ', 'AskClara', 'Knowledge'];
-const OPTIONAL_TABS = new Set(['Knowledge']);
+const TABS = ['_Settings', 'Hours', 'Drinks', 'Events', 'WhatsHere', 'Photos', 'FAQ', 'AskClara', 'Knowledge'];
+const OPTIONAL_TABS = new Set(['Knowledge', 'Photos']);
 const OPTIONAL_SETTINGS_KEYS = new Set([
   'instagram_url',
   'facebook_url',
   'tiktok_url',
   'google_business_url',
+  'gallery_eyebrow',
+  'gallery_title',
 ]);
 
 const DEFAULT_NAV = {
@@ -590,6 +593,17 @@ function buildClaraKnowledgeJson(rows, errors) {
   return { items };
 }
 
+function collectActivePhotoRows(rows, errors) {
+  const active = rows.filter(isActive).sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+
+  for (const row of active) {
+    requireField(errors, 'Photos', row, 'image_url', row.image_url);
+    requireField(errors, 'Photos', row, 'alt_text', row.alt_text);
+  }
+
+  return active;
+}
+
 function writeJson(name, data) {
   writeFileSync(join(contentDir, name), `${JSON.stringify(data, null, 2)}\n`);
 }
@@ -624,6 +638,14 @@ async function syncFromSheets() {
   const drinks = buildDrinksJson(tabs.Drinks, errors);
   const events = await buildEvents(settings, tabs.Events, credentials, errors);
   const whatsHere = buildWhatsHereJson(tabs.WhatsHere, errors);
+  const photoRows = collectActivePhotoRows(tabs.Photos ?? [], errors);
+  const galleryDir = join(root, 'public/assets/gallery');
+  const gallery = await buildGalleryJson({
+    rows: photoRows,
+    settings,
+    galleryDir,
+    errors,
+  });
   const faq = buildFaqJson(tabs.FAQ, errors);
   const claraKnowledge = buildClaraKnowledgeJson(tabs.Knowledge ?? [], errors);
 
@@ -636,6 +658,7 @@ async function syncFromSheets() {
   writeJson('drinks.json', drinks);
   writeJson('events.json', events);
   writeJson('whats-here.json', whatsHere);
+  writeJson('gallery.json', gallery);
   writeJson('faq.json', faq);
   writeJson('clara-knowledge.json', claraKnowledge);
 
@@ -644,6 +667,7 @@ async function syncFromSheets() {
   console.log('Wrote src/content/drinks.json');
   console.log('Wrote src/content/events.json');
   console.log('Wrote src/content/whats-here.json');
+  console.log(`Wrote src/content/gallery.json (${gallery.items.length} photo(s))`);
   console.log('Wrote src/content/faq.json');
   console.log('Wrote src/content/clara-knowledge.json');
   console.log(`Wrote src/content/knowledge.json (${knowledge.chunks.length} chunks)`);
@@ -656,7 +680,7 @@ syncFromSheets().catch((err) => {
     console.error('Sync failed: spreadsheet not found or not shared with the service account.');
     console.error('  • Use only the Sheet ID or full URL in GOOGLE_SHEET_ID');
     console.error('  • Share the sheet with the service account email as Viewer');
-    console.error('  • Confirm tab names: _Settings, Hours, Drinks, Events, WhatsHere, FAQ, AskClara, Knowledge (optional)');
+    console.error('  • Confirm tab names: _Settings, Hours, Drinks, Events, WhatsHere, Photos (optional), FAQ, AskClara, Knowledge (optional)');
   } else {
     console.error('Sync failed:', msg);
   }

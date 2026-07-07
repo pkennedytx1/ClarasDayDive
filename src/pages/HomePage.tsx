@@ -5,19 +5,19 @@ import { Hero } from '@/sections/Hero';
 import { AskClara } from '@/sections/AskClara';
 import { Drinks } from '@/sections/Drinks';
 import { WhatsHere } from '@/sections/WhatsHere';
+import { Gallery } from '@/sections/Gallery';
 import { Events } from '@/sections/Events';
 import { Faq } from '@/sections/Faq';
 import { Contact } from '@/sections/Contact';
 import { Footer } from '@/sections/Footer';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { scrollToHash } from '@/lib/scroll';
-import { getSiteContent } from '@/lib/content';
-
-const SECTION_IDS = ['#top', '#ask-clara', '#drinks', '#here', '#events', '#faq', '#contact'];
+import { getNavLinks, getHomeSectionIds } from '@/lib/content';
 
 export function HomePage() {
-  const site = getSiteContent();
-  const activeHref = useActiveSection(SECTION_IDS);
+  const navLinks = getNavLinks();
+  const sectionIds = getHomeSectionIds();
+  const activeHref = useActiveSection(sectionIds);
 
   useEffect(() => {
     document.body.classList.add('has-site-nav');
@@ -46,7 +46,7 @@ export function HomePage() {
       </a>
       <NavBar
         logoSrc="/assets/wordmark-color.png"
-        links={site.nav.links}
+        links={navLinks}
         activeHref={activeHref}
       />
       <main id="main">
@@ -56,6 +56,7 @@ export function HomePage() {
         <Drinks />
         <hr className="divider" />
         <WhatsHere />
+        <Gallery />
         <Events />
         <hr className="divider" />
         <Faq />

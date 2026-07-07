@@ -17,6 +17,7 @@ Staff edit site content in a Google Sheet. The build syncs that sheet into `src/
    - `Drinks`
    - `Events`
    - `WhatsHere`
+   - `Photos` (optional — gallery; hidden when empty)
    - `FAQ`
    - `AskClara`
    - `Knowledge` (optional — Ask Clara venue facts; see below)
@@ -225,6 +226,24 @@ Row 1: `title` | `tag` | `body` | `icon` | `hours` | `website_url` | `order_url`
 - `hours`: that vendor's hours (e.g. `Mon–Fri · 8am–2pm`)
 - `website_url` / `order_url`: optional links for **Visit website** and **Order now**
 
+### `Photos` (optional)
+
+Row 1: `sort_order` | `active` | `image_url` | `alt_text` | `caption`
+
+Staff upload images to a shared Google Drive folder, paste share links here, and publish. The build downloads each image, optimizes to WebP, and writes `src/content/gallery.json` plus files under `public/assets/gallery/`.
+
+| Column | Required | Notes |
+|--------|----------|-------|
+| `sort_order` | Yes | Lower numbers appear first |
+| `active` | Yes | `FALSE` to hide without deleting |
+| `image_url` | Yes | Drive share URL or public `https://` image URL |
+| `alt_text` | Yes | Accessibility description for each photo |
+| `caption` | No | Optional caption below the image |
+
+Section copy: `_Settings` keys `gallery_eyebrow` and `gallery_title`. If no active rows, the gallery section and **Photos** nav link are omitted.
+
+If this tab is missing, sync still succeeds (empty gallery).
+
 ### `FAQ`
 
 Row 1: `question` | `answer` | `sort_order` | `active`
@@ -264,6 +283,8 @@ The sync script fails (exit 1) if any row is invalid:
 - Event `end_datetime` not after `start_datetime`
 - Invalid datetime format (must be `YYYY-MM-DD HH:MM`)
 - Invalid `icon` value on WhatsHere
+- Photo `image_url` unreachable or not an image
+- Missing `alt_text` on active Photos rows
 
 Errors include tab name and row number (1-based sheet row, including header).
 

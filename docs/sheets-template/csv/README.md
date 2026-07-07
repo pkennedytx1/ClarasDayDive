@@ -7,7 +7,7 @@ Import one CSV per tab in **Clara's Day Dive — Site Content**.
 1. Create a new Google Sheet.
 2. Rename the first tab to `_Settings` (exact name, including underscore).
 3. **File → Import → Upload** → choose `_Settings.csv` → **Replace current sheet**.
-4. Add 7 more tabs named exactly: `Hours`, `Drinks`, `Events`, `WhatsHere`, `FAQ`, `AskClara`, `Knowledge` (Knowledge is optional for older workbooks).
+4. Add 8 more tabs named exactly: `Hours`, `Drinks`, `Events`, `WhatsHere`, `Photos`, `FAQ`, `AskClara`, `Knowledge` (`Photos` and `Knowledge` are optional).
 5. For each tab: **File → Import → Upload** the matching CSV → **Replace current sheet**.
 6. Share the sheet with your service account email (see [sheets-setup.md](../../sheets-setup.md)).
 7. Set `GOOGLE_SHEET_ID` and run `npm run sync:content`.
@@ -21,6 +21,7 @@ Import one CSV per tab in **Clara's Day Dive — Site Content**.
 | `Drinks.csv` | `Drinks` |
 | `Events.csv` | `Events` |
 | `WhatsHere.csv` | `WhatsHere` |
+| `Photos.csv` | `Photos` |
 | `FAQ.csv` | `FAQ` |
 | `AskClara.csv` | `AskClara` |
 | `Knowledge.csv` | `Knowledge` |
