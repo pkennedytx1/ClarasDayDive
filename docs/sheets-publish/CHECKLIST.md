@@ -37,6 +37,8 @@ Replace `YOUR_ORG/claras-day-dive` with your repo.
 
 Optional later: `GOOGLE_CALENDAR_ID` — only if using calendar-only sync (most teams skip this).
 
+Optional for custom domain: `ACM_CERT_ARN` — **Secret** with the us-east-1 certificate ARN. See [godaddy-domain-setup.md](../godaddy-domain-setup.md).
+
 - [ ] **B1.** All four required secrets saved.
 
 - [ ] **B2.** Test deploy from GitHub: **Actions → Publish site → Run workflow → Run workflow**.
@@ -102,10 +104,19 @@ npm run deploy
 
 If both succeed locally, GitHub only needs the same values as secrets.
 
+Production deploy (with custom domain):
+
+```bash
+export SST_STAGE=production
+export ACM_CERT_ARN="arn:aws:acm:us-east-1:622885995693:certificate/6af1e80c-9969-4d51-b994-3cc9e8c3cd40"
+npm run deploy
+```
+
 ---
 
 ## After publish works
 
-- [ ] Set `seo_site_url` in `_Settings` to the live SST URL, publish once more.
+- [ ] Custom domain live — [godaddy-domain-setup.md](../godaddy-domain-setup.md) (GoDaddy DNS + ACM)
+- [ ] Set `seo_site_url` in `_Settings` to `https://www.clarasdaydive.com` (or apex if forwarding is configured), publish once more.
 - [ ] Add `events_source` = `sheet` in `_Settings` if not already set.
 - [ ] Optional later: Google Calendar import or calendar-only — [sheets-events.md](../sheets-events.md).

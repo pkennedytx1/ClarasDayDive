@@ -1,5 +1,7 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+const PRODUCTION_DOMAIN = 'clarasdaydive.com';
+
 export default $config({
   app(input) {
     return {
@@ -14,6 +16,12 @@ export default $config({
     };
   },
   async run() {
+    const isProduction = $app.stage === 'production';
+    const productionOrigins = [
+      `https://${PRODUCTION_DOMAIN}`,
+      `https://www.${PRODUCTION_DOMAIN}`,
+    ];
+
     const usage = new sst.aws.Dynamo('AskClaraUsage', {
       fields: { pk: 'string' },
       primaryIndex: { hashKey: 'pk' },
@@ -38,16 +46,38 @@ export default $config({
       cors: {
         allowMethods: ['POST', 'OPTIONS'],
         allowHeaders: ['Content-Type'],
-        allowOrigins: [
-          'https://clarasdaydive.com',
-          'https://d19sxc1xcbgypp.cloudfront.net',
-          'http://localhost:5173',
-          'http://localhost:4173',
-        ],
+        allowOrigins: isProduction
+          ? [...productionOrigins, 'http://localhost:5173', 'http://localhost:4173']
+          : [
+              ...productionOrigins,
+              'https://d19sxc1xcbgypp.cloudfront.net',
+              'http://localhost:5173',
+              'http://localhost:4173',
+            ],
       },
     });
 
     api.route('POST /api/ask', askClara.arn);
+
+    const acmCertArn = process.env.ACM_CERT_ARN?.trim();
+
+    const siteDomain =
+      isProduction && acmCertArn
+        ? {
+            // GoDaddy DNS: CNAME www → CloudFront; forward @ → www in GoDaddy.
+            // Do not redirect www → apex (that loops with GoDaddy forwarding).
+            name: `www.${PRODUCTION_DOMAIN}`,
+            dns: false,
+            cert: acmCertArn,
+          }
+        : undefined;
+
+    if (isProduction && !acmCertArn) {
+      throw new Error(
+        'ACM_CERT_ARN is required for production deploy (GoDaddy DNS / manual cert). ' +
+          'See docs/godaddy-domain-setup.md',
+      );
+    }
 
     const site = new sst.aws.StaticSite('Site', {
       build: {
@@ -58,11 +88,13 @@ export default $config({
         VITE_ASK_CLARA_API_URL: api.url,
       },
       error: 'index.html',
+      domain: siteDomain,
     });
 
     return {
       url: site.url,
       api: api.url,
+      domain: siteDomain ? PRODUCTION_DOMAIN : undefined,
     };
   },
 });
