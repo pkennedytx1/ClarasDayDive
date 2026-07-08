@@ -24,14 +24,14 @@ const OPTIONAL_SETTINGS_KEYS = new Set([
 
 const DEFAULT_NAV = {
   links: [
-    { label: 'Drinks', href: '#drinks' },
-    { label: "What's Here", href: '#here' },
-    { label: 'Events', href: '#events' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Visit', href: '#contact' },
+    { label: 'Drinks', href: '/drinks' },
+    { label: "What's Here", href: '/here' },
+    { label: 'Events', href: '/events' },
+    { label: 'FAQ', href: '/faq' },
+    { label: 'Visit', href: '/contact' },
   ],
   ctaLabel: 'Book the bar',
-  ctaHref: '#contact',
+  ctaHref: '/contact',
 };
 
 function mapsUrlFromAddress(address, city) {

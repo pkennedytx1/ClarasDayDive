@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getSiteContent } from '@/lib/content';
-import { handleAnchorClick } from '@/lib/scroll';
 
 export function Hero() {
   const site = getSiteContent();
@@ -42,13 +42,9 @@ export function Hero() {
               />
             </div>
             <figcaption>
-              <a
-                href="#ask-clara"
-                className="hero__frame-cta"
-                onClick={(e) => handleAnchorClick(e, '#ask-clara')}
-              >
+              <Link to="/ask-clara" className="hero__frame-cta">
                 Dive in for a day drink
-              </a>
+              </Link>
             </figcaption>
           </figure>
         </div>

@@ -11,7 +11,7 @@ Canonical site: https://www.clarasdaydive.com/
 ## Contact
 - Email: events@example.com
 - Phone: (512) 555-0100
-- Private events: https://www.clarasdaydive.com/#contact
+- Private events: https://www.clarasdaydive.com/contact
 
 ## Facts
 - **restrooms:** Restrooms: The restrooms are toward the back of the bar — head past the bar and up the steps to the deck. You'll find them behind the wall on the right.

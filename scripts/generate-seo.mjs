@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { filterUpcomingEvents } from './lib/filter-upcoming-events.mjs';
 import { buildJsonLd } from './lib/build-json-ld.mjs';
 import { generateLegalHtml } from './generate-legal-html.mjs';
+import { SITEMAP_SECTION_PATHS } from './lib/sections.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const site = JSON.parse(readFileSync(join(root, 'src/content/site.json'), 'utf8'));
@@ -37,6 +38,10 @@ function socialLines(social) {
 
 mkdirSync(join(root, 'public'), { recursive: true });
 
+const gallery = existsSync(join(root, 'src/content/gallery.json'))
+  ? JSON.parse(readFileSync(join(root, 'src/content/gallery.json'), 'utf8'))
+  : { items: [] };
+
 const legalUrls = legal.policies
   .map(
     (p) => `  <url>
@@ -44,6 +49,20 @@ const legalUrls = legal.policies
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+  </url>`,
+  )
+  .join('\n');
+
+const sectionPaths = SITEMAP_SECTION_PATHS.filter(
+  (path) => path !== '/gallery' || gallery.items?.length > 0,
+);
+const sectionUrls = sectionPaths
+  .map(
+    (path) => `  <url>
+    <loc>${baseUrl}${path}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>`,
   )
   .join('\n');
@@ -58,6 +77,7 @@ writeFileSync(
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+${sectionUrls}
 ${legalUrls}
 </urlset>
 `,
@@ -126,7 +146,7 @@ ${site.hours.map((h) => `- ${h}`).join('\n')}
 - **Events email:** ${site.contact.email}
 - **Events phone:** ${site.contact.phone}
 ${socialLines(site.social)}
-- **Book private events:** ${baseUrl}/#contact
+- **Book private events:** ${baseUrl}/contact
 
 ## About
 ${site.seo.longDescription}
@@ -144,7 +164,7 @@ ${venueFacts || '- See FAQ below for parking, food trucks, and patio details.'}
 ${faq.items.map((f) => `### ${f.question}\n${f.answer}`).join('\n\n')}
 
 ## Ask Clara
-- On-site AI assistant for drink suggestions and venue questions: ${baseUrl}/#ask-clara
+- On-site AI assistant for drink suggestions and venue questions: ${baseUrl}/ask-clara
 - Answers are generated from our menu and venue information; confirm details with staff.
 
 ## Legal policies
@@ -169,7 +189,7 @@ Canonical site: ${baseUrl}/
 ## Contact
 - Email: ${site.contact.email}
 - Phone: ${site.contact.phone}
-- Private events: ${baseUrl}/#contact
+- Private events: ${baseUrl}/contact
 
 ${venueFacts ? `## Facts\n${venueFacts}\n` : ''}
 ## Menu highlights

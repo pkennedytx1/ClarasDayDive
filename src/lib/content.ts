@@ -38,7 +38,7 @@ export type LegalPolicy = LegalContent['policies'][number];
 
 export type NavLink = SiteContent['nav']['links'][number];
 
-const GALLERY_NAV_LINK: NavLink = { label: 'Photos', href: '#gallery' };
+const GALLERY_NAV_LINK: NavLink = { label: 'Photos', href: '/gallery' };
 
 export function getSiteContent(): SiteContent {
   return site;
@@ -79,9 +79,9 @@ export function getPolicyBySlug(slug: string): LegalPolicy | undefined {
 export function getNavLinks(): NavLink[] {
   const links = [...site.nav.links];
   if (getGalleryContent().items.length === 0) return links;
-  if (links.some((link) => link.href === '#gallery')) return links;
+  if (links.some((link) => link.href === '/gallery')) return links;
 
-  const hereIndex = links.findIndex((link) => link.href === '#here');
+  const hereIndex = links.findIndex((link) => link.href === '/here');
   const insertAt = hereIndex >= 0 ? hereIndex + 1 : links.length;
   links.splice(insertAt, 0, GALLERY_NAV_LINK);
   return links;

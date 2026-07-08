@@ -10,7 +10,7 @@ export function parseEventPrice(timeLabel: string): string {
 export function buildEventOffer(event: SiteEvent, baseUrl: string) {
   return {
     '@type': 'Offer',
-    url: event.ticketUrl?.trim() || `${baseUrl}/#events`,
+    url: event.ticketUrl?.trim() || `${baseUrl}/events`,
     price: parseEventPrice(event.timeLabel),
     priceCurrency: 'USD',
     validFrom: event.start,
@@ -38,7 +38,7 @@ export function buildEventSchemaItem(event: SiteEvent, options: BuildEventSchema
     description: event.desc,
     startDate: event.start,
     endDate: event.end,
-    url: event.ticketUrl?.trim() || `${baseUrl}/#events`,
+    url: event.ticketUrl?.trim() || `${baseUrl}/events`,
     image: [eventImage],
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     eventStatus: 'https://schema.org/EventScheduled',

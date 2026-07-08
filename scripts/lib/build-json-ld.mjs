@@ -108,7 +108,7 @@ export function buildJsonLd({ site, drinks, faq, events }) {
     publisher: { '@id': `${baseUrl}/#business` },
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${baseUrl}/#ask-clara`,
+      target: `${baseUrl}/ask-clara`,
       'query-input': 'required name=search_term_string',
     },
   };
@@ -116,7 +116,7 @@ export function buildJsonLd({ site, drinks, faq, events }) {
   const faqPage = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    '@id': `${baseUrl}/#faq`,
+    '@id': `${baseUrl}/faq`,
     mainEntity: faq.items.map((item) => ({
       '@type': 'Question',
       name: item.question,
@@ -133,7 +133,7 @@ export function buildJsonLd({ site, drinks, faq, events }) {
     graphs.push({
       '@context': 'https://schema.org',
       '@type': 'ItemList',
-      '@id': `${baseUrl}/#events`,
+      '@id': `${baseUrl}/events`,
       name: "Upcoming events at Clara's Day Dive",
       itemListElement: upcoming.map((event, index) => ({
         '@type': 'ListItem',

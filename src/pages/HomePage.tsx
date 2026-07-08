@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { NavBar } from '@/components/NavBar';
 import { SeoHead } from '@/components/SeoHead';
 import { Hero } from '@/sections/Hero';
@@ -11,10 +12,13 @@ import { Faq } from '@/sections/Faq';
 import { Contact } from '@/sections/Contact';
 import { Footer } from '@/sections/Footer';
 import { useActiveSection } from '@/hooks/useActiveSection';
-import { scrollToHash } from '@/lib/scroll';
+import { scrollToSection, scrollToHash } from '@/lib/scroll';
 import { getNavLinks, getHomeSectionIds } from '@/lib/content';
+import { LEGACY_HASH_TO_PATH, pathToSectionId } from '@/lib/sections';
 
 export function HomePage() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const navLinks = getNavLinks();
   const sectionIds = getHomeSectionIds();
   const activeHref = useActiveSection(sectionIds);
@@ -25,22 +29,29 @@ export function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (window.location.hash) {
-      requestAnimationFrame(() => scrollToHash(window.location.hash));
+    const { hash, pathname } = location;
+    if (!hash) return;
+
+    const targetPath = LEGACY_HASH_TO_PATH[hash];
+    if (targetPath && targetPath !== pathname) {
+      navigate(targetPath, { replace: true });
+      return;
     }
 
-    const onPopState = () => {
-      if (window.location.hash) scrollToHash(window.location.hash);
-      else window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    if (!targetPath) {
+      requestAnimationFrame(() => scrollToHash(hash));
+    }
+  }, [location.hash, location.pathname, navigate]);
 
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
-  }, []);
+  useEffect(() => {
+    const sectionId = pathToSectionId(location.pathname);
+    if (!sectionId) return;
+    requestAnimationFrame(() => scrollToSection(sectionId));
+  }, [location.pathname]);
 
   return (
     <>
-      <SeoHead />
+      <SeoHead path={location.pathname} />
       <a href="#main" className="skip-link">
         Skip to content
       </a>

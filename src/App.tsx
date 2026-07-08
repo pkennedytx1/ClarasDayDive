@@ -1,11 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 import { HomePage } from '@/pages/HomePage';
 import { LegalPage } from '@/pages/LegalPage';
+import { HOME_ROUTE_PATHS } from '@/lib/sections';
 
 export function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      {HOME_ROUTE_PATHS.map((path) => (
+        <Route key={path} path={path} element={<HomePage />} />
+      ))}
       <Route path="/privacy" element={<LegalPage />} />
       <Route path="/terms" element={<LegalPage />} />
       <Route path="/accessibility" element={<LegalPage />} />

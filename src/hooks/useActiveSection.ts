@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { sectionIdToPath } from '@/lib/sections';
 
 /** Highlights the nav link for whichever section is currently in view. */
 export function useActiveSection(sectionIds: string[]): string {
-  const [active, setActive] = useState(sectionIds[0] ?? '#top');
+  const [active, setActive] = useState('/');
 
   useEffect(() => {
     const sections = sectionIds
@@ -18,7 +19,7 @@ export function useActiveSection(sectionIds: string[]): string {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
         if (visible[0]?.target.id) {
-          setActive(`#${visible[0].target.id}`);
+          setActive(sectionIdToPath(visible[0].target.id));
         }
       },
       {

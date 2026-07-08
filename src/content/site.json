@@ -103,26 +103,26 @@
     "links": [
       {
         "label": "Drinks",
-        "href": "#drinks"
+        "href": "/drinks"
       },
       {
         "label": "What's Here",
-        "href": "#here"
+        "href": "/here"
       },
       {
         "label": "Events",
-        "href": "#events"
+        "href": "/events"
       },
       {
         "label": "FAQ",
-        "href": "#faq"
+        "href": "/faq"
       },
       {
         "label": "Visit",
-        "href": "#contact"
+        "href": "/contact"
       }
     ],
     "ctaLabel": "Book the bar",
-    "ctaHref": "#contact"
+    "ctaHref": "/contact"
   }
 }

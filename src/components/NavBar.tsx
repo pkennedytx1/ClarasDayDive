@@ -1,8 +1,9 @@
-import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { useNavScrollHide } from '@/hooks/useNavScrollHide';
-import { handleAnchorClick } from '@/lib/scroll';
+import { pathToSectionId } from '@/lib/sections';
+import { scrollToSection } from '@/lib/scroll';
 
 interface NavLink {
   label: string;
@@ -16,6 +17,7 @@ interface NavBarProps {
 }
 
 export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const hidden = useNavScrollHide(open);
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -44,8 +46,12 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
 
   useFocusTrap(sheetRef, open, close);
 
-  const navigate = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-    handleAnchorClick(event, href, close);
+  const handleNavClick = (path: string) => {
+    close();
+    const sectionId = pathToSectionId(path);
+    if (sectionId && location.pathname === path) {
+      scrollToSection(sectionId);
+    }
   };
 
   const isActive = (href: string) => activeHref === href;
@@ -53,25 +59,25 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
   return (
     <header className={`site-nav${hidden ? ' is-hidden' : ''}`}>
       <div className="container site-nav__inner">
-        <a
-          href="#top"
+        <Link
+          to="/"
           className="site-nav__logo"
           aria-label="Clara's Day Dive home"
-          onClick={(e) => navigate(e, '#top')}
+          onClick={() => handleNavClick('/')}
         >
           <img src={logoSrc} alt="Clara's Day Dive" width={280} height={72} decoding="async" />
-        </a>
+        </Link>
 
         <nav className="site-nav__links" aria-label="Primary">
           {links.map((l) => (
-            <a
+            <Link
               key={l.label}
-              href={l.href}
+              to={l.href}
               className={`site-nav__link${isActive(l.href) ? ' is-active' : ''}`}
-              onClick={(e) => navigate(e, l.href)}
+              onClick={() => handleNavClick(l.href)}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -101,15 +107,15 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
         <div className="site-nav__sheet-inner">
           <nav className="site-nav__sheet" aria-label="Mobile">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.label}
-                href={l.href}
+                to={l.href}
                 className={`site-nav__sheet-link${isActive(l.href) ? ' is-active' : ''}`}
-                onClick={(e) => navigate(e, l.href)}
+                onClick={() => handleNavClick(l.href)}
                 tabIndex={open ? 0 : -1}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>

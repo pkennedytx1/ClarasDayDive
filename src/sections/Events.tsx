@@ -1,9 +1,9 @@
+import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { CalendarExplorer } from '@/components/CalendarExplorer';
 import { EventActions } from '@/components/EventActions';
 import { Reveal } from '@/components/Reveal';
 import { getEventsContent, getSiteContent } from '@/lib/content';
-import { handleAnchorClick } from '@/lib/scroll';
 
 export function Events() {
   const events = getEventsContent();
@@ -69,9 +69,7 @@ export function Events() {
         <Reveal delay={200}>
           <p className="events-note">
             {events.hostNote}{' '}
-            <a href="#contact" onClick={(ev) => handleAnchorClick(ev, '#contact')}>
-              Book the bar →
-            </a>
+            <Link to="/contact">Book the bar →</Link>
           </p>
         </Reveal>
         </div>
