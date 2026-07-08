@@ -1,19 +1,38 @@
-/** Smooth scroll to in-page sections, accounting for sticky nav height. Mobile-first offset. */
-export function scrollToSection(sectionId: string): void {
+const NAV_SHEET_CLOSE_MS = 440;
+
+let deferScrollForNavClose = false;
+
+/** Call before route change when closing the mobile nav sheet. */
+export function markScrollAfterNavClose(): void {
+  deferScrollForNavClose = true;
+}
+
+function shouldDeferForNavClose(): boolean {
+  if (!deferScrollForNavClose) return false;
+  deferScrollForNavClose = false;
+  return window.matchMedia('(max-width: 768px)').matches;
+}
+
+function runScrollToSection(sectionId: string): void {
   if (sectionId === 'top') {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return;
   }
 
   const target = document.querySelector(`#${CSS.escape(sectionId)}`);
-  if (!target) return;
+  if (!(target instanceof HTMLElement)) return;
 
-  const nav = document.querySelector('.site-nav');
-  const navHeight = nav?.getBoundingClientRect().height ?? 64;
-  const offset = navHeight + 10;
-  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+/** Smooth scroll to in-page sections; respects section scroll-margin for the fixed nav. */
+export function scrollToSection(sectionId: string): void {
+  if (shouldDeferForNavClose()) {
+    window.setTimeout(() => runScrollToSection(sectionId), NAV_SHEET_CLOSE_MS);
+    return;
+  }
+
+  requestAnimationFrame(() => runScrollToSection(sectionId));
 }
 
 /** @deprecated Prefer path routes; kept for skip links and legacy hash fragments. */

@@ -6,9 +6,12 @@ import { writeKnowledge } from './generate-knowledge.mjs';
 import { fetchCalendarEvents, normalizeCalendarId } from './lib/google-calendar-events.mjs';
 import { filterUpcomingEvents } from './lib/filter-upcoming-events.mjs';
 import { buildGalleryJson } from './lib/optimize-gallery-images.mjs';
+import { readCsvAsSheetValues, readSettingsCsv } from './lib/parse-csv.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const contentDir = join(root, 'src/content');
+const LOCAL_PHOTOS_CSV = join(root, 'docs/sheets-template/csv/Photos.csv');
+const LOCAL_SETTINGS_CSV = join(root, 'docs/sheets-template/csv/_Settings.csv');
 
 const TABS = ['_Settings', 'Hours', 'Drinks', 'Events', 'WhatsHere', 'Photos', 'FAQ', 'AskClara', 'Knowledge'];
 const OPTIONAL_TABS = new Set(['Knowledge', 'Photos']);
@@ -619,12 +622,52 @@ function reportErrors(errors) {
   console.error(`\n${errors.length} error(s) — fix the sheet and re-run sync.\n`);
 }
 
+/** Dev-only: build gallery from docs/sheets-template/csv/Photos.csv (LOCAL_PHOTOS=1). */
+async function syncGalleryFromLocalCsv() {
+  const csvPath = process.env.LOCAL_PHOTOS_CSV?.trim() || LOCAL_PHOTOS_CSV;
+  if (!existsSync(csvPath)) {
+    console.log('No local Photos.csv found — gallery unchanged');
+    return;
+  }
+
+  const rows = parseRows(readCsvAsSheetValues(csvPath));
+  if (rows.length === 0) {
+    console.log('Photos.csv has no data rows — gallery unchanged');
+    return;
+  }
+
+  const errors = [];
+  const photoRows = collectActivePhotoRows(rows, errors);
+  const settingsPath = process.env.LOCAL_SETTINGS_CSV?.trim() || LOCAL_SETTINGS_CSV;
+  const settings = existsSync(settingsPath)
+    ? readSettingsCsv(settingsPath)
+    : { gallery_eyebrow: 'See for yourself', gallery_title: 'Worth the shot' };
+
+  const gallery = await buildGalleryJson({
+    rows: photoRows,
+    settings,
+    galleryDir: join(root, 'public/assets/gallery'),
+    errors,
+  });
+
+  if (errors.length) {
+    reportErrors(errors);
+    process.exit(1);
+  }
+
+  writeJson('gallery.json', gallery);
+  console.log(`Built gallery from ${csvPath} (${gallery.items.length} photo(s))`);
+}
+
 async function syncFromSheets() {
   const sheetId = process.env.GOOGLE_SHEET_ID
     ? normalizeSheetId(process.env.GOOGLE_SHEET_ID)
     : '';
   if (!sheetId) {
     console.log('GOOGLE_SHEET_ID unset — skipping sheet sync, using existing JSON');
+    if (process.env.LOCAL_PHOTOS === '1') {
+      await syncGalleryFromLocalCsv();
+    }
     const knowledge = writeKnowledge();
     console.log(`Generated src/content/knowledge.json (${knowledge.chunks.length} chunks)`);
     return;

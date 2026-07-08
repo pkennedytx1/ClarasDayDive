@@ -12,6 +12,19 @@ Import one CSV per tab in **Clara's Day Dive — Site Content**.
 6. Share the sheet with your service account email (see [sheets-setup.md](../../sheets-setup.md)).
 7. Set `GOOGLE_SHEET_ID` and run `npm run sync:content`.
 
+## Local gallery QA (dev only)
+
+For layout QA without the Google Sheet, run:
+
+```bash
+npm run sync:gallery
+npm run dev
+```
+
+Then open **http://localhost:5173/gallery**.
+
+This uses `Photos.csv` in this folder only when you run `sync:gallery` (sets `LOCAL_PHOTOS=1`). It does **not** run on deploy or normal `sync:content` — production always reads the Sheet `Photos` tab.
+
 ## Files
 
 | CSV file | Tab name |

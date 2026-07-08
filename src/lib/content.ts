@@ -38,7 +38,7 @@ export type LegalPolicy = LegalContent['policies'][number];
 
 export type NavLink = SiteContent['nav']['links'][number];
 
-const GALLERY_NAV_LINK: NavLink = { label: 'Photos', href: '/gallery' };
+const GALLERY_NAV_LINK: NavLink = { label: 'Gallery', href: '/gallery' };
 
 export function getSiteContent(): SiteContent {
   return site;
@@ -75,21 +75,20 @@ export function getPolicyBySlug(slug: string): LegalPolicy | undefined {
   return legal.policies.find((p) => p.slug === slug);
 }
 
-/** Inserts Photos nav link after What's Here when the gallery has active items. */
+/** Inserts Gallery nav link after Visit when the gallery has active items. */
 export function getNavLinks(): NavLink[] {
   const links = [...site.nav.links];
   if (getGalleryContent().items.length === 0) return links;
   if (links.some((link) => link.href === '/gallery')) return links;
 
-  const hereIndex = links.findIndex((link) => link.href === '/here');
-  const insertAt = hereIndex >= 0 ? hereIndex + 1 : links.length;
+  const contactIndex = links.findIndex((link) => link.href === '/contact');
+  const insertAt = contactIndex >= 0 ? contactIndex + 1 : links.length;
   links.splice(insertAt, 0, GALLERY_NAV_LINK);
   return links;
 }
 
 export function getHomeSectionIds(): string[] {
-  const ids = ['#top', '#ask-clara', '#drinks', '#here'];
+  const ids = ['#top', '#ask-clara', '#drinks', '#here', '#events', '#faq', '#contact'];
   if (getGalleryContent().items.length > 0) ids.push('#gallery');
-  ids.push('#events', '#faq', '#contact');
   return ids;
 }

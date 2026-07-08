@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "sync:content": "node scripts/sync-from-sheets.mjs",
+    "sync:gallery": "LOCAL_PHOTOS=1 node scripts/sync-from-sheets.mjs",
     "copy:knowledge": "node scripts/copy-knowledge.mjs",
     "build": "node scripts/sync-from-sheets.mjs && node scripts/generate-seo.mjs && node scripts/check-a11y.mjs && node scripts/copy-knowledge.mjs && tsc --noEmit && vite build",
     "check:a11y": "node scripts/check-a11y.mjs",

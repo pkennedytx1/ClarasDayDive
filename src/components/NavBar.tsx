@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { useNavScrollHide } from '@/hooks/useNavScrollHide';
 import { pathToSectionId } from '@/lib/sections';
-import { scrollToSection } from '@/lib/scroll';
+import { markScrollAfterNavClose, scrollToSection } from '@/lib/scroll';
 
 interface NavLink {
   label: string;
@@ -47,7 +47,10 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
   useFocusTrap(sheetRef, open, close);
 
   const handleNavClick = (path: string) => {
+    const wasOpen = open;
     close();
+    if (wasOpen) markScrollAfterNavClose();
+
     const sectionId = pathToSectionId(path);
     if (sectionId && location.pathname === path) {
       scrollToSection(sectionId);

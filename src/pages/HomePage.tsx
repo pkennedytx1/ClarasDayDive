@@ -67,11 +67,11 @@ export function HomePage() {
         <Drinks />
         <hr className="divider" />
         <WhatsHere />
-        <Gallery />
         <Events />
         <hr className="divider" />
         <Faq />
         <Contact />
+        <Gallery />
       </main>
       <Footer />
     </>

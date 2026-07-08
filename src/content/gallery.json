@@ -1,5 +1,54 @@
 {
-  "eyebrow": "The vibe",
-  "title": "Photos",
-  "items": []
+  "eyebrow": "See for yourself",
+  "title": "Worth the shot",
+  "items": [
+    {
+      "src": "/assets/gallery/photo-01.webp",
+      "srcThumb": "/assets/gallery/photo-01-thumb.webp",
+      "width": 360,
+      "height": 240,
+      "alt": "sample photo",
+      "caption": "This is sample photo number one"
+    },
+    {
+      "src": "/assets/gallery/photo-02.webp",
+      "srcThumb": "/assets/gallery/photo-02-thumb.webp",
+      "width": 360,
+      "height": 240,
+      "alt": "sample photo",
+      "caption": "This is sample photo number two"
+    },
+    {
+      "src": "/assets/gallery/photo-03.webp",
+      "srcThumb": "/assets/gallery/photo-03-thumb.webp",
+      "width": 360,
+      "height": 240,
+      "alt": "sample photo",
+      "caption": "This is sample photo number three"
+    },
+    {
+      "src": "/assets/gallery/photo-04.webp",
+      "srcThumb": "/assets/gallery/photo-04-thumb.webp",
+      "width": 360,
+      "height": 240,
+      "alt": "sample photo",
+      "caption": "This is sample photo number four"
+    },
+    {
+      "src": "/assets/gallery/photo-05.webp",
+      "srcThumb": "/assets/gallery/photo-05-thumb.webp",
+      "width": 1000,
+      "height": 667,
+      "alt": "sample photo",
+      "caption": "This is sample photo number five"
+    },
+    {
+      "src": "/assets/gallery/photo-06.webp",
+      "srcThumb": "/assets/gallery/photo-06-thumb.webp",
+      "width": 360,
+      "height": 240,
+      "alt": "sample photo",
+      "caption": "This is sample photo number six"
+    }
+  ]
 }
