@@ -1,3 +1,4 @@
+import { DirectionsLink } from '@/components/DirectionsLink';
 import { LegalLinks } from '@/components/LegalLinks';
 import { SocialLinks } from '@/components/SocialLinks';
 import { getSiteContent } from '@/lib/content';
@@ -36,10 +37,9 @@ export function Footer() {
 
         <div itemScope itemType="https://schema.org/PostalAddress">
           <h2 className="site-footer__label">Find us</h2>
-          <a href={site.mapsUrl} className="site-footer__line site-footer__link">
+          <DirectionsLink site={site} className="site-footer__line site-footer__link">
             <span itemProp="streetAddress">{site.location.address}</span>
-            <span className="visually-hidden"> (opens in Google Maps)</span>
-          </a>
+          </DirectionsLink>
           <p className="site-footer__line" itemProp="addressLocality">
             {site.location.city}
           </p>
