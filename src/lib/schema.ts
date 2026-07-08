@@ -2,6 +2,7 @@ import site from '@/content/site.json';
 import drinks from '@/content/drinks.json';
 import faq from '@/content/faq.json';
 import { getEventsContent } from './content';
+import { buildEventSchemaItem } from './event-schema';
 
 const baseUrl = site.seo.siteUrl.replace(/\/$/, '');
 const ogImagePath = site.seo.ogImage ?? '/assets/scarf.jpg';
@@ -50,16 +51,6 @@ function menuSections() {
         },
       })),
   }));
-}
-
-function eventOffer(event: ReturnType<typeof getEventsContent>['items'][number]) {
-  if (event.ticketUrl) {
-    return { '@type': 'Offer', url: event.ticketUrl, availability: 'https://schema.org/InStock' };
-  }
-  if (/free/i.test(event.timeLabel)) {
-    return { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' };
-  }
-  return undefined;
 }
 
 export function buildJsonLd() {
@@ -140,39 +131,16 @@ export function buildJsonLd() {
           '@type': 'ItemList',
           '@id': `${baseUrl}/#events`,
           name: "Upcoming events at Clara's Day Dive",
-          itemListElement: events.items.map((event, index) => {
-            const offer = eventOffer(event);
-            const item: Record<string, unknown> = {
-              '@type': 'Event',
-              name: event.title,
-              description: event.desc,
-              startDate: event.start,
-              endDate: event.end,
-              eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-              eventStatus: 'https://schema.org/EventScheduled',
-              isAccessibleForFree: /free/i.test(event.timeLabel),
-              location: {
-                '@type': 'Place',
-                name: site.name,
-                address: {
-                  '@type': 'PostalAddress',
-                  streetAddress: site.location.address,
-                  addressLocality: 'Austin',
-                  addressRegion: site.location.region,
-                  postalCode: site.location.postalCode,
-                  addressCountry: site.location.country,
-                },
-              },
-              organizer: { '@id': `${baseUrl}/#business` },
-            };
-            if (offer) item.offers = offer;
-            if (event.ticketUrl) item.url = event.ticketUrl;
-            return {
-              '@type': 'ListItem',
-              position: index + 1,
-              item,
-            };
-          }),
+          itemListElement: events.items.map((event, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            item: buildEventSchemaItem(event, {
+              baseUrl,
+              siteName: site.name,
+              eventImage: ogImageUrl,
+              location: site.location,
+            }),
+          })),
         }
       : null;
 

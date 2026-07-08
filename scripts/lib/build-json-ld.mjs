@@ -1,4 +1,5 @@
 import { filterUpcomingEvents } from './filter-upcoming-events.mjs';
+import { buildEventSchemaItem } from './event-schema.mjs';
 
 function openingHoursSpecification(hoursStructured) {
   return hoursStructured.flatMap(({ days, opens, closes }) =>
@@ -29,25 +30,6 @@ function menuSections(drinks) {
         },
       })),
   }));
-}
-
-function eventOffer(event) {
-  if (event.ticketUrl) {
-    return {
-      '@type': 'Offer',
-      url: event.ticketUrl,
-      availability: 'https://schema.org/InStock',
-    };
-  }
-  if (/free/i.test(event.timeLabel)) {
-    return {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-    };
-  }
-  return undefined;
 }
 
 function sameAsLinks(site) {
@@ -153,39 +135,16 @@ export function buildJsonLd({ site, drinks, faq, events }) {
       '@type': 'ItemList',
       '@id': `${baseUrl}/#events`,
       name: "Upcoming events at Clara's Day Dive",
-      itemListElement: upcoming.map((event, index) => {
-        const offer = eventOffer(event);
-        const item = {
-          '@type': 'Event',
-          name: event.title,
-          description: event.desc,
-          startDate: event.start,
-          endDate: event.end,
-          eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-          eventStatus: 'https://schema.org/EventScheduled',
-          isAccessibleForFree: /free/i.test(event.timeLabel),
-          location: {
-            '@type': 'Place',
-            name: site.name,
-            address: {
-              '@type': 'PostalAddress',
-              streetAddress: site.location.address,
-              addressLocality: 'Austin',
-              addressRegion: site.location.region,
-              postalCode: site.location.postalCode,
-              addressCountry: site.location.country,
-            },
-          },
-          organizer: { '@id': `${baseUrl}/#business` },
-        };
-        if (offer) item.offers = offer;
-        if (event.ticketUrl) item.url = event.ticketUrl;
-        return {
-          '@type': 'ListItem',
-          position: index + 1,
-          item,
-        };
-      }),
+      itemListElement: upcoming.map((event, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: buildEventSchemaItem(event, {
+          baseUrl,
+          siteName: site.name,
+          eventImage: ogImage,
+          location: site.location,
+        }),
+      })),
     });
   }
 
