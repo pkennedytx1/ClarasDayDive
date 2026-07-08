@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import type { SiteContent } from '@/lib/content';
-import { getDirectionsUrl } from '@/lib/maps';
+import { getDirectionsLinkOptions } from '@/lib/maps';
 
 type DirectionsSite = Pick<SiteContent, 'location' | 'mapsUrl' | 'seo'>;
 
@@ -11,10 +11,10 @@ type DirectionsLinkProps = {
 };
 
 export function DirectionsLink({ site, className, children }: DirectionsLinkProps) {
-  const [href, setHref] = useState(site.mapsUrl);
+  const [link, setLink] = useState(() => getDirectionsLinkOptions(site));
 
   useEffect(() => {
-    setHref(getDirectionsUrl(site));
+    setLink(getDirectionsLinkOptions(site));
   }, [
     site.mapsUrl,
     site.location.address,
@@ -24,9 +24,17 @@ export function DirectionsLink({ site, className, children }: DirectionsLinkProp
   ]);
 
   return (
-    <a href={href} className={className} target="_blank" rel="noopener noreferrer">
+    <a
+      href={link.href}
+      className={className}
+      {...(link.openInNewTab
+        ? { target: '_blank', rel: 'noopener noreferrer' }
+        : {})}
+    >
       {children}
-      <span className="visually-hidden"> (opens in a new tab)</span>
+      <span className="visually-hidden">
+        {link.openInNewTab ? ' (opens in a new tab)' : ' (opens in maps)'}
+      </span>
     </a>
   );
 }

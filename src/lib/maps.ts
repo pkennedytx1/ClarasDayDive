@@ -45,3 +45,15 @@ export function getDirectionsUrl(site: DirectionsSite): string {
 
   return geoMapsUrl(site);
 }
+
+/** geo: links must not use target="_blank" — Safari treats that as an invalid address. */
+export function getDirectionsLinkOptions(site: DirectionsSite): {
+  href: string;
+  openInNewTab: boolean;
+} {
+  const href = getDirectionsUrl(site);
+  return {
+    href,
+    openInNewTab: !href.startsWith('geo:'),
+  };
+}
