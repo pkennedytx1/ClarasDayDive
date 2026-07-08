@@ -1,5 +1,5 @@
-# LLMs: https://clarasdaydive.com/llms.txt
-# Knowledge: https://clarasdaydive.com/knowledge.txt
+# LLMs: https://www.clarasdaydive.com/llms.txt
+# Knowledge: https://www.clarasdaydive.com/knowledge.txt
 
 User-agent: *
 Allow: /
@@ -25,4 +25,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://clarasdaydive.com/sitemap.xml
+Sitemap: https://www.clarasdaydive.com/sitemap.xml

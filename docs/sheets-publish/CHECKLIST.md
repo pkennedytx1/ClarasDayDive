@@ -117,6 +117,7 @@ npm run deploy
 ## After publish works
 
 - [ ] Custom domain live — [godaddy-domain-setup.md](../godaddy-domain-setup.md) (GoDaddy DNS + ACM)
-- [ ] Set `seo_site_url` in `_Settings` to `https://www.clarasdaydive.com` (or apex if forwarding is configured), publish once more.
+- [ ] Set `seo_site_url` in `_Settings` to `https://www.clarasdaydive.com`, publish once more.
+- [ ] Google Search Console — add `google_site_verification` in `_Settings`, publish, verify, submit `sitemap.xml` — [godaddy-domain-setup.md](../godaddy-domain-setup.md#step-6--google-search-console-html-tag)
 - [ ] Add `events_source` = `sheet` in `_Settings` if not already set.
 - [ ] Optional later: Google Calendar import or calendar-only — [sheets-events.md](../sheets-events.md).

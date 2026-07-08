@@ -62,16 +62,17 @@ key | value
 | `ask_clara_placeholder` | what should I drink today? |
 | `ask_clara_button` | Dive in |
 | `ask_clara_fallback` | Clara says: come on in — we'll pour you something good. |
-| `seo_site_url` | https://clarasdaydive.com |
+| `seo_site_url` | https://www.clarasdaydive.com |
 | `seo_title` | Clara's Day Dive — East Austin Coupe Bar & Patio |
 | `seo_description` | Dive in for a day drink… |
 | `seo_og_image` | `/assets/scarf.jpg` — social share image path |
 | `maps_url` | Google Maps link for directions |
 | `google_business_url` | Optional — Google Business Profile URL for schema |
+| `google_site_verification` | Optional — Search Console HTML tag `content` value (not the full meta tag) |
 | `gallery_eyebrow` | On the patio — gallery section label (optional if no photos) |
 | `gallery_title` | A day at Clara's — gallery section heading (optional if no photos) |
 
-Both columns are required on every row. **Optional keys** (`instagram_url`, `facebook_url`, `tiktok_url`, `google_business_url`, `gallery_eyebrow`, `gallery_title`) can be left with an empty `value` cell — the site hides those icons/links until you fill them in. Gallery section copy uses defaults when photos exist but these keys are blank.
+Both columns are required on every row. **Optional keys** (`instagram_url`, `facebook_url`, `tiktok_url`, `google_business_url`, `google_site_verification`, `gallery_eyebrow`, `gallery_title`) can be left with an empty `value` cell — the site hides those icons/links until you fill them in. Gallery section copy uses defaults when photos exist but these keys are blank.
 
 ---
 

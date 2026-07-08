@@ -208,6 +208,17 @@ indexHtml = indexHtml.replace(
   /<meta property="og:image" content="[^"]*" \/>/,
   `<meta property="og:image" content="${ogImageUrl}" />`,
 );
+indexHtml = indexHtml.replace(
+  /<meta name="twitter:image" content="[^"]*" \/>/,
+  `<meta name="twitter:image" content="${ogImageUrl}" />`,
+);
+
+const gscVerification = site.seo.googleSiteVerification?.trim() ?? '';
+indexHtml = indexHtml.replace(/\s*<meta name="google-site-verification" content="[^"]*" \/>/g, '');
+if (gscVerification) {
+  const gscMeta = `    <meta name="google-site-verification" content="${gscVerification.replace(/"/g, '&quot;')}" />`;
+  indexHtml = indexHtml.replace(/<meta name="theme-color"/, `${gscMeta}\n    <meta name="theme-color"`);
+}
 
 const twitterBlock = `    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${site.seo.title.replace(/"/g, '&quot;')}" />

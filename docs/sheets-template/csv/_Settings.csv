@@ -24,11 +24,12 @@ ask_clara_title,Not sure what to order?
 ask_clara_placeholder,what should I drink today?
 ask_clara_button,Dive in
 ask_clara_fallback,"Clara says: come on in — we'll pour you something good."
-seo_site_url,https://clarasdaydive.com
+seo_site_url,https://www.clarasdaydive.com
 seo_title,Clara's Day Dive — East Austin Coupe Bar & Patio
 seo_description,"Dive in for a day drink at Clara's Day Dive — an East Austin coupe bar and patio with spritzes, frozen cocktails, food trucks, morning coffee, and live events."
 seo_og_image,/assets/scarf.jpg
 maps_url,https://maps.google.com/?q=1814+E+Cesar+Chavez+St,+Austin,+TX+78702
 google_business_url,
+google_site_verification,u8VyfQfoCtJhUQEOypyGPsIkX-A11xD76_9iWE64zmw
 gallery_eyebrow,On the patio
 gallery_title,A day at Clara's

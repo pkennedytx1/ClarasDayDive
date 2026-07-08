@@ -17,6 +17,7 @@ const OPTIONAL_SETTINGS_KEYS = new Set([
   'facebook_url',
   'tiktok_url',
   'google_business_url',
+  'google_site_verification',
   'gallery_eyebrow',
   'gallery_title',
 ]);
@@ -335,6 +336,8 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
       geo: existing.seo?.geo ?? { latitude: 30.2588, longitude: -97.7264 },
       priceRange: existing.seo?.priceRange ?? '$$',
       ogImage: settings.seo_og_image ?? existing.seo?.ogImage ?? '/assets/scarf.jpg',
+      googleSiteVerification:
+        settings.google_site_verification ?? existing.seo?.googleSiteVerification ?? '',
     },
     mapsUrl:
       settings.maps_url ??

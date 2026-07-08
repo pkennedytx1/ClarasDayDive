@@ -1,6 +1,8 @@
 # Custom domain — GoDaddy DNS (Option B)
 
-Production site: **https://clarasdaydive.com**
+Production site: **https://www.clarasdaydive.com** (canonical)
+
+Apex `clarasdaydive.com` forwards to `www` via GoDaddy domain forwarding.
 
 **GoDaddy keeps DNS** — email, MX, and other records stay in the GoDaddy panel. SST uses a manual ACM certificate and CloudFront; you add DNS records in GoDaddy after deploy.
 
@@ -116,20 +118,40 @@ GoDaddy does not support CNAME on `@`. Use **domain forwarding**:
 | Type | **Permanent (301)** |
 | Forward only | **Forward only** (not masking) |
 
-SST also redirects `www` → apex in config; with GoDaddy forwarding `@` → `www`, pick **one** canonical URL. Recommended:
+SST serves the site on `www` (no www → apex redirect in SST — that would loop with GoDaddy forwarding).
+
+**Live setup:**
 
 - **CNAME `www` → CloudFront**
 - **Forward `@` → `https://www.clarasdaydive.com`**
-
-Then update `_Settings` `seo_site_url` to `https://www.clarasdaydive.com` **or** keep apex in SEO and forward `@` → apex once CloudFront serves apex (requires GoDaddy Premium DNS / ALIAS — forwarding to `www` is simpler).
-
-**Simplest live setup:** site at **`https://www.clarasdaydive.com`**, forward `@` → `www`.
+- **`seo_site_url` = `https://www.clarasdaydive.com`**
 
 ---
 
 ## Step 5 — Sheet SEO URL
 
-Set `_Settings` → `seo_site_url` to match your canonical URL (`https://clarasdaydive.com` or `https://www.clarasdaydive.com`) and publish once.
+Set `_Settings` → `seo_site_url` to `https://www.clarasdaydive.com` and publish once.
+
+---
+
+## Step 6 — Google Search Console (HTML tag)
+
+Use the **HTML tag** method — **not** the GoDaddy / domain-name-provider option (that is DNS verification).
+
+1. [Google Search Console](https://search.google.com/search-console) → **Add property** → **URL prefix** → `https://www.clarasdaydive.com`
+2. Choose verification method **HTML tag**
+3. Copy only the `content` value from the meta tag Google shows, e.g. if the tag is:
+   ```html
+   <meta name="google-site-verification" content="AbCdEf123..." />
+   ```
+   copy just `AbCdEf123...`
+4. In the Google Sheet `_Settings` tab, set:
+   - `google_site_verification` = that content value (no quotes)
+5. **Publish site** from the sheet (injects the meta tag into `index.html` on deploy)
+6. Back in Search Console, click **Verify** — ignore any prompt to confirm via GoDaddy
+7. After verified: **Sitemaps** → submit `sitemap.xml`
+
+The sitemap URL is `https://www.clarasdaydive.com/sitemap.xml` (also listed in `robots.txt`).
 
 ---
 
@@ -141,7 +163,7 @@ Because GoDaddy still owns DNS, the client can add **MX** and **TXT** (SPF/DKIM)
 
 ## Optional cleanup
 
-A Route 53 hosted zone was created during an earlier attempt (`Z03201281HODQ56S8KSG9`). It is **not used** for Option B. Delete it in Route 53 if you don't need it (~$0.50/month):
+A Route 53 hosted zone was created during an earlier attempt (`Z03201281HODQ56S8KSG9`). It is **not used** for Option B. Delete it in Route 53 if it still exists (~$0.50/month):
 
 ```bash
 # List records first, delete non-default records, then delete zone in console
@@ -149,6 +171,8 @@ aws route53 delete-hosted-zone --id Z03201281HODQ56S8KSG9
 ```
 
 (Delete all records except NS/SOA first, or use the console.)
+
+> **Status:** This zone is already deleted (or not in the current AWS account) — no action needed.
 
 ---
 

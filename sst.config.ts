@@ -46,14 +46,7 @@ export default $config({
       cors: {
         allowMethods: ['POST', 'OPTIONS'],
         allowHeaders: ['Content-Type'],
-        allowOrigins: isProduction
-          ? [...productionOrigins, 'http://localhost:5173', 'http://localhost:4173']
-          : [
-              ...productionOrigins,
-              'https://d19sxc1xcbgypp.cloudfront.net',
-              'http://localhost:5173',
-              'http://localhost:4173',
-            ],
+        allowOrigins: [...productionOrigins, 'http://localhost:5173', 'http://localhost:4173'],
       },
     });
 
