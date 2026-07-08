@@ -207,13 +207,6 @@ export function buildLegalPageJsonLd(site, policy) {
         about: { '@id': `${baseUrl}/#business` },
         dateModified: policy.lastUpdated,
       },
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: `${baseUrl}/` },
-          { '@type': 'ListItem', position: 2, name: policy.title, item: `${baseUrl}${policy.path}` },
-        ],
-      },
     ],
   };
 }

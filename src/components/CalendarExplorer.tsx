@@ -36,7 +36,10 @@ export function CalendarExplorer({
   triggerRef,
 }: CalendarExplorerProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const liveRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef({ active: false, startY: 0, offset: 0 });
+  const [dragOffset, setDragOffset] = useState(0);
   const eventsByDate = groupEventsByDate(events);
   const eventDates = new Set(Object.keys(eventsByDate));
 
@@ -124,6 +127,51 @@ export function CalendarExplorer({
     }
   };
 
+  const canStartSheetDrag = (target: EventTarget | null) => {
+    if (!window.matchMedia('(max-width: 768px)').matches) return false;
+    const el = target as HTMLElement | null;
+    if (!el) return false;
+    if (el.closest('.calendar-explorer__close')) return false;
+    if (el.closest('.calendar-explorer__header')) return true;
+    if (el.closest('button, a, input, textarea, select')) return false;
+    return (bodyRef.current?.scrollTop ?? 0) <= 0;
+  };
+
+  const onSheetPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!canStartSheetDrag(e.target) || e.button !== 0) return;
+    dragRef.current = { active: true, startY: e.clientY, offset: 0 };
+    setDragOffset(0);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const onSheetPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active) return;
+    const delta = Math.max(0, e.clientY - dragRef.current.startY);
+    dragRef.current.offset = delta;
+    setDragOffset(delta);
+  };
+
+  const onSheetPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active) return;
+    dragRef.current.active = false;
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+    if (dragRef.current.offset > 100) {
+      onClose();
+    }
+    setDragOffset(0);
+  };
+
+  const onSheetPointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active) return;
+    dragRef.current.active = false;
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+    setDragOffset(0);
+  };
+
   if (!open) return null;
 
   const dayEvents = eventsByDate[selectedDate] ?? [];
@@ -133,11 +181,16 @@ export function CalendarExplorer({
       <div
         ref={dialogRef}
         id="calendar-explorer"
-        className="calendar-explorer__panel"
+        className={`calendar-explorer__panel${dragOffset > 0 ? ' is-dragging' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="calendar-explorer-title"
+        style={dragOffset > 0 ? { transform: `translateY(${dragOffset}px)` } : undefined}
         onClick={(e) => e.stopPropagation()}
+        onPointerDown={onSheetPointerDown}
+        onPointerMove={onSheetPointerMove}
+        onPointerUp={onSheetPointerUp}
+        onPointerCancel={onSheetPointerCancel}
       >
         <header className="calendar-explorer__header">
           <h2 id="calendar-explorer-title" className="calendar-explorer__title">
@@ -155,7 +208,7 @@ export function CalendarExplorer({
 
         <div ref={liveRef} className="visually-hidden" aria-live="polite" />
 
-        <div className="calendar-explorer__body">
+        <div ref={bodyRef} className="calendar-explorer__body">
           <MonthGrid
             month={viewMonth}
             year={viewYear}

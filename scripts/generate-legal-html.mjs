@@ -59,12 +59,10 @@ function renderLegalPage(site, policy) {
     h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; }
     p, ul { margin: 0 0 1rem; }
     .meta { color: #555; font-size: 0.9rem; }
-    .crumb { font-size: 0.875rem; margin-bottom: 1.5rem; }
   </style>
 </head>
 <body>
   <main>
-    <p class="crumb"><a href="${baseUrl}/">Home</a> → ${escapeHtml(policy.title)}</p>
     <h1>${escapeHtml(policy.title)}</h1>
     <p class="meta">Last updated ${formattedDate}</p>
     ${renderSections(policy.sections)}

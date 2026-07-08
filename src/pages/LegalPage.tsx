@@ -96,11 +96,6 @@ export function LegalPage() {
       <main id="main" className="legal-page">
         <div className="container legal-page__content">
           <header className="legal-page__head">
-            <nav className="legal-page__crumb" aria-label="Breadcrumb">
-              <Link to="/">Home</Link>
-              <span aria-hidden="true"> → </span>
-              <span>{policy.title}</span>
-            </nav>
             <p className="eyebrow">Legal</p>
             <h1 className="display-lg">{policy.title}</h1>
             <p className="legal-page__updated">Last updated {formattedDate}</p>
