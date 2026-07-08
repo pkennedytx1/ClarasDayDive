@@ -2,6 +2,14 @@ import type { SiteContent } from './content';
 
 type DirectionsSite = Pick<SiteContent, 'location' | 'mapsUrl' | 'seo'>;
 
+export type DirectionsLinkOptions = {
+  /** Visible href (HTTPS fallback; safe for long-press / copy). */
+  href: string;
+  /** Android-only: geo: URI handed to the OS default maps app on click. */
+  geoUrl?: string;
+  openInNewTab: boolean;
+};
+
 function formatAddressQuery(site: DirectionsSite): string {
   return `${site.location.address}, ${site.location.city}`;
 }
@@ -11,10 +19,10 @@ function googleMapsUrl(site: DirectionsSite): string {
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
+/** Android respects this and opens the user's default maps app (Google, Waze, etc.). */
 function geoMapsUrl(site: DirectionsSite): string {
-  const { latitude, longitude } = site.seo.geo;
   const query = encodeURIComponent(formatAddressQuery(site));
-  return `geo:${latitude},${longitude}?q=${query}`;
+  return `geo:0,0?q=${query}`;
 }
 
 function isMobileDevice(): boolean {
@@ -24,36 +32,56 @@ function isMobileDevice(): boolean {
   );
 }
 
-/** Embedded browsers (Instagram, Facebook, etc.) block geo: / app deep links. */
-function isInAppBrowser(): boolean {
-  return /(FBAN|FBAV|Instagram|Twitter|LinkedInApp|Snapchat|Line\/|MicroMessenger|TikTok|BytedanceWebview)/i.test(
-    navigator.userAgent,
-  );
+function isAndroid(): boolean {
+  return /Android/i.test(navigator.userAgent);
 }
 
 /**
- * Desktop → Google Maps web.
- * Mobile Safari/Chrome → geo: URI (respects the system default maps app on iOS).
- * In-app browsers → Google Maps HTTPS (geo: is usually blocked there).
+ * Desktop → Google Maps web (new tab).
+ * Android → geo: on tap (default maps app).
+ * iOS → Google Maps HTTPS (Safari does not support geo: links at all).
  */
-export function getDirectionsUrl(site: DirectionsSite): string {
-  if (typeof window === 'undefined') return site.mapsUrl;
+export function getDirectionsLinkOptions(site: DirectionsSite): DirectionsLinkOptions {
+  if (typeof window === 'undefined') {
+    return { href: site.mapsUrl, openInNewTab: true };
+  }
 
-  if (!isMobileDevice()) return site.mapsUrl;
+  if (!isMobileDevice()) {
+    return { href: site.mapsUrl, openInNewTab: true };
+  }
 
-  if (isInAppBrowser()) return googleMapsUrl(site);
+  if (isAndroid()) {
+    return {
+      href: googleMapsUrl(site),
+      geoUrl: geoMapsUrl(site),
+      openInNewTab: false,
+    };
+  }
 
-  return geoMapsUrl(site);
+  // iOS Safari rejects geo: with "address is invalid" — no web workaround for system default.
+  return {
+    href: googleMapsUrl(site),
+    openInNewTab: false,
+  };
 }
 
-/** geo: links must not use target="_blank" — Safari treats that as an invalid address. */
-export function getDirectionsLinkOptions(site: DirectionsSite): {
-  href: string;
-  openInNewTab: boolean;
-} {
-  const href = getDirectionsUrl(site);
-  return {
-    href,
-    openInNewTab: !href.startsWith('geo:'),
-  };
+/** @deprecated Use getDirectionsLinkOptions */
+export function getDirectionsUrl(site: DirectionsSite): string {
+  return getDirectionsLinkOptions(site).href;
+}
+
+export function openDirections(site: DirectionsSite): void {
+  const options = getDirectionsLinkOptions(site);
+
+  if (options.geoUrl) {
+    window.location.assign(options.geoUrl);
+    return;
+  }
+
+  if (options.openInNewTab) {
+    window.open(options.href, '_blank', 'noopener,noreferrer');
+    return;
+  }
+
+  window.location.assign(options.href);
 }
