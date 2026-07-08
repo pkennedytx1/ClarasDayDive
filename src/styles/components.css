@@ -1443,6 +1443,22 @@ button.here-item__link {
   color: var(--clr-rose);
 }
 
+.site-footer__directions {
+  display: inline-block;
+  margin-top: 0.375rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--clr-teal-deep);
+  text-decoration: none;
+}
+
+.site-footer__directions:hover,
+.site-footer__directions:focus-visible {
+  color: var(--clr-rose);
+  text-decoration: underline;
+}
+
 .site-footer__social {
   display: inline-block;
   margin-top: 0.5rem;

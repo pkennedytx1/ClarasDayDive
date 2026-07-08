@@ -37,12 +37,15 @@ export function Footer() {
 
         <div itemScope itemType="https://schema.org/PostalAddress">
           <h2 className="site-footer__label">Find us</h2>
-          <DirectionsLink site={site} className="site-footer__line site-footer__link">
-            <span itemProp="streetAddress">{site.location.address}</span>
-          </DirectionsLink>
+          <p className="site-footer__line" itemProp="streetAddress">
+            {site.location.address}
+          </p>
           <p className="site-footer__line" itemProp="addressLocality">
             {site.location.city}
           </p>
+          <DirectionsLink site={site} className="site-footer__directions">
+            Get directions →
+          </DirectionsLink>
         </div>
 
         <div>

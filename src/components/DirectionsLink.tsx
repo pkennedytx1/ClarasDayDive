@@ -24,9 +24,9 @@ export function DirectionsLink({ site, className, children }: DirectionsLinkProp
   ]);
 
   return (
-    <a href={href} className={className}>
+    <a href={href} className={className} target="_blank" rel="noopener noreferrer">
       {children}
-      <span className="visually-hidden"> (opens in maps)</span>
+      <span className="visually-hidden"> (opens in a new tab)</span>
     </a>
   );
 }
