@@ -124,5 +124,7 @@
     ],
     "ctaLabel": "Book the bar",
     "ctaHref": "/contact"
-  }
+  },
+  "underConstruction": true,
+  "underConstructionPassword": "102712"
 }

@@ -23,6 +23,8 @@ const OPTIONAL_SETTINGS_KEYS = new Set([
   'google_site_verification',
   'gallery_eyebrow',
   'gallery_title',
+  'under_construction',
+  'under_construction_password',
 ]);
 
 const DEFAULT_NAV = {
@@ -66,6 +68,10 @@ const DAY_ABBR = {
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function parseSheetBool(value) {
+  return String(value ?? '').trim().toLowerCase() === 'true';
+}
 
 function readExistingSite() {
   const path = join(contentDir, 'site.json');
@@ -392,6 +398,11 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
         "Clara says: come on in — we'll pour you something good.",
     },
     nav: existing.nav ?? DEFAULT_NAV,
+    underConstruction: parseSheetBool(settings.under_construction ?? existing.underConstruction),
+    underConstructionPassword:
+      settings.under_construction_password?.trim() ||
+      existing.underConstructionPassword ||
+      '102712',
   };
 }
 
