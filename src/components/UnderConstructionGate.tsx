@@ -2,16 +2,6 @@ import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
 import { Button } from '@/components/Button';
 import { getSiteContent } from '@/lib/content';
 
-const UNLOCK_KEY = 'cdd-site-unlock';
-
-function readUnlockState(password: string): boolean {
-  try {
-    return sessionStorage.getItem(UNLOCK_KEY) === password;
-  } catch {
-    return false;
-  }
-}
-
 interface UnderConstructionGateProps {
   children: ReactNode;
 }
@@ -19,7 +9,7 @@ interface UnderConstructionGateProps {
 export function UnderConstructionGate({ children }: UnderConstructionGateProps) {
   const { underConstruction, underConstructionPassword } = getSiteContent();
   const gatePassword = underConstructionPassword || '102712';
-  const [unlocked, setUnlocked] = useState(() => readUnlockState(gatePassword));
+  const [unlocked, setUnlocked] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
@@ -36,11 +26,6 @@ export function UnderConstructionGate({ children }: UnderConstructionGateProps) 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password === gatePassword) {
-      try {
-        sessionStorage.setItem(UNLOCK_KEY, gatePassword);
-      } catch {
-        /* sessionStorage unavailable */
-      }
       setUnlocked(true);
       setError(false);
       return;
@@ -67,7 +52,7 @@ export function UnderConstructionGate({ children }: UnderConstructionGateProps) 
             id="site-gate-password"
             type="password"
             inputMode="numeric"
-            autoComplete="current-password"
+            autoComplete="off"
             className={`site-gate__input${error ? ' site-gate__input--error' : ''}`}
             value={password}
             onChange={(event) => {
