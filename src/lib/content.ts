@@ -10,7 +10,7 @@ import whatsHere from '@/content/whats-here.json';
 import gallery from '@/content/gallery.json';
 import faq from '@/content/faq.json';
 import legal from '@/content/legal.json';
-import { filterUpcomingEvents } from './events';
+import { filterUpcomingEvents, type SiteEvent } from './events';
 
 export type { SiteEvent } from './events';
 
@@ -23,7 +23,10 @@ export type DrinkItem = {
   price?: string;
   badge?: string;
 };
-export type EventsContent = typeof events;
+export type EventsContent = {
+  items: SiteEvent[];
+  hostNote: string;
+};
 export type WhatsHereContent = typeof whatsHere;
 export type GalleryItem = {
   src: string;
@@ -56,9 +59,10 @@ export function getDrinksContent(): { categories: string[]; items: DrinkItem[] }
 }
 
 export function getEventsContent(): EventsContent {
+  const data = events as EventsContent;
   return {
-    ...events,
-    items: filterUpcomingEvents(events.items),
+    ...data,
+    items: filterUpcomingEvents(data.items),
   };
 }
 
