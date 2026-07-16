@@ -15,7 +15,8 @@
     "check:a11y": "node scripts/check-a11y.mjs",
     "preview": "vite preview",
     "deploy": "node scripts/copy-knowledge.mjs && sst refresh && sst deploy",
-    "dev:sst": "sst dev"
+    "dev:sst": "sst dev",
+    "test:email": "tsx scripts/test-event-inquiry-email.ts"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.750.0",
@@ -36,6 +37,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "sharp": "^0.35.3",
     "sst": "^4.17.1",
+    "tsx": "^4.23.1",
     "typescript": "^5.7.2",
     "vite": "^6.0.3"
   }

@@ -1,7 +1,8 @@
 import type { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
+import { SESClient } from '@aws-sdk/client-ses';
 import inquiryConfig from './inquiry-config.json' with { type: 'json' };
 import { guestReceiptEmail, staffInquiryEmail } from './email-templates.js';
+import { sendBrandedEmail } from './email-send.js';
 import { checkRateLimit } from './rate-limit.js';
 import {
   checkFormTiming,
@@ -101,35 +102,23 @@ export async function handler(event: APIGatewayProxyEventV2): Promise<APIGateway
   const replyTo = config.fromEmail?.trim() || 'events@clarasdaydive.com';
 
   try {
-    await ses.send(
-      new SendEmailCommand({
-        Source: from,
-        Destination: { ToAddresses: [config.staffEmail] },
-        ReplyToAddresses: [result.data.email],
-        Message: {
-          Subject: { Data: staff.subject, Charset: 'UTF-8' },
-          Body: {
-            Html: { Data: staff.html, Charset: 'UTF-8' },
-            Text: { Data: staff.text, Charset: 'UTF-8' },
-          },
-        },
-      }),
-    );
+    await sendBrandedEmail(ses, {
+      from,
+      to: config.staffEmail,
+      replyTo: result.data.email,
+      subject: staff.subject,
+      html: staff.html,
+      text: staff.text,
+    });
 
-    await ses.send(
-      new SendEmailCommand({
-        Source: from,
-        Destination: { ToAddresses: [result.data.email] },
-        ReplyToAddresses: [replyTo],
-        Message: {
-          Subject: { Data: guest.subject, Charset: 'UTF-8' },
-          Body: {
-            Html: { Data: guest.html, Charset: 'UTF-8' },
-            Text: { Data: guest.text, Charset: 'UTF-8' },
-          },
-        },
-      }),
-    );
+    await sendBrandedEmail(ses, {
+      from,
+      to: result.data.email,
+      replyTo,
+      subject: guest.subject,
+      html: guest.html,
+      text: guest.text,
+    });
   } catch (err) {
     console.error('SES send failed', err);
     return json(502, { error: 'Unable to send your request right now. Please try again shortly.' });

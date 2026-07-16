@@ -687,6 +687,7 @@ function writeInquiryConfig(settings) {
     staffEmailTarget: INQUIRY_EMAIL_TARGET,
     fromEmail,
     siteName: settings.site_name?.trim() || "Clara's Day Dive",
+    siteUrl: settings.seo_site_url?.trim() || 'https://www.clarasdaydive.com',
     responseTime:
       settings.contact_response_time?.trim() || 'We typically reply within a day.',
   };

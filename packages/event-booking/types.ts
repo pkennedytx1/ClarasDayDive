@@ -16,5 +16,6 @@ export type InquiryConfig = {
   staffEmailTarget: string;
   fromEmail: string;
   siteName: string;
+  siteUrl?: string;
   responseTime: string;
 };

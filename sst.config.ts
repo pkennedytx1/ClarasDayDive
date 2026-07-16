@@ -56,6 +56,12 @@ export default $config({
       handler: 'packages/event-booking/handler.handler',
       runtime: 'nodejs24.x',
       link: [usage],
+      copyFiles: [
+        {
+          from: 'packages/event-booking/assets/wordmark-color.png',
+          to: 'assets/wordmark-color.png',
+        },
+      ],
       environment: {
         EVENT_BOOKING_USAGE_TABLE: usage.name,
         TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY ?? '',

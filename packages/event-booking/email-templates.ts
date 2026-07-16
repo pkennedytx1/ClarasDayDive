@@ -2,13 +2,18 @@ import type { EventInquiryPayload, InquiryConfig } from './types.js';
 import { escapeHtml } from './security.js';
 
 const BRAND = {
+  nav: '#E3D8B5',
   cream: '#EDE5CF',
   ink: '#1C1C1A',
   rose: '#C2556A',
   roseDeep: '#A8455A',
-  pink: '#E0A6AC',
   muted: '#6B6B66',
 };
+
+function siteLogoUrl(): string {
+  // Inline CID attachment — see email-send.ts (loadLogoBuffer).
+  return 'cid:claras-logo';
+}
 
 function formatDate(date: string): string {
   const [year, month, day] = date.split('-').map(Number);
@@ -36,7 +41,10 @@ function formatTimeRange(startTime: string, endTime: string): string {
   return `${formatTime(startTime)} – ${formatTime(endTime)}`;
 }
 
-function shell(title: string, body: string): string {
+function shell(title: string, body: string, config: InquiryConfig): string {
+  const logoSrc = siteLogoUrl();
+  const siteName = escapeHtml(config.siteName || "Clara's Day Dive");
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,25 +52,36 @@ function shell(title: string, body: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${title}</title>
 </head>
-<body style="margin:0;padding:0;background:${BRAND.cream};font-family:Georgia,'Times New Roman',serif;color:${BRAND.ink};">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:${BRAND.cream};padding:32px 16px;">
+<body style="margin:0;padding:0;background:${BRAND.nav};font-family:Georgia,'Times New Roman',serif;color:${BRAND.ink};">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:${BRAND.nav};padding:32px 16px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border-radius:22px;overflow:hidden;box-shadow:0 12px 28px rgba(28,28,26,0.10);">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;">
           <tr>
-            <td style="padding:28px 28px 12px;background:linear-gradient(160deg,${BRAND.rose} 0%,${BRAND.roseDeep} 100%);color:#ffffff;">
-              <p style="margin:0 0 8px;font:700 11px/1.4 'Helvetica Neue',Arial,sans-serif;letter-spacing:0.12em;text-transform:uppercase;opacity:0.9;">Clara's Day Dive</p>
-              <h1 style="margin:0;font:italic 700 28px/1.15 Georgia,serif;">${title}</h1>
+            <td align="center" style="padding:0 0 24px;">
+              <img src="${logoSrc}" alt="${siteName}" width="220" height="57" style="display:block;width:220px;max-width:72%;height:auto;border:0;" />
             </td>
           </tr>
           <tr>
-            <td style="padding:28px;font:16px/1.6 'Helvetica Neue',Arial,sans-serif;color:${BRAND.ink};">
-              ${body}
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:0 28px 28px;font:13px/1.5 'Helvetica Neue',Arial,sans-serif;color:${BRAND.muted};">
-              Clara's Day Dive · South Austin bar &amp; patio
+            <td>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:22px;overflow:hidden;box-shadow:0 12px 28px rgba(28,28,26,0.10);">
+                <tr>
+                  <td style="padding:28px 28px 12px;background:linear-gradient(160deg,${BRAND.rose} 0%,${BRAND.roseDeep} 100%);color:#ffffff;">
+                    <p style="margin:0 0 8px;font:700 11px/1.4 'Helvetica Neue',Arial,sans-serif;letter-spacing:0.12em;text-transform:uppercase;opacity:0.9;">${siteName}</p>
+                    <h1 style="margin:0;font:italic 700 28px/1.15 Georgia,serif;">${title}</h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:28px;font:16px/1.6 'Helvetica Neue',Arial,sans-serif;color:${BRAND.ink};">
+                    ${body}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 28px 28px;font:13px/1.5 'Helvetica Neue',Arial,sans-serif;color:${BRAND.muted};">
+                    ${siteName} · South Austin bar &amp; patio
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
@@ -103,6 +122,7 @@ export function staffInquiryEmail(data: EventInquiryPayload, config: InquiryConf
     `<p style="margin:0 0 8px;">A guest submitted an event inquiry on the website.</p>
      ${detailsTable(rows)}
      <p style="margin:20px 0 0;color:${BRAND.muted};font-size:14px;">Reply directly to <strong>${escapeHtml(data.email)}</strong> when you're ready.</p>`,
+    config,
   );
 
   const text = [
@@ -129,8 +149,8 @@ export function guestReceiptEmail(data: EventInquiryPayload, config: InquiryConf
   const html = shell(
     'We got your request',
     `<p style="margin:0 0 12px;">Hi ${escapeHtml(data.name)},</p>
-     <p style="margin:0 0 12px;">Thanks for reaching out about hosting an event at <strong>${config.siteName}</strong>. We've received your details and we're reviewing them now.</p>
-     <p style="margin:0 0 12px;">${config.responseTime}</p>
+     <p style="margin:0 0 12px;">Thanks for reaching out about hosting an event at <strong>${escapeHtml(config.siteName)}</strong>. We've received your details and we're reviewing them now.</p>
+     <p style="margin:0 0 12px;">${escapeHtml(config.responseTime)}</p>
      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:20px 0 0;background:${BRAND.cream};border-radius:14px;">
        <tr>
          <td style="padding:18px 20px;font:15px/1.6 'Helvetica Neue',Arial,sans-serif;">
@@ -140,7 +160,8 @@ export function guestReceiptEmail(data: EventInquiryPayload, config: InquiryConf
          </td>
        </tr>
      </table>
-     <p style="margin:20px 0 0;color:${BRAND.muted};font-size:14px;">If anything changes, reply to this email or write us at ${config.fromEmail || 'events@clarasdaydive.com'}.</p>`,
+     <p style="margin:20px 0 0;color:${BRAND.muted};font-size:14px;">If anything changes, reply to this email or write us at ${escapeHtml(config.fromEmail || 'events@clarasdaydive.com')}.</p>`,
+    config,
   );
 
   const text = [
