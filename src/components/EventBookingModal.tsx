@@ -103,7 +103,7 @@ function fieldInputProps(name: BookingFieldName, error?: string) {
 }
 
 const CLOSE_ANIM_MS = 280;
-const SUCCESS_AUTO_CLOSE_MS = 2000;
+const SUCCESS_AUTO_CLOSE_MS = 4000;
 const VERIFY_FAIL_CLOSE_MS = 2500;
 
 type BookingPhase = 'form' | 'verify' | 'sending' | 'success';
