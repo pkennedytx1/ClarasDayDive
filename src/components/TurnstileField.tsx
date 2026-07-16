@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef } from 'react';
+import { forwardRef, useEffect, useId, useImperativeHandle, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -11,8 +11,10 @@ declare global {
           'error-callback'?: () => void;
           'expired-callback'?: () => void;
           theme?: 'light' | 'dark' | 'auto';
+          execution?: 'render' | 'execute';
         },
       ) => string;
+      execute: (widgetId: string) => void;
       remove: (widgetId: string) => void;
       reset: (widgetId: string) => void;
     };
@@ -26,6 +28,12 @@ interface TurnstileFieldProps {
   onToken: (token: string) => void;
   onExpire: () => void;
   onError: () => void;
+  hideLabel?: boolean;
+}
+
+export interface TurnstileFieldHandle {
+  execute: () => boolean;
+  isReady: () => boolean;
 }
 
 function loadTurnstileScript(): Promise<void> {
@@ -55,16 +63,30 @@ export function getTurnstileSiteKey(): string | undefined {
   return key || undefined;
 }
 
-export function TurnstileField({ onToken, onExpire, onError }: TurnstileFieldProps) {
+export const TurnstileField = forwardRef<TurnstileFieldHandle, TurnstileFieldProps>(function TurnstileField(
+  { onToken, onExpire, onError, hideLabel = false },
+  ref,
+) {
   const siteKey = getTurnstileSiteKey();
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
+  const readyRef = useRef(false);
   const hintId = useId();
+
+  useImperativeHandle(ref, () => ({
+    isReady: () => readyRef.current && widgetIdRef.current !== null,
+    execute: () => {
+      if (!readyRef.current || !widgetIdRef.current || !window.turnstile) return false;
+      window.turnstile.execute(widgetIdRef.current);
+      return true;
+    },
+  }));
 
   useEffect(() => {
     if (!siteKey || !containerRef.current) return;
 
     let cancelled = false;
+    readyRef.current = false;
 
     loadTurnstileScript()
       .then(() => {
@@ -72,15 +94,18 @@ export function TurnstileField({ onToken, onExpire, onError }: TurnstileFieldPro
         widgetIdRef.current = window.turnstile.render(containerRef.current, {
           sitekey: siteKey,
           theme: 'light',
+          execution: 'execute',
           callback: onToken,
           'expired-callback': onExpire,
           'error-callback': onError,
         });
+        readyRef.current = true;
       })
       .catch(() => onError());
 
     return () => {
       cancelled = true;
+      readyRef.current = false;
       if (widgetIdRef.current && window.turnstile) {
         window.turnstile.remove(widgetIdRef.current);
         widgetIdRef.current = null;
@@ -92,10 +117,12 @@ export function TurnstileField({ onToken, onExpire, onError }: TurnstileFieldPro
 
   return (
     <div className="booking-turnstile">
-      <p id={hintId} className="booking-turnstile__label">
-        Quick check — confirm you&apos;re human
-      </p>
-      <div ref={containerRef} aria-describedby={hintId} />
+      {hideLabel ? null : (
+        <p id={hintId} className="booking-turnstile__label">
+          Quick check — we&apos;ll confirm you&apos;re human when you submit
+        </p>
+      )}
+      <div ref={containerRef} aria-describedby={hideLabel ? undefined : hintId} />
     </div>
   );
-}
+});

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Button } from '@/components/Button';
 import { BookingRevealItem, BookingStepReveal } from '@/components/BookingStepReveal';
-import { TurnstileField, getTurnstileSiteKey } from '@/components/TurnstileField';
+import { TurnstileField, getTurnstileSiteKey, type TurnstileFieldHandle } from '@/components/TurnstileField';
 import { getSiteContent } from '@/lib/content';
 import {
   EMPTY_EVENT_INQUIRY,
@@ -103,6 +103,23 @@ function fieldInputProps(name: BookingFieldName, error?: string) {
 }
 
 const CLOSE_ANIM_MS = 280;
+const SUCCESS_AUTO_CLOSE_MS = 2000;
+const VERIFY_FAIL_CLOSE_MS = 2500;
+
+type BookingPhase = 'form' | 'verify' | 'sending' | 'success';
+
+function getModalTitle(phase: BookingPhase, fallback: string): string {
+  switch (phase) {
+    case 'verify':
+      return "Verifying you're human";
+    case 'sending':
+      return 'Sending your request';
+    case 'success':
+      return 'Request sent';
+    default:
+      return fallback;
+  }
+}
 
 function getCloseDuration(): number {
   if (typeof window === 'undefined') return CLOSE_ANIM_MS;
@@ -116,18 +133,18 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const openedAtRef = useRef(0);
   const dragRef = useRef({ active: false, startY: 0, offset: 0 });
+  const turnstileRef = useRef<TurnstileFieldHandle>(null);
+  const failCloseTimerRef = useRef<number | null>(null);
   const turnstileRequired = Boolean(getTurnstileSiteKey());
 
   const [step, setStep] = useState(0);
+  const [phase, setPhase] = useState<BookingPhase>('form');
   const [form, setForm] = useState<EventInquiryForm>(EMPTY_EVENT_INQUIRY);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [honeypot, setHoneypot] = useState('');
-  const [turnstileToken, setTurnstileToken] = useState('');
   const [turnstileKey, setTurnstileKey] = useState(0);
   const [isPresent, setIsPresent] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -160,16 +177,18 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
   }, [isClosing]);
 
   const reset = useCallback(() => {
+    if (failCloseTimerRef.current) {
+      window.clearTimeout(failCloseTimerRef.current);
+      failCloseTimerRef.current = null;
+    }
     setStep(0);
+    setPhase('form');
     setForm(EMPTY_EVENT_INQUIRY);
     setFieldErrors({});
     setSubmitError(null);
     setTurnstileError(null);
-    setSubmitting(false);
-    setSuccess(false);
     setDragOffset(0);
     setHoneypot('');
-    setTurnstileToken('');
     setTurnstileKey((current) => current + 1);
     openedAtRef.current = Date.now();
   }, []);
@@ -219,7 +238,34 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
     return () => {
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [isPresent, isClosing, requestClose, step, success]);
+  }, [isPresent, isClosing, requestClose, step, phase]);
+
+  useEffect(() => {
+    if (phase !== 'success') return;
+    const timer = window.setTimeout(() => requestClose(), SUCCESS_AUTO_CLOSE_MS);
+    return () => window.clearTimeout(timer);
+  }, [phase, requestClose]);
+
+  useEffect(() => {
+    if (phase !== 'verify' || !turnstileRequired) return;
+    const timer = window.setTimeout(() => {
+      if (!turnstileRef.current?.execute()) {
+        setTurnstileError('Human verification failed to load. Closing…');
+        failCloseTimerRef.current = window.setTimeout(() => requestClose(), VERIFY_FAIL_CLOSE_MS);
+      }
+    }, 150);
+    return () => window.clearTimeout(timer);
+  }, [phase, turnstileRequired, turnstileKey, requestClose]);
+
+  const failVerificationAndClose = useCallback(
+    (message: string) => {
+      setTurnstileError(message);
+      setPhase('verify');
+      if (failCloseTimerRef.current) window.clearTimeout(failCloseTimerRef.current);
+      failCloseTimerRef.current = window.setTimeout(() => requestClose(), VERIFY_FAIL_CLOSE_MS);
+    },
+    [requestClose],
+  );
 
   const focusFirstError = (errors: FieldErrors) => {
     const firstKey = Object.keys(errors)[0] as BookingFieldName | undefined;
@@ -259,23 +305,59 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
     setTurnstileError(null);
   };
 
-  const onTurnstileToken = useCallback((token: string) => {
-    setTurnstileToken(token);
-    setTurnstileError(null);
+  const sendInquiry = useCallback(async (token: string) => {
+    setPhase('sending');
     setSubmitError(null);
-  }, []);
+    setTurnstileError(null);
+    const result = await submitEventInquiry(form, {
+      turnstileToken: token || undefined,
+      openedAt: openedAtRef.current,
+      website: honeypot,
+    });
+
+    if (!result.ok) {
+      setSubmitError(result.error);
+      setTurnstileKey((current) => current + 1);
+      setPhase('form');
+      setStep(BOOKING_STEPS.length - 1);
+      return;
+    }
+
+    setPhase('success');
+  }, [form, honeypot]);
+
+  const onTurnstileToken = useCallback(
+    (token: string) => {
+      setTurnstileError(null);
+      setSubmitError(null);
+      void sendInquiry(token);
+    },
+    [sendInquiry],
+  );
 
   const onTurnstileExpire = useCallback(() => {
-    setTurnstileToken('');
-  }, []);
+    failVerificationAndClose('Verification expired. Closing…');
+  }, [failVerificationAndClose]);
 
   const onTurnstileError = useCallback(() => {
-    setTurnstileToken('');
-    setTurnstileError('Human verification failed to load. Please refresh and try again.');
-  }, []);
+    failVerificationAndClose('Human verification failed. Closing…');
+  }, [failVerificationAndClose]);
+
+  const beginSubmit = () => {
+    if (turnstileRequired) {
+      setTurnstileError(null);
+      setSubmitError(null);
+      setTurnstileKey((current) => current + 1);
+      setPhase('verify');
+      return;
+    }
+    void sendInquiry('');
+  };
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (phase !== 'form') return;
+
     if (step < BOOKING_STEPS.length - 1) {
       goNext();
       return;
@@ -294,33 +376,13 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
       return;
     }
 
-    if (turnstileRequired && !turnstileToken) {
-      setTurnstileError('Please complete the human verification check.');
-      return;
-    }
-
-    setSubmitting(true);
-    setSubmitError(null);
-    setTurnstileError(null);
-    const result = await submitEventInquiry(form, {
-      turnstileToken: turnstileToken || undefined,
-      openedAt: openedAtRef.current,
-      website: honeypot,
-    });
-    setSubmitting(false);
-
-    if (!result.ok) {
-      setSubmitError(result.error);
-      setTurnstileToken('');
-      setTurnstileKey((current) => current + 1);
-      return;
-    }
-
-    setSuccess(true);
+    beginSubmit();
   };
 
+  const isBusy = phase === 'verify' || phase === 'sending';
+
   const canStartSheetDrag = (target: EventTarget | null) => {
-    if (!window.matchMedia('(max-width: 768px)').matches || isClosing) return false;
+    if (isBusy || !window.matchMedia('(max-width: 768px)').matches || isClosing) return false;
     const el = target as HTMLElement | null;
     if (!el) return false;
     if (el.closest('.booking-modal__close')) return false;
@@ -390,7 +452,7 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
           <div>
             <p className="booking-modal__eyebrow">Event questionnaire</p>
             <h2 id={titleId} className="booking-modal__title">
-              {success ? 'Request sent' : site.sections.contact.title}
+              {getModalTitle(phase, site.sections.contact.title)}
             </h2>
           </div>
           <button
@@ -406,7 +468,7 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
           </button>
         </header>
 
-        {!success ? (
+        {phase === 'form' ? (
           <>
             <div className="booking-modal__progress" aria-hidden="true">
               {BOOKING_STEPS.map((item, index) => (
@@ -599,19 +661,6 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
                           <ReviewRow label="Additional notes" value={form.additionalInfo} />
                         </dl>
                       </BookingRevealItem>
-                      <BookingRevealItem index={2}>
-                        <TurnstileField
-                          key={turnstileKey}
-                          onToken={onTurnstileToken}
-                          onExpire={onTurnstileExpire}
-                          onError={onTurnstileError}
-                        />
-                        {turnstileError ? (
-                          <p className="booking-field__error booking-turnstile__error" role="alert">
-                            {turnstileError}
-                          </p>
-                        ) : null}
-                      </BookingRevealItem>
                     </div>
                   </BookingStepReveal>
                 ) : null}
@@ -625,18 +674,40 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
 
               <div className="booking-modal__actions">
                 {step > 0 ? (
-                  <Button type="button" variant="secondary" onClick={goBack} disabled={submitting}>
+                  <Button type="button" variant="secondary" onClick={goBack}>
                     Back
                   </Button>
                 ) : (
                   <span />
                 )}
-                <Button type="submit" disabled={submitting}>
-                  {submitting ? 'Sending…' : step === BOOKING_STEPS.length - 1 ? 'Submit request' : 'Continue'}
+                <Button type="submit">
+                  {step === BOOKING_STEPS.length - 1 ? 'Submit request' : 'Continue'}
                 </Button>
               </div>
             </form>
           </>
+        ) : phase === 'verify' ? (
+          <div className="booking-modal__phase" aria-live="polite">
+            <p className="booking-modal__phase-lead">Complete the quick check below, then we&apos;ll send your request.</p>
+            <TurnstileField
+              ref={turnstileRef}
+              key={turnstileKey}
+              hideLabel
+              onToken={onTurnstileToken}
+              onExpire={onTurnstileExpire}
+              onError={onTurnstileError}
+            />
+            {turnstileError ? (
+              <p className="booking-field__error booking-turnstile__error" role="alert">
+                {turnstileError}
+              </p>
+            ) : null}
+          </div>
+        ) : phase === 'sending' ? (
+          <div className="booking-modal__phase booking-modal__phase--sending" aria-live="polite">
+            <p className="booking-modal__phase-lead">Sending your event request…</p>
+            <div className="booking-modal__spinner" aria-hidden="true" />
+          </div>
         ) : (
           <BookingStepReveal stepKey="success" className="booking-modal__success">
             <BookingRevealItem index={0}>
@@ -647,11 +718,6 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
             </BookingRevealItem>
             <BookingRevealItem index={1}>
               <p className="booking-modal__success-note">{site.contact.responseTime}</p>
-            </BookingRevealItem>
-            <BookingRevealItem index={2}>
-              <Button type="button" full onClick={requestClose}>
-                Done
-              </Button>
             </BookingRevealItem>
           </BookingStepReveal>
         )}

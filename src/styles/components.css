@@ -1705,6 +1705,55 @@ button.here-item__link {
   color: var(--clr-ink-60);
 }
 
+.booking-modal__phase {
+  padding: 1.25rem 1.25rem 2rem;
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.booking-modal__phase--sending {
+  min-height: 10rem;
+  align-content: center;
+}
+
+.booking-modal__phase-lead {
+  margin: 0;
+  max-width: 28ch;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--clr-ink-60);
+}
+
+.booking-modal__phase .booking-turnstile {
+  width: 100%;
+  justify-items: center;
+}
+
+.booking-modal__spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid var(--clr-ink-15);
+  border-top-color: var(--clr-teal-deep);
+  border-radius: var(--radius-pill);
+  animation: booking-spin 700ms linear infinite;
+}
+
+@keyframes booking-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-modal__spinner {
+    animation: none;
+    border-top-color: var(--clr-teal-deep);
+  }
+}
+
 @media (max-width: 768px) {
   .booking-modal {
     align-items: flex-end;

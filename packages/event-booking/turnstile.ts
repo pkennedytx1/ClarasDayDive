@@ -18,7 +18,10 @@ export async function verifyTurnstileToken(token: string, ip: string): Promise<b
 
   if (!response.ok) return false;
 
-  const payload = (await response.json()) as { success?: boolean };
+  const payload = (await response.json()) as { success?: boolean; 'error-codes'?: string[] };
+  if (payload.success !== true) {
+    console.error('Turnstile verification failed', payload['error-codes'] ?? payload);
+  }
   return payload.success === true;
 }
 
