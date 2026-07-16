@@ -31,7 +31,7 @@
           "paragraphs": [
             "When you use Ask Clara, your message and recent chat history are sent to our secure API, which uses Amazon Web Services (AWS) Bedrock to generate a response. We use this data only to answer your question and improve the reliability of the service.",
             "Ask Clara does not require an account. We do not use your chat messages to train public AI models. Chat requests may be logged temporarily for abuse prevention and cost monitoring, then discarded.",
-            "Do not share sensitive personal information (such as payment details or government IDs) in Ask Clara. For private event bookings, use the contact email or phone listed on our site."
+            "Do not share sensitive personal information (such as payment details or government IDs) in Ask Clara. For private event bookings, use the contact email listed on our site."
           ]
         },
         {
@@ -206,7 +206,7 @@
         {
           "heading": "Feedback and assistance",
           "paragraphs": [
-            "We welcome accessibility feedback. Contact us using the email or phone in our Contact section. Please include the page URL or describe the issue you experienced. We aim to respond within a few business days."
+            "We welcome accessibility feedback. Contact us using the email in our Plan an event section. Please include the page URL or describe the issue you experienced. We aim to respond within a few business days."
           ]
         },
         {

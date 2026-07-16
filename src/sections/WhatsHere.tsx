@@ -1,8 +1,10 @@
 import { Reveal } from '@/components/Reveal';
-import { getWhatsHereContent } from '@/lib/content';
+import { WhatsHereHoursPill } from '@/components/WhatsHereHoursPill';
+import { getSiteContent, getWhatsHereContent } from '@/lib/content';
 
 export function WhatsHere() {
   const whatsHere = getWhatsHereContent();
+  const site = getSiteContent();
 
   return (
     <section id="here" className="section section--here section--compact" aria-labelledby="here-heading">
@@ -11,9 +13,9 @@ export function WhatsHere() {
         <Reveal>
           <header className="section-head section-head--brand">
             <div>
-              <p className="eyebrow eyebrow--teal">More than a bar</p>
+              <p className="eyebrow eyebrow--teal">{site.sections.whatsHere.eyebrow}</p>
               <h2 id="here-heading" className="display-lg">
-                What's here
+                {site.sections.whatsHere.title}
               </h2>
             </div>
           </header>
@@ -26,7 +28,7 @@ export function WhatsHere() {
                 <div className="here-item__content">
                   <p className="eyebrow">{t.tag}</p>
                   <h3 className="here-item__title">{t.title}</h3>
-                  {t.hours && <p className="here-item__hours">{t.hours}</p>}
+                  {t.hours ? <WhatsHereHoursPill hours={t.hours} vendorName={t.title} /> : null}
                   <p className="here-item__body">{t.body}</p>
                   {(t.websiteUrl || t.orderUrl) && (
                     <div className="here-item__links">

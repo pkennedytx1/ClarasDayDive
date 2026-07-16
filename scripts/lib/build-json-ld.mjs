@@ -19,16 +19,21 @@ function menuSections(drinks) {
     name: cat,
     hasMenuItem: drinks.items
       .filter((d) => d.cat === cat)
-      .map((item) => ({
-        '@type': 'MenuItem',
-        name: item.name,
-        description: item.desc,
-        offers: {
-          '@type': 'Offer',
-          price: item.price.replace('$', ''),
-          priceCurrency: 'USD',
-        },
-      })),
+      .map((item) => {
+        const menuItem = {
+          '@type': 'MenuItem',
+          name: item.name,
+        };
+        if (item.desc) menuItem.description = item.desc;
+        if (item.price) {
+          menuItem.offers = {
+            '@type': 'Offer',
+            price: item.price.replace('$', ''),
+            priceCurrency: 'USD',
+          };
+        }
+        return menuItem;
+      }),
   }));
 }
 
@@ -68,7 +73,6 @@ export function buildJsonLd({ site, drinks, faq, events }) {
       `${baseUrl}/assets/scarf.jpg`,
     ],
     logo: `${baseUrl}/assets/wordmark-color.png`,
-    telephone: site.contact.phone,
     email: site.contact.email,
     priceRange: site.seo.priceRange,
     servesCuisine: 'Bar food',

@@ -16,6 +16,13 @@ export type { SiteEvent } from './events';
 
 export type SiteContent = typeof site;
 export type DrinksContent = typeof drinks;
+export type DrinkItem = {
+  cat: string;
+  name: string;
+  desc?: string;
+  price?: string;
+  badge?: string;
+};
 export type EventsContent = typeof events;
 export type WhatsHereContent = typeof whatsHere;
 export type GalleryItem = {
@@ -44,8 +51,8 @@ export function getSiteContent(): SiteContent {
   return site;
 }
 
-export function getDrinksContent(): DrinksContent {
-  return drinks;
+export function getDrinksContent(): { categories: string[]; items: DrinkItem[] } {
+  return drinks as { categories: string[]; items: DrinkItem[] };
 }
 
 export function getEventsContent(): EventsContent {
@@ -75,7 +82,7 @@ export function getPolicyBySlug(slug: string): LegalPolicy | undefined {
   return legal.policies.find((p) => p.slug === slug);
 }
 
-/** Inserts Gallery nav link after Visit when the gallery has active items. */
+/** Inserts Gallery nav link after Plan an event when the gallery has active items. */
 export function getNavLinks(): NavLink[] {
   const links = [...site.nav.links];
   if (getGalleryContent().items.length === 0) return links;

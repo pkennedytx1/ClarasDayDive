@@ -1,37 +1,50 @@
 key,value
 site_name,Clara's Day Dive
 tagline,Dive in for a day drink.
-description,"A neighborhood coupe bar with cold drinks, good shade, and a rotating cast of food trucks. Sun's out, penguins in."
-hero_meta,"№ 01 — Open till midnight, seven days"
-location_eyebrow,East Austin · Coupe bar & patio
-address,1814 E Cesar Chavez St
-city,"Austin, TX 78702"
+description,"A neighborhood bar with coffee, sports, cocktails, good shade, and food trucks."
+hero_meta,"Open noon to 2am, seven days a week"
+location_eyebrow,South Austin Bar & Patio - Coffee, Sports, & Cocktails
+address,10700 Menchaca Rd
+city,"Austin, TX 78748"
 region,TX
-postal_code,78702
+postal_code,78748
 country,US
 instagram_url,https://instagram.com/clarasdaydive
 facebook_url,https://facebook.com/clarasdaydive
 tiktok_url,https://tiktok.com/@clarasdaydive
 contact_name,Your event coordinator
 contact_role,Events & private bookings
-contact_email,events@example.com
-contact_phone,(512) 555-0100
+contact_email,events@clarasdaydive.com
 contact_response_time,We typically reply within a day.
-events_host_note,Want to host something on our patio? Reach out below — we'd love to hear your idea.
+events_host_note,Want to host something on our patio? Tell us about your event below — we'd love to hear your idea.
+events_booking_cta,Request an event
+events_inquiry_email,pkennedytx1@gmail.com
+events_inquiry_from,events@clarasdaydive.com
 events_source,sheet
 ask_clara_eyebrow,Ask Clara
 ask_clara_title,Not sure what to order?
 ask_clara_placeholder,what should I drink today?
 ask_clara_button,Dive in
 ask_clara_fallback,"Clara says: come on in — we'll pour you something good."
+drinks_eyebrow,What's pouring
+drinks_title,The drinks menu
+events_eyebrow,On the calendar
+events_title,Upcoming events
+contact_eyebrow,Book the bar
+contact_title,Plan your event
+contact_lead,"Birthdays, send-offs, watch parties — tell us about your event and we'll get back to you."
+whats_here_eyebrow,More than a bar
+whats_here_title,What's here
+faq_eyebrow,Good to know
+faq_title,Questions answered
 seo_site_url,https://www.clarasdaydive.com
-seo_title,Clara's Day Dive — East Austin Coupe Bar & Patio
-seo_description,"Dive in for a day drink at Clara's Day Dive — an East Austin coupe bar and patio with spritzes, frozen cocktails, food trucks, morning coffee, and live events."
+seo_title,Clara's Day Dive — South Austin Bar & Patio
+seo_description,"Dive in for a day drink at Clara's Day Dive — a South Austin bar and patio with cocktails, sports, food trucks, morning coffee, and live events."
 seo_og_image,/assets/scarf.jpg
-maps_url,https://maps.google.com/?q=1814+E+Cesar+Chavez+St,+Austin,+TX+78702
+maps_url,https://www.google.com/maps/place/10700+Menchaca+Rd,+Austin,+TX+78748/@30.1642161,-97.8338135,17z/data=!3m1!4b1!4m6!3m5!1s0x865b4c5655dc74f5:0x6bb790eb867bd137!8m2!3d30.1642115!4d-97.8312386!16s%2Fg%2F11cpl_6nwd?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D
 google_business_url,
 google_site_verification,u8VyfQfoCtJhUQEOypyGPsIkX-A11xD76_9iWE64zmw
 gallery_eyebrow,See for yourself
 gallery_title,Worth the shot
-under_construction,true
+under_construction,TRUE
 under_construction_password,102712

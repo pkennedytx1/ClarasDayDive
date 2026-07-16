@@ -4,37 +4,21 @@
       "icon": "food-truck",
       "tone": "cream",
       "tag": "Food truck",
-      "title": "Bird Bird Biscuit",
-      "body": "Biscuits, sandwiches, and breakfast on the patio — weekdays.",
-      "hours": "Mon–Fri · 8am–2pm",
-      "websiteUrl": "https://birdbirdbiscuit.com",
-      "orderUrl": "https://birdbirdbiscuit.com"
-    },
-    {
-      "icon": "food-truck",
-      "tone": "white",
-      "tag": "Food truck",
-      "title": "Veracruz All Natural",
-      "body": "Tacos, migas, and aguas frescas out back on weekends.",
-      "hours": "Sat–Sun · 9am–3pm",
-      "websiteUrl": "https://veracruztacos.com",
-      "orderUrl": "https://veracruztacos.com"
+      "title": "Guppys",
+      "body": "Indian Fried Chicken",
+      "hours": "Mon · Closed, Tues-Wed · 12pm–12am, Thur-Fri · 12pm–2am, Sat · 11am–2am, Sun · 11am–10pm",
+      "websiteUrl": "https://guppysindianfriedchicken.com/",
+      "orderUrl": "https://www.toasttab.com/local/order/guppysatx"
     },
     {
       "icon": "coffee",
       "tone": "white",
-      "tag": "Til noon",
-      "title": "Morning coffee",
-      "body": "Local roast, cold brew on tap, and a flat white that holds up to the heat.",
-      "hours": "Daily · 8am–12pm"
-    },
-    {
-      "icon": "sun",
-      "tone": "white",
-      "tag": "Open late",
-      "title": "The patio",
-      "body": "Shaded, dog-friendly, string lights overhead. Open till midnight when the weather plays nice.",
-      "hours": "Daily · bar hours"
+      "tag": "Coffee",
+      "title": "Puente Coffee Co",
+      "body": "House roasted coffee, espresso, and craft coffee drinks",
+      "hours": "Thur-Sat · 7am–2pm, Sun · 8am–1pm, Mon-Wed · 7am–12pm",
+      "websiteUrl": "https://puente.coffee",
+      "orderUrl": "https://puente.coffee/order"
     }
   ]
 }

@@ -54,7 +54,7 @@ Answer using general bar and cocktail knowledge. Do NOT invent specific menu ite
 
 ${COCKTAIL_EDUCATION} When the context below covers the topic, prefer the context for anything specific to Clara's.
 
-Answer using the context below about drinks, food, menu, hours, events, patio, parking, restrooms, and visiting. Never invent menu items, prices, or events not in the context. For private event or booking questions, direct guests to the contact email and phone in the context.
+Answer using the context below about drinks, food, menu, hours, events, patio, parking, restrooms, and visiting. Never invent menu items, prices, or events not in the context. For private event or booking questions, direct guests to the contact email in the context.
 
 Context:
 ${context}`;

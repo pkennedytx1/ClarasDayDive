@@ -1,50 +1,49 @@
 {
   "categories": [
     "All",
-    "Classic",
-    "Frozen",
-    "Spritz",
-    "Zero-proof"
+    "Cocktails",
+    "Wine"
   ],
   "items": [
     {
-      "cat": "Spritz",
-      "name": "Clara's Spritz",
-      "price": "$11",
-      "desc": "Aperol, prosecco, a twist of grapefruit oil.",
-      "badge": "House"
+      "cat": "Cocktails",
+      "name": "Blueberry Lemonade",
+      "desc": "Deep Eddy Lemon Vodka, Blueberry Syrup, Lemonade"
     },
     {
-      "cat": "Spritz",
-      "name": "Limoncello Fizz",
-      "price": "$12",
-      "desc": "Limoncello, soda, lemon, a little thyme."
+      "cat": "Cocktails",
+      "name": "Old Fashioned",
+      "desc": "Rittenhouse Rye, Demerara Syrup, Bitters"
     },
     {
-      "cat": "Frozen",
-      "name": "Frozen Negroni",
-      "price": "$13",
-      "desc": "Campari, gin, sweet vermouth — slushied.",
-      "badge": "Seasonal"
+      "cat": "Cocktails",
+      "name": "Beach Bum",
+      "desc": "Flor de Cana Rum, Coconut, Vanilla, Lime, Pinch of Salt"
     },
     {
-      "cat": "Frozen",
-      "name": "Frosé",
-      "price": "$12",
-      "desc": "Rosé, strawberry, lemon. Dangerously easy."
+      "cat": "Cocktails",
+      "name": "Seltzer Marg",
+      "desc": "Pantalones Blanco Tequila, Agave, Lime, Seltzer of Your Choice"
     },
     {
-      "cat": "Classic",
-      "name": "Coupe Martini",
-      "price": "$14",
-      "desc": "Gin or vodka, dry, lemon or olive."
+      "cat": "Cocktails",
+      "name": "Hugo Spritz",
+      "desc": "Tito's Vodka, Elderflower, Sparkling Wine, Mint"
     },
     {
-      "cat": "Zero-proof",
-      "name": "Penguin Punch",
-      "price": "$9",
-      "desc": "Frozen, very pink, all the fun, none of the buzz.",
-      "badge": "No ABV"
+      "cat": "Wine",
+      "name": "Scarpetta Sangiovese",
+      "desc": "Red · Toscana, Italy"
+    },
+    {
+      "cat": "Wine",
+      "name": "Scarpetta Bianco",
+      "desc": "White · Toscana, Italy"
+    },
+    {
+      "cat": "Wine",
+      "name": "Scarpetta Rosato",
+      "desc": "Rosé · Toscana, Italy"
     }
   ]
 }

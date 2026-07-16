@@ -10,34 +10,33 @@
 - **Age policy:** 21+ with valid ID
 
 ## Location
-- **Address:** 1814 E Cesar Chavez St, Austin, TX 78702
-- **Coordinates:** 30.2588, -97.7264
-- **Directions:** https://maps.google.com/?q=1814+E+Cesar+Chavez+St,+Austin,+TX+78702
+- **Address:** 10700 Menchaca Rd, Austin, TX 78748
+- **Coordinates:** 30.1642115, -97.8312386
+- **Directions:** https://www.google.com/maps/place/10700+Menchaca+Rd,+Austin,+TX+78748/@30.1642161,-97.8338135,17z/data=!3m1!4b1!4m6!3m5!1s0x865b4c5655dc74f5:0x6bb790eb867bd137!8m2!3d30.1642115!4d-97.8312386!16s%2Fg%2F11cpl_6nwd?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D
 - **Dog-friendly patio:** Yes
 
 ## Hours
-- Mon–Thu · 3pm–12am
-- Fri · 12pm–2am
-- Sat–Sun · 11am–2am
+- Daily · noon–2am
 
 ## Contact
-- **Events email:** events@example.com
-- **Events phone:** (512) 555-0100
+- **Events email:** events@clarasdaydive.com
 - **Instagram:** https://instagram.com/clarasdaydive
 - **Facebook:** https://facebook.com/clarasdaydive
 - **TikTok:** https://tiktok.com/@clarasdaydive
 - **Book private events:** https://www.clarasdaydive.com/contact
 
 ## About
-Clara's Day Dive is an East Austin coupe bar and patio at 1814 E Cesar Chavez St. We pour day drinks, Aperol spritzes, frozen frosé, and zero-proof Penguin Punch on a dog-friendly patio with rotating food trucks and morning coffee. Open afternoons through late night.
+Clara's Day Dive is a South Austin bar and patio at 10700 Menchaca Rd. Coffee in the morning, sports on the screens, cocktails on the patio, and food trucks out back. Open noon to 2am, seven days a week.
 
 ## Signature drinks
-- **Clara's Spritz** ($11) — House: Aperol, prosecco, a twist of grapefruit oil.
-- **Limoncello Fizz** ($12): Limoncello, soda, lemon, a little thyme.
-- **Frozen Negroni** ($13) — Seasonal: Campari, gin, sweet vermouth — slushied.
-- **Frosé** ($12): Rosé, strawberry, lemon. Dangerously easy.
-- **Coupe Martini** ($14): Gin or vodka, dry, lemon or olive.
-- **Penguin Punch** ($9) — No ABV: Frozen, very pink, all the fun, none of the buzz.
+- **Blueberry Lemonade** (undefined): Deep Eddy Lemon Vodka, Blueberry Syrup, Lemonade
+- **Old Fashioned** (undefined): Rittenhouse Rye, Demerara Syrup, Bitters
+- **Beach Bum** (undefined): Flor de Cana Rum, Coconut, Vanilla, Lime, Pinch of Salt
+- **Seltzer Marg** (undefined): Pantalones Blanco Tequila, Agave, Lime, Seltzer of Your Choice
+- **Hugo Spritz** (undefined): Tito's Vodka, Elderflower, Sparkling Wine, Mint
+- **Scarpetta Sangiovese** (undefined): Red · Toscana, Italy
+- **Scarpetta Bianco** (undefined): White · Toscana, Italy
+- **Scarpetta Rosato** (undefined): Rosé · Toscana, Italy
 
 ## Upcoming events
 - **Patio vinyl night** (JUL 18): 7–10pm · Free. Soul & disco on the turntable, frosé specials all night.
@@ -50,22 +49,19 @@ Clara's Day Dive is an East Austin coupe bar and patio at 1814 E Cesar Chavez St
 
 ## Frequently asked questions
 ### What is Clara's Day Dive?
-Clara's Day Dive is a neighborhood coupe bar and patio in East Austin, Texas. We serve day drinks, spritzes, frozen cocktails, and zero-proof options in a warm, retro-playful setting with rotating food trucks and morning coffee.
+Clara's Day Dive is a neighborhood bar and patio in South Austin, Texas. We offer coffee in the morning, sports, cocktails, and an extensive selection of draft beer. We have plenty of shade and we are open late.
 
 ### Where is Clara's Day Dive located?
-1814 E Cesar Chavez St, Austin, TX 78702 — on the east side, with a shaded dog-friendly patio open late.
+10700 Menchaca Rd, Austin, TX 78748
 
 ### What are Clara's Day Dive hours?
-Monday through Thursday 3pm to midnight; Friday noon to 2am; Saturday and Sunday 11am to 2am.
+12pm–2am, seven days a week. Puente Coffee Co opens at 7am every day.
 
 ### Does Clara's Day Dive serve food?
-We host rotating food trucks — Bird Bird Biscuit on weekdays and Veracruz tacos on weekends — plus morning coffee until noon.
+Yes, we have a rotating food truck selection.
 
 ### Can I book Clara's Day Dive for a private event?
-Yes. We host birthdays, send-offs, and patio gatherings. Reach out to our event coordinator by email or phone — details are on the Book the bar section of our website.
-
-### What drinks is Clara's Day Dive known for?
-House favorites include Clara's Spritz (Aperol, prosecco, grapefruit), frozen Frosé, the Penguin Punch zero-proof slush, and seasonal frozen Negronis.
+Yes. We would love to host your events. Drop us a line with details.
 
 ## Ask Clara
 - On-site AI assistant for drink suggestions and venue questions: https://www.clarasdaydive.com/ask-clara

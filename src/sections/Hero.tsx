@@ -20,7 +20,7 @@ export function Hero() {
           </div>
 
           <h1 id="hero-heading" className="hero__headline">
-            Dive in for a <em className="hero__accent">day</em> drink.
+            {site.tagline}
           </h1>
 
           <p className="hero__lead">{site.description}</p>
@@ -43,7 +43,7 @@ export function Hero() {
             </div>
             <figcaption>
               <Link to="/ask-clara" className="hero__frame-cta">
-                Dive in for a day drink
+                {site.tagline}
               </Link>
             </figcaption>
           </figure>

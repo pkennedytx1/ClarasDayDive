@@ -14,11 +14,15 @@ import { Footer } from '@/sections/Footer';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { scrollToSection, scrollToHash } from '@/lib/scroll';
 import { getNavLinks, getHomeSectionIds } from '@/lib/content';
+import { useEventBooking } from '@/context/EventBookingContext';
+import { EventBookingModal } from '@/components/EventBookingModal';
+
 import { LEGACY_HASH_TO_PATH, pathToSectionId } from '@/lib/sections';
 
 export function HomePage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { open, closeBooking } = useEventBooking();
   const navLinks = getNavLinks();
   const sectionIds = getHomeSectionIds();
   const activeHref = useActiveSection(sectionIds);
@@ -74,6 +78,7 @@ export function HomePage() {
         <Gallery />
       </main>
       <Footer />
+      <EventBookingModal open={open} onClose={closeBooking} />
     </>
   );
 }

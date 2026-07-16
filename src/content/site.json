@@ -1,45 +1,42 @@
 {
   "name": "Clara's Day Dive",
   "tagline": "Dive in for a day drink.",
-  "description": "A neighborhood coupe bar with cold drinks, good shade, and a rotating cast of food trucks. Sun's out, penguins in.",
+  "description": "A neighborhood bar with coffee, sports, cocktails, good shade, and food trucks.",
   "hero": {
-    "meta": "№ 01 — Open till midnight, seven days"
+    "meta": "Open noon to 2am, seven days a week"
   },
   "seo": {
     "siteUrl": "https://www.clarasdaydive.com",
-    "title": "Clara's Day Dive — East Austin Coupe Bar & Patio",
-    "description": "Dive in for a day drink at Clara's Day Dive — an East Austin coupe bar and patio with spritzes, frozen cocktails, food trucks, morning coffee, and live events.",
-    "longDescription": "Clara's Day Dive is an East Austin coupe bar and patio at 1814 E Cesar Chavez St. We pour day drinks, Aperol spritzes, frozen frosé, and zero-proof Penguin Punch on a dog-friendly patio with rotating food trucks and morning coffee. Open afternoons through late night.",
+    "title": "Clara's Day Dive — South Austin Bar & Patio",
+    "description": "Dive in for a day drink at Clara's Day Dive — a South Austin bar and patio with cocktails, sports, food trucks, morning coffee, and live events.",
+    "longDescription": "Clara's Day Dive is a South Austin bar and patio at 10700 Menchaca Rd. Coffee in the morning, sports on the screens, cocktails on the patio, and food trucks out back. Open noon to 2am, seven days a week.",
     "keywords": [
-      "East Austin bar",
-      "coupe bar Austin",
-      "day drink Austin",
+      "South Austin bar",
       "patio bar Austin",
-      "spritz bar",
+      "sports bar Austin",
+      "cocktail bar Austin",
       "food trucks Austin bar",
       "Clara's Day Dive"
     ],
     "geo": {
-      "latitude": 30.2588,
-      "longitude": -97.7264
+      "latitude": 30.1642115,
+      "longitude": -97.8312386
     },
     "priceRange": "$$",
     "ogImage": "/assets/scarf.jpg",
     "googleSiteVerification": "u8VyfQfoCtJhUQEOypyGPsIkX-A11xD76_9iWE64zmw"
   },
-  "mapsUrl": "https://maps.google.com/?q=1814+E+Cesar+Chavez+St,+Austin,+TX+78702",
+  "mapsUrl": "https://www.google.com/maps/place/10700+Menchaca+Rd,+Austin,+TX+78748/@30.1642161,-97.8338135,17z/data=!3m1!4b1!4m6!3m5!1s0x865b4c5655dc74f5:0x6bb790eb867bd137!8m2!3d30.1642115!4d-97.8312386!16s%2Fg%2F11cpl_6nwd?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",
   "location": {
-    "eyebrow": "East Austin · Coupe bar & patio",
-    "address": "1814 E Cesar Chavez St",
-    "city": "Austin, TX 78702",
+    "eyebrow": "South Austin Bar & Patio - Coffee, Sports, & Cocktails",
+    "address": "10700 Menchaca Rd",
+    "city": "Austin, TX 78748",
     "region": "TX",
-    "postalCode": "78702",
+    "postalCode": "78748",
     "country": "US"
   },
   "hours": [
-    "Mon–Thu · 3pm–12am",
-    "Fri · 12pm–2am",
-    "Sat–Sun · 11am–2am"
+    "Daily · noon–2am"
   ],
   "hoursStructured": [
     {
@@ -47,25 +44,13 @@
         "Monday",
         "Tuesday",
         "Wednesday",
-        "Thursday"
-      ],
-      "opens": "15:00",
-      "closes": "23:59"
-    },
-    {
-      "days": [
-        "Friday"
-      ],
-      "opens": "12:00",
-      "closes": "2:00"
-    },
-    {
-      "days": [
+        "Thursday",
+        "Friday",
         "Saturday",
         "Sunday"
       ],
-      "opens": "11:00",
-      "closes": "2:00"
+      "opens": "12:00",
+      "closes": "02:00"
     }
   ],
   "social": {
@@ -73,13 +58,12 @@
     "facebook": "https://facebook.com/clarasdaydive",
     "tiktok": "https://tiktok.com/@clarasdaydive",
     "googleBusiness": "",
-    "googleMaps": "https://maps.google.com/?q=1814+E+Cesar+Chavez+St,+Austin,+TX+78702"
+    "googleMaps": "https://www.google.com/maps/place/10700+Menchaca+Rd,+Austin,+TX+78748/@30.1642161,-97.8338135,17z/data=!3m1!4b1!4m6!3m5!1s0x865b4c5655dc74f5:0x6bb790eb867bd137!8m2!3d30.1642115!4d-97.8312386!16s%2Fg%2F11cpl_6nwd?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D"
   },
   "contact": {
     "coordinatorName": "Your event coordinator",
     "coordinatorRole": "Events & private bookings",
-    "email": "events@example.com",
-    "phone": "(512) 555-0100",
+    "email": "events@clarasdaydive.com",
     "responseTime": "We typically reply within a day."
   },
   "search": {
@@ -88,14 +72,14 @@
     "placeholder": "what should I drink today?",
     "buttonLabel": "Dive in",
     "suggestions": [
-      "Something pink & frozen",
-      "Low-ABV spritz",
-      "What's on the patio?"
+      "What are your hours?",
+      "What's on the food truck?",
+      "Can I book a private event?"
     ],
     "responses": {
-      "Something pink & frozen": "Try the Penguin Punch — frozen, very pink, zero-proof. Or a Frosé if you want the buzz.",
-      "Low-ABV spritz": "Clara's Spritz: Aperol, prosecco, a twist of grapefruit. Sessionable all afternoon.",
-      "What's on the patio?": "Shade, string lights, dog bowls, and Bird Bird Biscuit til 2. Open till midnight."
+      "What are your hours?": "We're open 12pm–2am, seven days a week. Puente Coffee Co opens at 7am every day for morning coffee.",
+      "What's on the food truck?": "We have a rotating food truck selection — check What's Here on our site to see who's parked out back.",
+      "Can I book a private event?": "Yes — we'd love to host your event. Head to Plan an event on our site or email events@clarasdaydive.com with the details."
     },
     "fallback": "Clara says: come on in — we'll pour you something good."
   },
@@ -118,12 +102,36 @@
         "href": "/faq"
       },
       {
-        "label": "Visit",
+        "label": "Plan an event",
         "href": "/contact"
       }
     ],
     "ctaLabel": "Book the bar",
     "ctaHref": "/contact"
+  },
+  "sections": {
+    "drinks": {
+      "eyebrow": "What's pouring",
+      "title": "The drinks menu"
+    },
+    "events": {
+      "eyebrow": "On the calendar",
+      "title": "Upcoming events",
+      "bookingCta": "Request an event"
+    },
+    "contact": {
+      "eyebrow": "Book the bar",
+      "title": "Plan your event",
+      "lead": "Birthdays, send-offs, watch parties — tell us about your event and we'll get back to you."
+    },
+    "whatsHere": {
+      "eyebrow": "More than a bar",
+      "title": "What's here"
+    },
+    "faq": {
+      "eyebrow": "Good to know",
+      "title": "Questions, answered"
+    }
   },
   "underConstruction": true,
   "underConstructionPassword": "102712"

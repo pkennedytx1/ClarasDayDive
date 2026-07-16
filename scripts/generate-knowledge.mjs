@@ -83,10 +83,9 @@ export function generateKnowledge(dir = contentDir) {
   chunks.push({
     id: 'settings-contact',
     type: 'settings',
-    text: `Contact ${site.contact.coordinatorName} (${site.contact.coordinatorRole}). Email: ${site.contact.email}. Phone: ${site.contact.phone}. ${site.contact.responseTime}`,
+    text: `Contact ${site.contact.coordinatorName} (${site.contact.coordinatorRole}). Email: ${site.contact.email}. ${site.contact.responseTime}`,
     keywords: extractKeywords(
       site.contact.email,
-      site.contact.phone,
       site.contact.coordinatorName,
       'contact',
       'book',

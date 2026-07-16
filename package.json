@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "vite",
     "sync:content": "node scripts/sync-from-sheets.mjs",
@@ -17,6 +20,7 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.750.0",
     "@aws-sdk/client-dynamodb": "^3.750.0",
+    "@aws-sdk/client-ses": "^3.750.0",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
     "googleapis": "^173.0.0",
@@ -26,12 +30,12 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.147",
-    "@types/node": "^22.10.2",
+    "@types/node": "^24.0.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
     "sharp": "^0.35.3",
-    "sst": "^3.6.28",
+    "sst": "^4.17.1",
     "typescript": "^5.7.2",
     "vite": "^6.0.3"
   }

@@ -144,7 +144,6 @@ ${site.hours.map((h) => `- ${h}`).join('\n')}
 
 ## Contact
 - **Events email:** ${site.contact.email}
-- **Events phone:** ${site.contact.phone}
 ${socialLines(site.social)}
 - **Book private events:** ${baseUrl}/contact
 
@@ -188,7 +187,6 @@ Canonical site: ${baseUrl}/
 
 ## Contact
 - Email: ${site.contact.email}
-- Phone: ${site.contact.phone}
 - Private events: ${baseUrl}/contact
 
 ${venueFacts ? `## Facts\n${venueFacts}\n` : ''}

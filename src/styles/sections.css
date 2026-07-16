@@ -219,4 +219,6 @@
 .section--contact .lead {
   color: var(--clr-cream);
   opacity: 0.78;
+  margin-top: 0.75rem;
+  max-width: 42ch;
 }

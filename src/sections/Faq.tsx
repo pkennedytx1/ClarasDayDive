@@ -1,8 +1,9 @@
 import { Reveal } from '@/components/Reveal';
-import { getFaqContent } from '@/lib/content';
+import { getFaqContent, getSiteContent } from '@/lib/content';
 
 export function Faq() {
   const faq = getFaqContent();
+  const site = getSiteContent();
 
   return (
     <section id="faq" className="section section--faq section--compact" aria-labelledby="faq-heading">
@@ -11,9 +12,9 @@ export function Faq() {
           <Reveal>
             <header className="section-head section-head--brand">
               <div>
-                <p className="eyebrow">Good to know</p>
+                <p className="eyebrow">{site.sections.faq.eyebrow}</p>
                 <h2 id="faq-heading" className="display-lg">
-                  Questions, answered
+                  {site.sections.faq.title}
                 </h2>
               </div>
             </header>

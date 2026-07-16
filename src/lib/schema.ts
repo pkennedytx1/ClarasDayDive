@@ -1,7 +1,7 @@
 import site from '@/content/site.json';
-import drinks from '@/content/drinks.json';
 import faq from '@/content/faq.json';
-import { getEventsContent } from './content';
+import { getDrinksContent, getEventsContent } from './content';
+import type { DrinkItem } from './content';
 import { buildEventSchemaItem } from './event-schema';
 
 const baseUrl = site.seo.siteUrl.replace(/\/$/, '');
@@ -34,22 +34,28 @@ function sameAsLinks(): string[] {
 }
 
 function menuSections() {
-  const categories = [...new Set(drinks.items.map((d) => d.cat))];
+  const drinkItems = getDrinksContent().items;
+  const categories = [...new Set(drinkItems.map((d) => d.cat))];
   return categories.map((cat) => ({
     '@type': 'MenuSection',
     name: cat,
-    hasMenuItem: drinks.items
+    hasMenuItem: drinkItems
       .filter((d) => d.cat === cat)
-      .map((item) => ({
-        '@type': 'MenuItem',
-        name: item.name,
-        description: item.desc,
-        offers: {
-          '@type': 'Offer',
-          price: item.price.replace('$', ''),
-          priceCurrency: 'USD',
-        },
-      })),
+      .map((item: DrinkItem) => {
+        const menuItem: Record<string, unknown> = {
+          '@type': 'MenuItem',
+          name: item.name,
+        };
+        if (item.desc) menuItem.description = item.desc;
+        if (item.price) {
+          menuItem.offers = {
+            '@type': 'Offer',
+            price: item.price.replace('$', ''),
+            priceCurrency: 'USD',
+          };
+        }
+        return menuItem;
+      }),
   }));
 }
 
@@ -65,7 +71,6 @@ export function buildJsonLd() {
     url: `${baseUrl}/`,
     image: [ogImageUrl, `${baseUrl}/assets/logo-combomark-color.png`, `${baseUrl}/assets/scarf.jpg`],
     logo: `${baseUrl}/assets/wordmark-color.png`,
-    telephone: site.contact.phone,
     email: site.contact.email,
     priceRange: site.seo.priceRange,
     servesCuisine: 'Bar food',

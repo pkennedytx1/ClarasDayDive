@@ -120,4 +120,11 @@ npm run deploy
 - [ ] Set `seo_site_url` in `_Settings` to `https://www.clarasdaydive.com`, publish once more.
 - [ ] Google Search Console — add `google_site_verification` in `_Settings`, publish, verify, submit `sitemap.xml` — [godaddy-domain-setup.md](../godaddy-domain-setup.md#step-6--google-search-console-html-tag)
 - [ ] Add `events_source` = `sheet` in `_Settings` if not already set.
+- [ ] Set `events_inquiry_from` in `_Settings` to `events@clarasdaydive.com` (the From address guests see on their receipt).
+- [ ] Set `events_inquiry_email` in `_Settings` to the inbox that receives event form submissions (currently `pkennedytx1@gmail.com`; switch to `events@clarasdaydive.com` once the alias is live).
+- [ ] Verify SES: `events@clarasdaydive.com` (or your sending domain) is verified in AWS SES so staff + guest receipt emails can send.
+- [ ] Event form spam protection: create a [Cloudflare Turnstile](https://dash.cloudflare.com/?to=/:account/turnstile) widget for `clarasdaydive.com` (and `localhost` for dev). Set GitHub/deploy secrets:
+  - `VITE_TURNSTILE_SITE_KEY` — public site key (baked into the static build)
+  - `TURNSTILE_SECRET_KEY` — secret key (Lambda only; never commit)
+  - Without these keys the form still works locally, but production should have both set.
 - [ ] Optional later: Google Calendar import or calendar-only — [sheets-events.md](../sheets-events.md).

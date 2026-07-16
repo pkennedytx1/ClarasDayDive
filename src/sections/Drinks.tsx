@@ -1,11 +1,52 @@
 import { useId, type KeyboardEvent, useState } from 'react';
 import { Reveal } from '@/components/Reveal';
-import { getDrinksContent } from '@/lib/content';
+import { getDrinksContent, getSiteContent, type DrinkItem } from '@/lib/content';
+
+function groupMenuItems(items: DrinkItem[], categories: string[]): { category: string; items: DrinkItem[] }[] {
+  return categories
+    .filter((category) => category !== 'All')
+    .map((category) => ({
+      category,
+      items: items.filter((item) => item.cat === category),
+    }))
+    .filter((group) => group.items.length > 0);
+}
+
+function MenuItemRow({ drink, stagger }: { drink: DrinkItem; stagger: number }) {
+  return (
+    <Reveal stagger={stagger} delay={120}>
+      <article className="menu-row" itemScope itemType="https://schema.org/MenuItem">
+        <div className="menu-row__line">
+          <h3 className="menu-row__name" itemProp="name">
+            {drink.name}
+          </h3>
+          {drink.badge ? <span className="menu-row__badge">{drink.badge}</span> : null}
+          {drink.price ? (
+            <>
+              <span className="menu-row__dots" aria-hidden="true" />
+              <span className="menu-row__price" itemProp="offers" itemScope itemType="https://schema.org/Offer">
+                <meta itemProp="priceCurrency" content="USD" />
+                <span itemProp="price">{drink.price.replace('$', '')}</span>
+              </span>
+            </>
+          ) : null}
+        </div>
+        {drink.desc ? (
+          <p className="menu-row__desc" itemProp="description">
+            {drink.desc}
+          </p>
+        ) : null}
+      </article>
+    </Reveal>
+  );
+}
 
 export function Drinks() {
   const drinks = getDrinksContent();
+  const site = getSiteContent();
   const [filter, setFilter] = useState('All');
   const shown = filter === 'All' ? drinks.items : drinks.items.filter((d) => d.cat === filter);
+  const grouped = groupMenuItems(shown, drinks.categories);
   const panelId = useId();
 
   const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
@@ -30,9 +71,9 @@ export function Drinks() {
         <Reveal>
           <header className="section-head section-head--brand">
             <div>
-              <p className="eyebrow eyebrow--rose">What's pouring</p>
+              <p className="eyebrow eyebrow--rose">{site.sections.drinks.eyebrow}</p>
               <h2 id="drinks-heading" className="display-lg">
-                The drinks menu
+                {site.sections.drinks.title}
               </h2>
             </div>
           </header>
@@ -71,26 +112,18 @@ export function Drinks() {
           itemType="https://schema.org/Menu"
         >
           <meta itemProp="name" content="Clara's Day Dive drinks menu" />
-          {shown.map((d, i) => (
-            <Reveal key={d.name} stagger={i} delay={120}>
-              <article className="menu-row" itemScope itemType="https://schema.org/MenuItem">
-                <div className="menu-row__line">
-                  <h3 className="menu-row__name" itemProp="name">
-                    {d.name}
-                  </h3>
-                  {d.badge && <span className="menu-row__badge">{d.badge}</span>}
-                  <span className="menu-row__dots" aria-hidden="true" />
-                  <span className="menu-row__price" itemProp="offers" itemScope itemType="https://schema.org/Offer">
-                    <meta itemProp="priceCurrency" content="USD" />
-                    <span itemProp="price">{d.price.replace('$', '')}</span>
-                  </span>
-                </div>
-                <p className="menu-row__desc" itemProp="description">
-                  {d.desc}
-                </p>
-              </article>
-            </Reveal>
-          ))}
+          {filter === 'All'
+            ? grouped.map((group, groupIndex) => (
+                <section key={group.category} className="menu-section" aria-label={group.category}>
+                  <Reveal stagger={groupIndex} delay={100}>
+                    <h3 className="menu-section__title">{group.category}</h3>
+                  </Reveal>
+                  {group.items.map((drink, itemIndex) => (
+                    <MenuItemRow key={drink.name} drink={drink} stagger={itemIndex} />
+                  ))}
+                </section>
+              ))
+            : shown.map((drink, itemIndex) => <MenuItemRow key={drink.name} drink={drink} stagger={itemIndex} />)}
         </div>
         </div>
       </div>

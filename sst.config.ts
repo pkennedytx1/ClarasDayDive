@@ -30,7 +30,7 @@ export default $config({
 
     const askClara = new sst.aws.Function('AskClara', {
       handler: 'packages/ask-clara/handler.handler',
-      runtime: 'nodejs20.x',
+      runtime: 'nodejs24.x',
       link: [usage],
       environment: {
         ASK_CLARA_MONTHLY_BUDGET_USD: '5',
@@ -51,6 +51,21 @@ export default $config({
     });
 
     api.route('POST /api/ask', askClara.arn);
+
+    const eventBooking = new sst.aws.Function('EventBooking', {
+      handler: 'packages/event-booking/handler.handler',
+      runtime: 'nodejs24.x',
+      link: [usage],
+      environment: {
+        EVENT_BOOKING_USAGE_TABLE: usage.name,
+        TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY ?? '',
+      },
+      permissions: [
+        { actions: ['ses:SendEmail', 'ses:SendRawEmail'], resources: ['*'] },
+      ],
+    });
+
+    api.route('POST /api/event-inquiry', eventBooking.arn);
 
     const acmCertArn = process.env.ACM_CERT_ARN?.trim();
 
@@ -79,6 +94,8 @@ export default $config({
       },
       environment: {
         VITE_ASK_CLARA_API_URL: api.url,
+        VITE_EVENT_BOOKING_API_URL: api.url,
+        VITE_TURNSTILE_SITE_KEY: process.env.VITE_TURNSTILE_SITE_KEY ?? '',
       },
       error: 'index.html',
       domain: siteDomain,

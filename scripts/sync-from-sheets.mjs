@@ -25,6 +25,20 @@ const OPTIONAL_SETTINGS_KEYS = new Set([
   'gallery_title',
   'under_construction',
   'under_construction_password',
+  'events_inquiry_email',
+  'events_inquiry_from',
+  'events_booking_cta',
+  'drinks_eyebrow',
+  'drinks_title',
+  'events_eyebrow',
+  'events_title',
+  'contact_eyebrow',
+  'contact_title',
+  'contact_lead',
+  'whats_here_eyebrow',
+  'whats_here_title',
+  'faq_eyebrow',
+  'faq_title',
 ]);
 
 const DEFAULT_NAV = {
@@ -33,7 +47,7 @@ const DEFAULT_NAV = {
     { label: "What's Here", href: '/here' },
     { label: 'Events', href: '/events' },
     { label: 'FAQ', href: '/faq' },
-    { label: 'Visit', href: '/contact' },
+    { label: 'Plan an event', href: '/contact' },
   ],
   ctaLabel: 'Book the bar',
   ctaHref: '/contact',
@@ -295,6 +309,16 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
     errors.push(`_Settings: contact_email "${email}" is not a valid email`);
   }
 
+  const inquiryEmail = settings.events_inquiry_email?.trim() ?? '';
+  if (inquiryEmail && !EMAIL_RE.test(inquiryEmail)) {
+    errors.push(`_Settings: events_inquiry_email "${inquiryEmail}" is not a valid email`);
+  }
+
+  const inquiryFrom = settings.events_inquiry_from?.trim() ?? '';
+  if (inquiryFrom && !EMAIL_RE.test(inquiryFrom)) {
+    errors.push(`_Settings: events_inquiry_from "${inquiryFrom}" is not a valid email`);
+  }
+
   const activeAsk = askClaraRows.filter(isActive).sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
   for (const row of activeAsk) {
     requireField(errors, 'AskClara', row, 'suggestion', row.suggestion);
@@ -382,7 +406,6 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
       coordinatorName: settings.contact_name ?? existing.contact?.coordinatorName ?? '',
       coordinatorRole: settings.contact_role ?? existing.contact?.coordinatorRole ?? '',
       email,
-      phone: settings.contact_phone ?? existing.contact?.phone ?? '',
       responseTime: settings.contact_response_time ?? existing.contact?.responseTime ?? '',
     },
     search: {
@@ -398,6 +421,33 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
         "Clara says: come on in — we'll pour you something good.",
     },
     nav: existing.nav ?? DEFAULT_NAV,
+    sections: {
+      drinks: {
+        eyebrow: settings.drinks_eyebrow ?? existing.sections?.drinks?.eyebrow ?? "What's pouring",
+        title: settings.drinks_title ?? existing.sections?.drinks?.title ?? 'The drinks menu',
+      },
+      events: {
+        eyebrow: settings.events_eyebrow ?? existing.sections?.events?.eyebrow ?? 'On the calendar',
+        title: settings.events_title ?? existing.sections?.events?.title ?? 'Upcoming events',
+        bookingCta: settings.events_booking_cta ?? existing.sections?.events?.bookingCta ?? 'Request an event',
+      },
+      contact: {
+        eyebrow: settings.contact_eyebrow ?? existing.sections?.contact?.eyebrow ?? 'Book the bar',
+        title: settings.contact_title ?? existing.sections?.contact?.title ?? 'Plan your event',
+        lead:
+          settings.contact_lead ??
+          existing.sections?.contact?.lead ??
+          "Birthdays, send-offs, watch parties — tell us about your event and we'll get back to you.",
+      },
+      whatsHere: {
+        eyebrow: settings.whats_here_eyebrow ?? existing.sections?.whatsHere?.eyebrow ?? 'More than a bar',
+        title: settings.whats_here_title ?? existing.sections?.whatsHere?.title ?? "What's here",
+      },
+      faq: {
+        eyebrow: settings.faq_eyebrow ?? existing.sections?.faq?.eyebrow ?? 'Good to know',
+        title: settings.faq_title ?? existing.sections?.faq?.title ?? 'Questions, answered',
+      },
+    },
     underConstruction: parseSheetBool(settings.under_construction ?? existing.underConstruction),
     underConstructionPassword:
       settings.under_construction_password?.trim() ||
@@ -414,11 +464,10 @@ function buildDrinksJson(rows, errors) {
   for (const row of active) {
     requireField(errors, 'Drinks', row, 'name', row.name);
     requireField(errors, 'Drinks', row, 'category', row.category);
-    requireField(errors, 'Drinks', row, 'price', row.price);
-    requireField(errors, 'Drinks', row, 'description', row.description);
 
-    const priceNum = parseNumericPrice(row.price);
-    if (priceNum === null) {
+    const priceRaw = String(row.price ?? '').trim();
+    const priceNum = priceRaw ? parseNumericPrice(priceRaw) : null;
+    if (priceRaw && priceNum === null) {
       errors.push(`Drinks row ${row._row}: price "${row.price}" must be numeric`);
       continue;
     }
@@ -429,9 +478,10 @@ function buildDrinksJson(rows, errors) {
     const item = {
       cat,
       name: String(row.name).trim(),
-      price: formatPrice(priceNum),
-      desc: String(row.description).trim(),
+      desc: String(row.description ?? '').trim(),
     };
+
+    if (priceNum !== null) item.price = formatPrice(priceNum);
 
     const badge = String(row.badge ?? '').trim();
     if (badge) item.badge = badge;
@@ -625,6 +675,24 @@ function writeJson(name, data) {
   writeFileSync(join(contentDir, name), `${JSON.stringify(data, null, 2)}\n`);
 }
 
+const INQUIRY_CONFIG_PATH = join(root, 'packages/event-booking/inquiry-config.json');
+const INQUIRY_EMAIL_TARGET = 'events@clarasdaydive.com';
+
+/** Server-only — not bundled to the public site. */
+function writeInquiryConfig(settings) {
+  const staffEmail = settings.events_inquiry_email?.trim() || 'pkennedytx1@gmail.com';
+  const fromEmail = settings.events_inquiry_from?.trim() || 'events@clarasdaydive.com';
+  const config = {
+    staffEmail,
+    staffEmailTarget: INQUIRY_EMAIL_TARGET,
+    fromEmail,
+    siteName: settings.site_name?.trim() || "Clara's Day Dive",
+    responseTime:
+      settings.contact_response_time?.trim() || 'We typically reply within a day.',
+  };
+  writeFileSync(INQUIRY_CONFIG_PATH, `${JSON.stringify(config, null, 2)}\n`);
+}
+
 function reportErrors(errors) {
   console.error('\nSync validation failed:\n');
   for (const err of errors) {
@@ -679,6 +747,8 @@ async function syncFromSheets() {
     if (process.env.LOCAL_PHOTOS === '1') {
       await syncGalleryFromLocalCsv();
     }
+    const localSettings = readSettingsCsv(LOCAL_SETTINGS_CSV);
+    writeInquiryConfig(localSettings);
     const knowledge = writeKnowledge();
     console.log(`Generated src/content/knowledge.json (${knowledge.chunks.length} chunks)`);
     return;
@@ -712,6 +782,7 @@ async function syncFromSheets() {
   }
 
   writeJson('site.json', site);
+  writeInquiryConfig(settings);
   writeJson('drinks.json', drinks);
   writeJson('events.json', events);
   writeJson('whats-here.json', whatsHere);
