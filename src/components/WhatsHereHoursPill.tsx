@@ -21,9 +21,11 @@ export function WhatsHereHoursPill({ hours, vendorName }: WhatsHereHoursPillProp
 
   const statusLabel = status.isOpen
     ? `${vendorName} is open, ${status.label}`
-    : status.label.includes('Opens at')
-      ? `${vendorName} is closed and ${status.label.replace('Closed · ', '').toLowerCase()}`
-      : `${vendorName} is closed today`;
+    : status.label === 'Closed today'
+      ? `${vendorName} is closed today`
+      : status.label.includes('Opens at')
+        ? `${vendorName} is closed and ${status.label.replace('Closed · ', '').toLowerCase()}`
+        : `${vendorName} is closed`;
 
   return (
     <div className="here-item__hours-block">

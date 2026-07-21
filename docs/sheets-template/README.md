@@ -198,6 +198,8 @@ sort_order | active | image_url | alt_text | caption
 3. Add a row with `image_url`, `alt_text`, and `sort_order`.
 4. Publish site.
 
+**Replacing a photo:** set `active` to `FALSE` on the old row, then add a new row with the new Drive link. Do not leave the old row active — both will show in the gallery until the old row is hidden.
+
 Section heading copy comes from `_Settings` keys `gallery_eyebrow` and `gallery_title` (defaults: "The vibe" / "Photos").
 
 ---

@@ -177,6 +177,10 @@ function closedTodayLabel(): WhatsHereHoursStatus {
   return { isOpen: false, label: 'Closed today' };
 }
 
+function closedLabel(): WhatsHereHoursStatus {
+  return { isOpen: false, label: 'Closed' };
+}
+
 function closedOpensLaterLabel(schedule: DaySchedule): WhatsHereHoursStatus {
   return { isOpen: false, label: `Closed · Opens at ${openLabel(schedule)}` };
 }
@@ -219,5 +223,5 @@ export function getWhatsHereHoursStatus(hours: string, now = new Date()): WhatsH
     return closedOpensLaterLabel(todaySchedule);
   }
 
-  return closedTodayLabel();
+  return closedLabel();
 }

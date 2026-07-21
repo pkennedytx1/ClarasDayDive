@@ -19,8 +19,22 @@ export function normalizeImageUrl(url) {
   return raw;
 }
 
-function photoSlug(index) {
-  return `photo-${String(index + 1).padStart(2, '0')}`;
+function photoSlug(imageUrl, usedSlugs) {
+  const base = `photo-${stablePhotoId(imageUrl)}`;
+  if (!usedSlugs.has(base)) {
+    usedSlugs.add(base);
+    return base;
+  }
+
+  let suffix = 2;
+  while (usedSlugs.has(`${base}-${suffix}`)) suffix += 1;
+  const slug = `${base}-${suffix}`;
+  usedSlugs.add(slug);
+  return slug;
+}
+
+export function stablePhotoId(imageUrl) {
+  return createHash('sha256').update(normalizeImageUrl(imageUrl)).digest('hex').slice(0, 12);
 }
 
 async function fetchImageBytes(url) {
@@ -118,11 +132,10 @@ export async function buildGalleryJson({ rows, settings, galleryDir, errors }) {
   const title = settings.gallery_title?.trim() || 'Photos';
   const items = [];
   const slugs = [];
+  const usedSlugs = new Set();
 
-  for (let index = 0; index < rows.length; index++) {
-    const row = rows[index];
-    const slug = photoSlug(index);
-    slugs.push(slug);
+  for (const row of rows) {
+    const slug = photoSlug(String(row.image_url).trim(), usedSlugs);
 
     const imageUrl = normalizeImageUrl(row.image_url);
     let buffer;
@@ -135,6 +148,7 @@ export async function buildGalleryJson({ rows, settings, galleryDir, errors }) {
 
     try {
       const { width, height } = await writeOptimizedVariants(buffer, galleryDir, slug);
+      slugs.push(slug);
       const item = {
         src: `/assets/gallery/${slug}.webp`,
         srcThumb: `/assets/gallery/${slug}-thumb.webp`,
@@ -155,8 +169,4 @@ export async function buildGalleryJson({ rows, settings, galleryDir, errors }) {
   cleanupOrphans(galleryDir, slugs);
 
   return { eyebrow, title, items };
-}
-
-export function stablePhotoId(imageUrl) {
-  return createHash('sha256').update(normalizeImageUrl(imageUrl)).digest('hex').slice(0, 12);
 }
