@@ -38,6 +38,7 @@ key | value
 |-----|---------------|
 | `site_name` | Clara's Day Dive |
 | `tagline` | Dive in for a day drink. |
+| `footer_tagline` | Dive in for a day drink. South Austin bar & patio. — line under the footer wordmark |
 | `description` | A neighborhood coupe bar… |
 | `hero_meta` | № 01 — Open till midnight, seven days |
 | `location_eyebrow` | East Austin · Coupe bar & patio |

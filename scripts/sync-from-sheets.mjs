@@ -356,6 +356,10 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
   return {
     name: settings.site_name ?? existing.name ?? "Clara's Day Dive",
     tagline: settings.tagline ?? existing.tagline ?? '',
+    footerTagline:
+      settings.footer_tagline ??
+      existing.footerTagline ??
+      `${settings.tagline ?? existing.tagline ?? ''}`.trim(),
     description: settings.description ?? existing.description ?? '',
     hero: {
       meta: settings.hero_meta ?? existing.hero?.meta ?? '',

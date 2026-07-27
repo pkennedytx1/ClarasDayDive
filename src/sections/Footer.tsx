@@ -21,9 +21,7 @@ export function Footer() {
               decoding="async"
             />
           </div>
-          <p className="body-muted site-footer__tagline">
-            {site.tagline} East Austin's coupe bar &amp; patio.
-          </p>
+          <p className="body-muted site-footer__tagline">{site.footerTagline}</p>
         </div>
 
         <div>
