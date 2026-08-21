@@ -16,7 +16,8 @@
     "preview": "vite preview",
     "deploy": "node scripts/copy-knowledge.mjs && sst refresh && sst deploy",
     "dev:sst": "sst dev",
-    "test:email": "tsx scripts/test-event-inquiry-email.ts"
+    "test:email": "tsx scripts/test-event-inquiry-email.ts",
+    "test:general-email": "tsx scripts/test-general-contact-email.ts"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.750.0",

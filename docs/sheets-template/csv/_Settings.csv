@@ -17,8 +17,23 @@ contact_name,Your event coordinator
 contact_role,Events & private bookings
 contact_email,events@clarasdaydive.com
 contact_response_time,We typically reply within a day.
+general_inquiry_email,pkennedytx1@gmail.com
+general_inquiry_from,info@clarasdaydive.com
+contact_us_eyebrow,Get in touch
+contact_us_title,Contact us
+contact_us_lead,"Questions about hours, directions, or anything else — we're happy to help."
+general_contact_eyebrow,General inquiry
+general_contact_title,Send a message
+general_contact_pitch,"Hours, directions, press, or anything else — send us a quick note and we'll get back to you."
+general_contact_button,Send message
+general_contact_note,
 events_host_note,Want to host something on our patio? Tell us about your event below — we'd love to hear your idea.
 events_booking_cta,Request an event
+event_contact_eyebrow,Book the bar
+event_contact_title,Plan your event
+event_contact_pitch,"Birthdays, send-offs, watch parties — tell us about your event and we'll get back to you."
+event_contact_button,Request an event
+event_contact_note,For private events and patio bookings only.
 events_inquiry_email,pkennedytx1@gmail.com
 events_inquiry_from,events@clarasdaydive.com
 events_source,sheet

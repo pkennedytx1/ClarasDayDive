@@ -72,14 +72,14 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
         </Link>
 
         <nav className="site-nav__links" aria-label="Primary">
-          {links.map((l) => (
+          {links.map((link) => (
             <Link
-              key={l.label}
-              to={l.href}
-              className={`site-nav__link${isActive(l.href) ? ' is-active' : ''}`}
-              onClick={() => handleNavClick(l.href)}
+              key={link.label}
+              to={link.href}
+              className={`site-nav__link${isActive(link.href) ? ' is-active' : ''}`}
+              onClick={() => handleNavClick(link.href)}
             >
-              {l.label}
+              {link.label}
             </Link>
           ))}
         </nav>
@@ -109,15 +109,15 @@ export function NavBar({ logoSrc, links, activeHref }: NavBarProps) {
       >
         <div className="site-nav__sheet-inner">
           <nav className="site-nav__sheet" aria-label="Mobile">
-            {links.map((l) => (
+            {links.map((link) => (
               <Link
-                key={l.label}
-                to={l.href}
-                className={`site-nav__sheet-link${isActive(l.href) ? ' is-active' : ''}`}
-                onClick={() => handleNavClick(l.href)}
+                key={link.label}
+                to={link.href}
+                className={`site-nav__sheet-link${isActive(link.href) ? ' is-active' : ''}`}
+                onClick={() => handleNavClick(link.href)}
                 tabIndex={open ? 0 : -1}
               >
-                {l.label}
+                {link.label}
               </Link>
             ))}
           </nav>

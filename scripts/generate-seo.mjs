@@ -145,7 +145,7 @@ ${site.hours.map((h) => `- ${h}`).join('\n')}
 ## Contact
 - **Events email:** ${site.contact.email}
 ${socialLines(site.social)}
-- **Book private events:** ${baseUrl}/contact
+- **Book private events:** ${baseUrl}/contact-us
 
 ## About
 ${site.seo.longDescription}
@@ -187,7 +187,7 @@ Canonical site: ${baseUrl}/
 
 ## Contact
 - Email: ${site.contact.email}
-- Private events: ${baseUrl}/contact
+- Private events: ${baseUrl}/contact-us
 
 ${venueFacts ? `## Facts\n${venueFacts}\n` : ''}
 ## Menu highlights

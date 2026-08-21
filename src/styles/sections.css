@@ -75,14 +75,6 @@
   margin-bottom: 1.25rem;
 }
 
-.hero__rule {
-  display: block;
-  width: 2.5rem;
-  height: 1px;
-  background: var(--clr-ink-15);
-  margin-bottom: 0.875rem;
-}
-
 .hero__eyebrow {
   margin: 0;
   font-family: var(--font-body);

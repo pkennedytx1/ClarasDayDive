@@ -86,20 +86,21 @@ export function getPolicyBySlug(slug: string): LegalPolicy | undefined {
   return legal.policies.find((p) => p.slug === slug);
 }
 
-/** Inserts Gallery nav link after Plan an event when the gallery has active items. */
+/** Inserts Gallery nav link before Contact us when the gallery has active items. */
 export function getNavLinks(): NavLink[] {
-  const links = [...site.nav.links];
+  const links = site.nav.links.filter((link) => link.href !== '/contact');
   if (getGalleryContent().items.length === 0) return links;
   if (links.some((link) => link.href === '/gallery')) return links;
 
-  const contactIndex = links.findIndex((link) => link.href === '/contact');
-  const insertAt = contactIndex >= 0 ? contactIndex + 1 : links.length;
-  links.splice(insertAt, 0, GALLERY_NAV_LINK);
-  return links;
+  const contactIndex = links.findIndex((link) => link.href === '/contact-us');
+  const insertAt = contactIndex >= 0 ? contactIndex : links.length;
+  const next = [...links];
+  next.splice(insertAt, 0, GALLERY_NAV_LINK);
+  return next;
 }
 
 export function getHomeSectionIds(): string[] {
-  const ids = ['#top', '#ask-clara', '#drinks', '#here', '#events', '#faq', '#contact'];
+  const ids = ['#top', '#ask-clara', '#drinks', '#here', '#events', '#faq', '#contact-us'];
   if (getGalleryContent().items.length > 0) ids.push('#gallery');
   return ids;
 }

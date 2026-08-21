@@ -191,6 +191,9 @@ body.has-site-nav.is-nav-hidden {
 }
 
 .site-nav__link {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
   font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 600;
@@ -2039,6 +2042,44 @@ button.here-item__link {
 }
 
 /* Event booking / contact section */
+.contact-section {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 3.5rem);
+}
+
+.contact-intro--centered {
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+  align-items: center;
+}
+
+.contact-intro--centered .contact-intro__lead {
+  margin-inline: auto;
+}
+
+.contact-intro--centered .contact-scarf {
+  margin-inline: auto;
+}
+
+.contact-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+@media (min-width: 769px) {
+  .contact-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 2rem);
+    align-items: stretch;
+  }
+
+  .contact-cards > .reveal {
+    height: 100%;
+  }
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -2084,11 +2125,19 @@ button.here-item__link {
 }
 
 .contact-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: clamp(1.75rem, 4vw, 2.5rem);
   background: var(--clr-cream);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   color: var(--clr-ink);
+  scroll-margin-top: calc(var(--nav-height) + 1rem);
+}
+
+#contact-event {
+  scroll-margin-top: calc(var(--nav-height) + 1rem);
 }
 
 .contact-card__eyebrow {
@@ -2101,7 +2150,17 @@ button.here-item__link {
   color: var(--clr-teal-deep);
 }
 
+.contact-card__title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--clr-ink);
+}
+
 .contact-card__pitch {
+  flex: 1 1 auto;
   margin: 0 0 1.5rem;
   font-family: var(--font-body);
   font-size: 1rem;

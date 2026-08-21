@@ -344,47 +344,6 @@
       ]
     },
     {
-      "id": "event-makers-shakers-market",
-      "type": "event",
-      "text": "Makers & shakers market (Market) — JUL 24, 12–5pm · Free. Local makers out front, spritz flight inside.",
-      "keywords": [
-        "makers",
-        "shakers",
-        "market",
-        "local",
-        "out",
-        "front",
-        "spritz",
-        "flight",
-        "inside",
-        "5pm",
-        "free",
-        "event",
-        "calendar"
-      ]
-    },
-    {
-      "id": "event-low-abv-happy-hour",
-      "type": "event",
-      "text": "Low-ABV happy hour (Tasting) — AUG 02, 4–6pm · $25. Six sessionable pours, guided by Clara herself. Tickets: https://example.com/rsvp.",
-      "keywords": [
-        "low",
-        "abv",
-        "happy",
-        "hour",
-        "tasting",
-        "six",
-        "sessionable",
-        "pours",
-        "guided",
-        "clara",
-        "herself",
-        "6pm",
-        "event",
-        "calendar"
-      ]
-    },
-    {
       "id": "here-guppys",
       "type": "here",
       "text": "Guppys (Food truck): Indian Fried Chicken Hours: Mon · Closed, Tues-Wed · 12pm–12am, Thur-Fri · 12pm–2am, Sat · 11am–2am, Sun · 11am–10pm. Website: https://guppysindianfriedchicken.com/ Order: https://www.toasttab.com/local/order/guppysatx",

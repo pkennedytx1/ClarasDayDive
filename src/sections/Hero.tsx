@@ -15,7 +15,6 @@ export function Hero() {
       <div className="container hero__grid">
         <div className="hero__copy">
           <div className="hero__eyebrow-wrap">
-            <span className="hero__rule" aria-hidden="true" />
             <p className="hero__eyebrow">{site.location.eyebrow}</p>
           </div>
 

@@ -39,6 +39,22 @@ const OPTIONAL_SETTINGS_KEYS = new Set([
   'whats_here_title',
   'faq_eyebrow',
   'faq_title',
+  'general_inquiry_email',
+  'general_inquiry_from',
+  'contact_us_eyebrow',
+  'contact_us_title',
+  'contact_us_lead',
+  'contact_us_button',
+  'general_contact_eyebrow',
+  'general_contact_title',
+  'general_contact_pitch',
+  'general_contact_button',
+  'general_contact_note',
+  'event_contact_eyebrow',
+  'event_contact_title',
+  'event_contact_pitch',
+  'event_contact_button',
+  'event_contact_note',
 ]);
 
 const DEFAULT_NAV = {
@@ -47,10 +63,10 @@ const DEFAULT_NAV = {
     { label: "What's Here", href: '/here' },
     { label: 'Events', href: '/events' },
     { label: 'FAQ', href: '/faq' },
-    { label: 'Plan an event', href: '/contact' },
+    { label: 'Contact us', href: '/contact-us' },
   ],
   ctaLabel: 'Book the bar',
-  ctaHref: '/contact',
+  ctaHref: '/contact-us',
 };
 
 function mapsUrlFromAddress(address, city) {
@@ -412,6 +428,10 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
       email,
       responseTime: settings.contact_response_time ?? existing.contact?.responseTime ?? '',
     },
+    generalContact: {
+      email: settings.general_inquiry_from?.trim() || 'info@clarasdaydive.com',
+      responseTime: settings.contact_response_time ?? existing.generalContact?.responseTime ?? '',
+    },
     search: {
       sectionEyebrow: settings.ask_clara_eyebrow ?? existing.search?.sectionEyebrow ?? 'Ask Clara',
       sectionTitle: settings.ask_clara_title ?? existing.search?.sectionTitle ?? '',
@@ -450,6 +470,70 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
       faq: {
         eyebrow: settings.faq_eyebrow ?? existing.sections?.faq?.eyebrow ?? 'Good to know',
         title: settings.faq_title ?? existing.sections?.faq?.title ?? 'Questions, answered',
+      },
+      contactUs: {
+        eyebrow: settings.contact_us_eyebrow ?? existing.sections?.contactUs?.eyebrow ?? 'Get in touch',
+        title: settings.contact_us_title ?? existing.sections?.contactUs?.title ?? 'Contact us',
+        lead:
+          settings.contact_us_lead ??
+          existing.sections?.contactUs?.lead ??
+          "Questions about hours, directions, or anything else — we're happy to help.",
+      },
+      generalContactCard: {
+        eyebrow:
+          settings.general_contact_eyebrow ??
+          existing.sections?.generalContactCard?.eyebrow ??
+          'General inquiry',
+        title:
+          settings.general_contact_title ??
+          existing.sections?.generalContactCard?.title ??
+          'Send a message',
+        pitch:
+          settings.general_contact_pitch ??
+          existing.sections?.generalContactCard?.pitch ??
+          "Hours, directions, press, or anything else — send us a quick note and we'll get back to you.",
+        button:
+          settings.general_contact_button ??
+          settings.contact_us_button ??
+          existing.sections?.generalContactCard?.button ??
+          existing.sections?.contactUs?.button ??
+          'Send message',
+        note:
+          settings.general_contact_note?.trim() ||
+          settings.contact_response_time ||
+          existing.sections?.generalContactCard?.note ||
+          existing.generalContact?.responseTime ||
+          '',
+      },
+      eventContactCard: {
+        eyebrow:
+          settings.event_contact_eyebrow ??
+          settings.contact_eyebrow ??
+          existing.sections?.eventContactCard?.eyebrow ??
+          existing.sections?.contact?.eyebrow ??
+          'Book the bar',
+        title:
+          settings.event_contact_title ??
+          settings.contact_title ??
+          existing.sections?.eventContactCard?.title ??
+          existing.sections?.contact?.title ??
+          'Plan your event',
+        pitch:
+          settings.event_contact_pitch ??
+          settings.contact_lead ??
+          existing.sections?.eventContactCard?.pitch ??
+          existing.sections?.contact?.lead ??
+          "Birthdays, send-offs, watch parties — tell us about your event and we'll get back to you.",
+        button:
+          settings.event_contact_button ??
+          settings.events_booking_cta ??
+          existing.sections?.eventContactCard?.button ??
+          existing.sections?.events?.bookingCta ??
+          'Request an event',
+        note:
+          settings.event_contact_note?.trim() ||
+          existing.sections?.eventContactCard?.note ||
+          'For private events and patio bookings only.',
       },
     },
     underConstruction: parseSheetBool(settings.under_construction ?? existing.underConstruction),
@@ -680,7 +764,23 @@ function writeJson(name, data) {
 }
 
 const INQUIRY_CONFIG_PATH = join(root, 'packages/event-booking/inquiry-config.json');
+const GENERAL_CONTACT_CONFIG_PATH = join(root, 'packages/general-contact/general-contact-config.json');
 const INQUIRY_EMAIL_TARGET = 'events@clarasdaydive.com';
+
+/** Server-only — not bundled to the public site. */
+function writeGeneralContactConfig(settings) {
+  const staffEmail = settings.general_inquiry_email?.trim() || 'pkennedytx1@gmail.com';
+  const fromEmail = settings.general_inquiry_from?.trim() || 'info@clarasdaydive.com';
+  const config = {
+    staffEmail,
+    fromEmail,
+    siteName: settings.site_name?.trim() || "Clara's Day Dive",
+    siteUrl: settings.seo_site_url?.trim() || 'https://www.clarasdaydive.com',
+    responseTime:
+      settings.contact_response_time?.trim() || 'We typically reply within a day.',
+  };
+  writeFileSync(GENERAL_CONTACT_CONFIG_PATH, `${JSON.stringify(config, null, 2)}\n`);
+}
 
 /** Server-only — not bundled to the public site. */
 function writeInquiryConfig(settings) {
@@ -754,6 +854,7 @@ async function syncFromSheets() {
     }
     const localSettings = readSettingsCsv(LOCAL_SETTINGS_CSV);
     writeInquiryConfig(localSettings);
+    writeGeneralContactConfig(localSettings);
     const knowledge = writeKnowledge();
     console.log(`Generated src/content/knowledge.json (${knowledge.chunks.length} chunks)`);
     return;
@@ -788,6 +889,7 @@ async function syncFromSheets() {
 
   writeJson('site.json', site);
   writeInquiryConfig(settings);
+  writeGeneralContactConfig(settings);
   writeJson('drinks.json', drinks);
   writeJson('events.json', events);
   writeJson('whats-here.json', whatsHere);

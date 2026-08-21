@@ -452,7 +452,7 @@ export function EventBookingModal({ open, onClose }: EventBookingModalProps) {
           <div>
             <p className="booking-modal__eyebrow">Event questionnaire</p>
             <h2 id={titleId} className="booking-modal__title">
-              {getModalTitle(phase, site.sections.contact.title)}
+              {getModalTitle(phase, site.sections.eventContactCard.title)}
             </h2>
           </div>
           <button

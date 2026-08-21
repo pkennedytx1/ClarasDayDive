@@ -67,6 +67,10 @@
     "email": "events@clarasdaydive.com",
     "responseTime": "We typically reply within a day."
   },
+  "generalContact": {
+    "email": "info@clarasdaydive.com",
+    "responseTime": "We typically reply within a day."
+  },
   "search": {
     "sectionEyebrow": "Ask Clara",
     "sectionTitle": "Not sure what to order?",
@@ -103,12 +107,12 @@
         "href": "/faq"
       },
       {
-        "label": "Plan an event",
-        "href": "/contact"
+        "label": "Contact us",
+        "href": "/contact-us"
       }
     ],
     "ctaLabel": "Book the bar",
-    "ctaHref": "/contact"
+    "ctaHref": "/contact-us"
   },
   "sections": {
     "drinks": {
@@ -124,6 +128,25 @@
       "eyebrow": "Book the bar",
       "title": "Plan your event",
       "lead": "Birthdays, send-offs, watch parties — tell us about your event and we'll get back to you."
+    },
+    "contactUs": {
+      "eyebrow": "Get in touch",
+      "title": "Contact us",
+      "lead": "Questions about hours, directions, or anything else — we're happy to help."
+    },
+    "generalContactCard": {
+      "eyebrow": "General inquiry",
+      "title": "Send a message",
+      "pitch": "Hours, directions, press, or anything else — send us a quick note and we'll get back to you.",
+      "button": "Send message",
+      "note": "We typically reply within a day."
+    },
+    "eventContactCard": {
+      "eyebrow": "Book the bar",
+      "title": "Plan your event",
+      "pitch": "Birthdays, send-offs, watch parties — tell us about your event and we'll get back to you.",
+      "button": "Request an event",
+      "note": "For private events and patio bookings only."
     },
     "whatsHere": {
       "eyebrow": "More than a bar",

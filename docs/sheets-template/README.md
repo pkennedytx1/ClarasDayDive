@@ -55,6 +55,23 @@ key | value
 | `contact_email` | events@example.com |
 | `contact_phone` | (512) 555-0100 |
 | `contact_response_time` | We typically reply within a day. |
+| `general_inquiry_email` | Staff inbox for general contact form (e.g. info@ alias) |
+| `general_inquiry_from` | From address on general contact emails — `info@clarasdaydive.com` |
+| `contact_us_eyebrow` | Get in touch — contact **section** eyebrow (above both cards) |
+| `contact_us_title` | Contact us — contact **section** heading |
+| `contact_us_lead` | Intro copy for the contact **section** |
+| `general_contact_eyebrow` | General inquiry — **general card** label |
+| `general_contact_title` | Send a message — **general card** heading (+ general modal title) |
+| `general_contact_pitch` | Body copy on the general inquiry card |
+| `general_contact_button` | Send message — general card + modal submit label |
+| `general_contact_note` | Optional note under general card button (leave blank to hide; falls back to `contact_response_time` if set) |
+| `event_contact_eyebrow` | Book the bar — **event card** label |
+| `event_contact_title` | Plan your event — **event card** heading |
+| `event_contact_pitch` | Body copy on the event card |
+| `event_contact_button` | Request an event — event card button (+ event modal title context) |
+| `event_contact_note` | Optional note under event card (e.g. For private events and patio bookings only.) |
+| `events_inquiry_email` | Staff inbox for event booking form |
+| `events_inquiry_from` | From address on event emails — `events@clarasdaydive.com` |
 | `events_host_note` | Want to host something on our patio?… |
 | `events_source` | `sheet` (default) — or `calendar` for calendar-only; avoid `both` |
 | `google_calendar_id` | Optional — calendar-only sync or import-from-calendar |

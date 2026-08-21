@@ -73,6 +73,27 @@ export default $config({
 
     api.route('POST /api/event-inquiry', eventBooking.arn);
 
+    const generalContact = new sst.aws.Function('GeneralContact', {
+      handler: 'packages/general-contact/handler.handler',
+      runtime: 'nodejs24.x',
+      link: [usage],
+      copyFiles: [
+        {
+          from: 'packages/event-booking/assets/wordmark-color.png',
+          to: 'assets/wordmark-color.png',
+        },
+      ],
+      environment: {
+        GENERAL_CONTACT_USAGE_TABLE: usage.name,
+        TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY ?? '',
+      },
+      permissions: [
+        { actions: ['ses:SendEmail', 'ses:SendRawEmail'], resources: ['*'] },
+      ],
+    });
+
+    api.route('POST /api/general-contact', generalContact.arn);
+
     const acmCertArn = process.env.ACM_CERT_ARN?.trim();
 
     const siteDomain =
@@ -101,6 +122,7 @@ export default $config({
       environment: {
         VITE_ASK_CLARA_API_URL: api.url,
         VITE_EVENT_BOOKING_API_URL: api.url,
+        VITE_GENERAL_CONTACT_API_URL: api.url,
         VITE_TURNSTILE_SITE_KEY: process.env.VITE_TURNSTILE_SITE_KEY ?? '',
       },
       error: 'index.html',

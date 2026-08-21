@@ -4,5 +4,5 @@ export const SITEMAP_SECTION_PATHS = [
   '/gallery',
   '/events',
   '/faq',
-  '/contact',
+  '/contact-us',
 ];

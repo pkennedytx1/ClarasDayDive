@@ -122,6 +122,8 @@ npm run deploy
 - [ ] Add `events_source` = `sheet` in `_Settings` if not already set.
 - [ ] Set `events_inquiry_from` in `_Settings` to `events@clarasdaydive.com` (the From address guests see on their receipt).
 - [ ] Set `events_inquiry_email` in `_Settings` to the inbox that receives event form submissions (currently `pkennedytx1@gmail.com`; switch to `events@clarasdaydive.com` once the alias is live).
+- [ ] Set `general_inquiry_from` in `_Settings` to `info@clarasdaydive.com` (the From address guests see on general contact receipts).
+- [ ] Set `general_inquiry_email` in `_Settings` to the inbox that receives general contact form submissions (info@ alias when ready).
 - [ ] Verify SES: `events@clarasdaydive.com` (or your sending domain) is verified in AWS SES so staff + guest receipt emails can send.
 - [ ] Event form spam protection: create a [Cloudflare Turnstile](https://dash.cloudflare.com/?to=/:account/turnstile) widget for `clarasdaydive.com` (and `localhost` for dev). Set GitHub/deploy secrets:
   - `VITE_TURNSTILE_SITE_KEY` — public site key (baked into the static build)

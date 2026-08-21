@@ -15,7 +15,9 @@ import { useActiveSection } from '@/hooks/useActiveSection';
 import { scrollToSection, scrollToHash } from '@/lib/scroll';
 import { getNavLinks, getHomeSectionIds } from '@/lib/content';
 import { useEventBooking } from '@/context/EventBookingContext';
+import { useGeneralContact } from '@/context/GeneralContactContext';
 import { EventBookingModal } from '@/components/EventBookingModal';
+import { GeneralContactModal } from '@/components/GeneralContactModal';
 
 import { LEGACY_HASH_TO_PATH, pathToSectionId } from '@/lib/sections';
 
@@ -23,6 +25,7 @@ export function HomePage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { open, closeBooking } = useEventBooking();
+  const { open: contactOpen, closeContact } = useGeneralContact();
   const navLinks = getNavLinks();
   const sectionIds = getHomeSectionIds();
   const activeHref = useActiveSection(sectionIds);
@@ -48,10 +51,15 @@ export function HomePage() {
   }, [location.hash, location.pathname, navigate]);
 
   useEffect(() => {
+    if (location.pathname === '/contact') {
+      navigate('/contact-us', { replace: true });
+      return;
+    }
+
     const sectionId = pathToSectionId(location.pathname);
     if (!sectionId) return;
     requestAnimationFrame(() => scrollToSection(sectionId));
-  }, [location.pathname]);
+  }, [location.pathname, navigate]);
 
   return (
     <>
@@ -79,6 +87,7 @@ export function HomePage() {
       </main>
       <Footer />
       <EventBookingModal open={open} onClose={closeBooking} />
+      <GeneralContactModal open={contactOpen} onClose={closeContact} />
     </>
   );
 }

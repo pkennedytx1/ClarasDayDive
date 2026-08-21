@@ -6,6 +6,7 @@ export const HOME_ROUTE_PATHS = [
   '/gallery',
   '/events',
   '/faq',
+  '/contact-us',
   '/contact',
   '/ask-clara',
 ] as const;
@@ -18,7 +19,7 @@ export const SITEMAP_SECTION_PATHS = [
   '/gallery',
   '/events',
   '/faq',
-  '/contact',
+  '/contact-us',
 ] as const;
 
 /** Old hash URLs → clean paths (shared links, bookmarks). */
@@ -29,14 +30,15 @@ export const LEGACY_HASH_TO_PATH: Record<string, HomeRoutePath> = {
   '#gallery': '/gallery',
   '#events': '/events',
   '#faq': '/faq',
-  '#contact': '/contact',
+  '#contact-us': '/contact-us',
+  '#contact': '/contact-us',
   '#ask-clara': '/ask-clara',
 };
 
 export function pathToSectionId(pathname: string): string | null {
   if (pathname === '/') return 'top';
   const sectionId = pathname.replace(/^\//, '');
-  const valid = ['drinks', 'here', 'gallery', 'events', 'faq', 'contact', 'ask-clara'];
+  const valid = ['drinks', 'here', 'gallery', 'events', 'faq', 'contact-us', 'ask-clara'];
   return valid.includes(sectionId) ? sectionId : null;
 }
 
