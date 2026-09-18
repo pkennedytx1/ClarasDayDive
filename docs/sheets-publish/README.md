@@ -87,7 +87,7 @@ Store the token securely. Do **not** put it in the Sheet or commit it to git.
 2. **Extensions → Apps Script**.
 3. Delete any placeholder code in `Code.gs`.
 4. Copy the contents of [`PublishSite.gs`](./PublishSite.gs) from this repo into `Code.gs`.
-5. **File → New → Script file** → paste [`ValidateEvents.gs`](./ValidateEvents.gs) (Events validation — runs automatically when staff click **Publish site**).
+5. **File → New → Script file** → paste [`ValidateEvents.gs`](./ValidateEvents.gs) (validates all content tabs — same rules as GitHub sync — runs automatically when staff click **Publish site**).
 6. **File → New → Script file** → paste [`SetupEventsTab.gs`](./SetupEventsTab.gs) for **Format Events tab** (header notes + example styling).
 7. Optional: **File → New → Script file** → paste [`ImportCalendarEvents.gs`](./ImportCalendarEvents.gs) for **Import events from calendar**.
 8. **Project settings** (gear icon) → **Script properties** → Add:
