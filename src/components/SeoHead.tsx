@@ -45,7 +45,7 @@ export function SeoHead({
     setMeta('og:image', defaultMeta.ogImage, true);
     setMeta('og:image:width', '1200', true);
     setMeta('og:image:height', '630', true);
-    setMeta('og:image:alt', "Clara's Day Dive — East Austin coupe bar and patio", true);
+    setMeta('og:image:alt', defaultMeta.ogImageAlt, true);
     setMeta('og:locale', 'en_US', true);
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', title);

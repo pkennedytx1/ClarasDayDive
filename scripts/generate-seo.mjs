@@ -24,6 +24,13 @@ const baseUrl = site.seo.siteUrl.replace(/\/$/, '');
 const today = new Date().toISOString().slice(0, 10);
 const ogImagePath = site.seo.ogImage ?? '/assets/scarf.jpg';
 const ogImageUrl = ogImagePath.startsWith('http') ? ogImagePath : `${baseUrl}${ogImagePath}`;
+const seoTitle = site.seo.title?.trim() || site.name;
+const seoDescription = site.seo.description?.trim() || site.description?.trim() || site.tagline;
+const ogImageAlt = `${site.name} — ${site.location?.eyebrow?.trim() || 'South Austin bar & patio'}`;
+
+function escapeAttr(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+}
 
 function socialLines(social) {
   const rows = [
@@ -124,13 +131,13 @@ const venueFacts = knowledgeChunks
 
 const llms = `# Clara's Day Dive
 
-> East Austin coupe bar and patio — day drinks, spritzes, food trucks, and live events.
+> ${seoDescription}
 
 ## Identity
 - **Name:** ${site.name}
-- **Type:** Coupe bar, cocktail bar, patio bar
+- **Type:** Neighborhood bar, cocktail bar, patio bar
 - **Tagline:** ${site.tagline}
-- **Neighborhood:** East Austin, Texas
+- **Area:** ${site.location?.eyebrow?.trim() || site.location?.city || 'South Austin, TX'}
 - **Age policy:** 21+ with valid ID
 
 ## Location
@@ -217,6 +224,35 @@ indexHtml = indexHtml.replace(
   '',
 );
 
+const escapedTitle = escapeAttr(seoTitle);
+const escapedDescription = escapeAttr(seoDescription);
+const escapedOgImageAlt = escapeAttr(ogImageAlt);
+
+indexHtml = indexHtml.replace(/<title>[^<]*<\/title>/, `<title>${escapedTitle}</title>`);
+indexHtml = indexHtml.replace(
+  /<meta\s+name="description"\s*\n?\s*content="[^"]*"\s*\/>/,
+  `<meta name="description" content="${escapedDescription}" />`,
+);
+indexHtml = indexHtml.replace(
+  /<meta property="og:title" content="[^"]*" \/>/,
+  `<meta property="og:title" content="${escapedTitle}" />`,
+);
+indexHtml = indexHtml.replace(
+  /<meta\s+property="og:description"\s*\n?\s*content="[^"]*"\s*\/>/,
+  `<meta property="og:description" content="${escapedDescription}" />`,
+);
+indexHtml = indexHtml.replace(
+  /<meta name="twitter:title" content="[^"]*" \/>/,
+  `<meta name="twitter:title" content="${escapedTitle}" />`,
+);
+indexHtml = indexHtml.replace(
+  /<meta name="twitter:description" content="[^"]*" \/>/,
+  `<meta name="twitter:description" content="${escapedDescription}" />`,
+);
+indexHtml = indexHtml.replace(
+  /<meta property="og:image:alt" content="[^"]*" \/>/,
+  `<meta property="og:image:alt" content="${escapedOgImageAlt}" />`,
+);
 indexHtml = indexHtml.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${baseUrl}/" />`);
 indexHtml = indexHtml.replace(
   /<meta property="og:url" content="[^"]*" \/>/,
@@ -238,15 +274,14 @@ if (gscVerification) {
   indexHtml = indexHtml.replace(/<meta name="theme-color"/, `${gscMeta}\n    <meta name="theme-color"`);
 }
 
-const twitterBlock = `    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${site.seo.title.replace(/"/g, '&quot;')}" />
-    <meta name="twitter:description" content="${site.seo.description.replace(/"/g, '&quot;')}" />
+if (!indexHtml.includes('twitter:title')) {
+  const twitterBlock = `    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${escapedTitle}" />
+    <meta name="twitter:description" content="${escapedDescription}" />
     <meta name="twitter:image" content="${ogImageUrl}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="${site.name} — East Austin coupe bar and patio" />`;
-
-if (!indexHtml.includes('twitter:title')) {
+    <meta property="og:image:alt" content="${escapedOgImageAlt}" />`;
   indexHtml = indexHtml.replace(
     /<meta name="twitter:card" content="summary_large_image" \/>/,
     twitterBlock,

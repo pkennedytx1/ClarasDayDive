@@ -159,5 +159,6 @@ export function getSeoMeta() {
     keywords: site.seo.keywords.join(', '),
     siteUrl: baseUrl,
     ogImage: ogImageUrl,
+    ogImageAlt: `${site.name} — ${site.location.eyebrow}`,
   };
 }
