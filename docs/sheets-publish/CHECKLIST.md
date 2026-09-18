@@ -60,7 +60,7 @@ Common failures:
 
 - [ ] **C2.** Open the content workbook in Google Sheets.
 
-- [ ] **C3.** **Extensions → Apps Script** → paste [`PublishSite.gs`](./PublishSite.gs); optional [`ImportCalendarEvents.gs`](./ImportCalendarEvents.gs).
+- [ ] **C3.** **Extensions → Apps Script** → paste [`PublishSite.gs`](./PublishSite.gs); add [`ValidateEvents.gs`](./ValidateEvents.gs), [`SetupEventsTab.gs`](./SetupEventsTab.gs); optional [`ImportCalendarEvents.gs`](./ImportCalendarEvents.gs).
 
 - [ ] **C4.** **Project settings → Script properties:**
 
@@ -75,6 +75,12 @@ Common failures:
 
 - [ ] **C7.** Optional: **Insert → Drawing** “Publish site” → assign script `publishSite`.
 
+- [ ] **C8.** **Events tab migration** (one time):
+  1. **File → Import → Upload** [`Events.csv`](../sheets-template/csv/Events.csv) → **Replace current sheet** (or add columns manually — see [sheets-events.md](../sheets-events.md)).
+  2. Replace placeholder rows with real client events; delete or keep example rows with `active` = `FALSE`.
+  3. **Clara's Day Dive → Format Events tab** (header notes + example row styling).
+  4. Run local sync test (Phase D below) before first live publish.
+
 ---
 
 ## Phase D — Staff handoff
@@ -85,7 +91,18 @@ Tell staff:
 2. **Clara's Day Dive → Publish site** when ready to go live.
 3. Wait ~5 minutes; refresh the site.
 
-Events guide: [sheets-events.md](../sheets-events.md)
+### Events tab — 5-minute staff walkthrough
+
+| Task | What to do |
+|------|------------|
+| **One-time event** | Fill `start_datetime` / `end_datetime`; leave `recurrence` blank |
+| **Weekly series** | First occurrence in start/end; `recurrence` = `weekly`; `recurrence_until` = last date (`YYYY-MM-DD`) |
+| **Big upcoming event** | Set `featured` = `TRUE` on **one row only** — homepage highlights the next occurrence |
+| **Hide without deleting** | Set `active` = `FALSE` |
+| **Order** | Automatic by date — no sort column |
+| **Format help** | Hover the small triangle on column headers (after **Format Events tab** is run once) |
+
+Full guide: [sheets-events.md](../sheets-events.md)
 
 Track runs: `https://github.com/YOUR_ORG/claras-day-dive/actions`
 

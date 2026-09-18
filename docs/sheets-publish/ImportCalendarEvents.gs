@@ -13,6 +13,20 @@ var EVENTS_SHEET = 'Events';
 var SETTINGS_SHEET = '_Settings';
 var TZ = 'America/Chicago';
 
+var EVENT_HEADERS = [
+  'title',
+  'start_datetime',
+  'end_datetime',
+  'tag',
+  'time_label',
+  'description',
+  'ticket_url',
+  'active',
+  'recurrence',
+  'recurrence_until',
+  'featured',
+];
+
 var META_LINE = /^(TAG|TIME|TICKETS|RSVP|TIME_LABEL):\s*(.+)$/i;
 
 function importEventsFromCalendar() {
@@ -30,7 +44,7 @@ function importEventsFromCalendar() {
 
   var confirm = ui.alert(
     'Import events from calendar?',
-    'This replaces all rows on the Events tab (keeps the header row).\n\nReview imported events before Publish site.\n\nContinue?',
+    'This replaces all data rows on the Events tab (keeps the header row).\n\nImported events are one-offs — add recurrence or featured in the sheet after import.\n\nContinue?',
     ui.ButtonSet.YES_NO
   );
 
@@ -64,7 +78,7 @@ function importEventsFromCalendar() {
   var rows = [];
 
   for (var i = 0; i < events.length; i++) {
-    var row = mapEventToRow_(events[i], i + 1);
+    var row = mapEventToRow_(events[i]);
     if (row) {
       rows.push(row);
     }
@@ -76,13 +90,16 @@ function importEventsFromCalendar() {
     return;
   }
 
+  var width = EVENT_HEADERS.length;
+  sheet.getRange(1, 1, 1, width).setValues([EVENT_HEADERS]);
+
   var lastRow = Math.max(sheet.getLastRow(), 1);
   if (lastRow > 1) {
-    sheet.getRange(2, 1, lastRow - 1, 8).clearContent();
+    sheet.getRange(2, 1, lastRow - 1, width).clearContent();
   }
 
   if (rows.length > 0) {
-    sheet.getRange(2, 1, rows.length, 8).setValues(rows);
+    sheet.getRange(2, 1, rows.length, width).setValues(rows);
   }
 
   ui.alert(
@@ -126,7 +143,7 @@ function normalizeCalendarId_(raw) {
   return raw;
 }
 
-function mapEventToRow_(event, sortOrder) {
+function mapEventToRow_(event) {
   var title = String(event.getTitle() || '').trim();
   if (!title) {
     return null;
@@ -141,7 +158,7 @@ function mapEventToRow_(event, sortOrder) {
   var start = formatChicago_(event.getStartTime());
   var end = formatChicago_(event.getEndTime());
 
-  return [title, start, end, tag, timeLabel, description, ticketUrl, sortOrder, 'TRUE'];
+  return [title, start, end, tag, timeLabel, description, ticketUrl, 'TRUE', '', '', ''];
 }
 
 function parseDescription_(text) {

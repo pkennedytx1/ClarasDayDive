@@ -150,7 +150,7 @@ No schema change, no extra configuration.
 **Row 1 headers:**
 
 ```
-title | start_datetime | end_datetime | tag | time_label | description | ticket_url | sort_order | active
+title | start_datetime | end_datetime | tag | time_label | description | ticket_url | active | recurrence | recurrence_until | featured
 ```
 
 | Column | Required | Notes |
@@ -159,13 +159,17 @@ title | start_datetime | end_datetime | tag | time_label | description | ticket_
 | `start_datetime` | Yes | `YYYY-MM-DD HH:MM` in **America/Chicago** |
 | `end_datetime` | Yes | Must be after `start_datetime` |
 | `tag` | Yes | e.g. `Live music`, `Market` |
-| `time_label` | No | Display string, e.g. `7–10pm · Free` |
+| `time_label` | No | Display string, e.g. `Every Friday · 7–10pm · Free` |
 | `description` | Yes | Event description |
 | `ticket_url` | No | RSVP / ticket link — button shown when set |
-| `sort_order` | No | Lower numbers appear first |
 | `active` | No | `FALSE` to hide |
+| `recurrence` | No | Blank = one-off; `weekly` = same weekday every week |
+| `recurrence_until` | When weekly | Last date the series runs (`YYYY-MM-DD`) |
+| `featured` | No | `TRUE` on **one row** to highlight the next upcoming occurrence |
 
 `month` and `day` on the site are derived from `start_datetime` at sync — do not add those columns.
+
+**Row 2+ in CSV template:** example rows with `active` = `FALSE` show formatting patterns without publishing. Add header **Notes** in Google Sheets for hover help (see [sheets-events.md](../sheets-events.md)).
 
 ---
 
@@ -292,7 +296,7 @@ Paste into row 1 of each tab:
 | `_Settings` | `key` \| `value` |
 | `Hours` | `day_group` \| `display_label` \| `opens` \| `closes` \| `sort_order` \| `active` |
 | `Drinks` | `name` \| `category` \| `price` \| `description` \| `badge` \| `sort_order` \| `active` |
-| `Events` | `title` \| `start_datetime` \| `end_datetime` \| `tag` \| `time_label` \| `description` \| `ticket_url` \| `sort_order` \| `active` |
+| `Events` | `title` \| `start_datetime` \| `end_datetime` \| `tag` \| `time_label` \| `description` \| `ticket_url` \| `active` \| `recurrence` \| `recurrence_until` \| `featured` |
 | `WhatsHere` | `title` \| `tag` \| `body` \| `icon` \| `hours` \| `website_url` \| `order_url` \| `sort_order` \| `active` |
 | `Photos` | `sort_order` \| `active` \| `image_url` \| `alt_text` \| `caption` |
 | `FAQ` | `question` \| `answer` \| `sort_order` \| `active` |

@@ -12,9 +12,19 @@ Import one CSV per tab in **Clara's Day Dive — Site Content**.
 6. Share the sheet with your service account email (see [sheets-setup.md](../../sheets-setup.md)).
 7. Set `GOOGLE_SHEET_ID` and run `npm run sync:content`.
 
-## Local gallery QA (dev only)
+## Local dev (Events + gallery)
 
-For layout QA without the Google Sheet, run:
+**Events:** `npm run dev` syncs from `Events.csv` in this folder automatically (`LOCAL_EVENTS=1`). To re-sync without restarting the dev server:
+
+```bash
+npm run sync:events
+```
+
+Only **upcoming** events appear on the site (past dates are filtered at sync and on the homepage). Replace placeholder rows with real client content before publishing.
+
+**Production sheet:** Import this CSV into the live **Events** tab, then run **Clara's Day Dive → Format Events tab** in Google Sheets. See [CHECKLIST.md](../../sheets-publish/CHECKLIST.md) step C8.
+
+**Gallery:** For layout QA without the Google Sheet:
 
 ```bash
 npm run sync:gallery
@@ -23,7 +33,7 @@ npm run dev
 
 Then open **http://localhost:5173/gallery**.
 
-This uses `Photos.csv` in this folder only when you run `sync:gallery` (sets `LOCAL_PHOTOS=1`). It does **not** run on deploy or normal `sync:content` — production always reads the Sheet `Photos` tab.
+This uses `Photos.csv` only when you run `sync:gallery` (sets `LOCAL_PHOTOS=1`). It does **not** run on deploy or normal `sync:content` — production always reads the Sheet `Photos` tab.
 
 ## Files
 

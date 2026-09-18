@@ -11,7 +11,7 @@ How events get onto the Clara's Day Dive website.
 | Step | Who | Action |
 |------|-----|--------|
 | 1 | Staff | Add or edit rows on the **Events** tab |
-| 2 | Staff | **Clara's Day Dive → Publish site** |
+| 2 | Staff | **Clara's Day Dive → Publish site** (checks Events tab first; blocks publish if errors) |
 | 3 | Guests | See events on the site, Calendar Explorer, and per-event “Add to calendar” |
 
 In `_Settings`, either omit calendar keys or set explicitly:
@@ -25,13 +25,60 @@ Do **not** set `google_calendar_id` unless you switch to calendar-only (below).
 ### Events tab columns
 
 ```
-title | start_datetime | end_datetime | tag | time_label | description | ticket_url | sort_order | active
+title | start_datetime | end_datetime | tag | time_label | description | ticket_url | active | recurrence | recurrence_until | featured
 ```
 
-- **Datetimes:** `YYYY-MM-DD HH:MM` in **America/Chicago** (e.g. `2026-07-18 19:00`)
+- **Datetimes:** `YYYY-MM-DD HH:MM` in **America/Chicago** (e.g. `2026-09-19 19:00`)
 - **`month` / `day` on the site** are calculated at publish — do not add those columns
+- **`time_label`** display text only — e.g. `Every Friday · 7–10pm · Free`
 - **`ticket_url`** optional — shows “Get tickets / RSVP →” when set
 - **`active`:** `FALSE` to hide an event without deleting the row
+- **`recurrence`** optional — leave blank for one-time events; set to `weekly` for a repeating series
+- **`recurrence_until`** required when `recurrence` = `weekly` — last date the series runs (`YYYY-MM-DD`)
+- **`featured`** optional — `TRUE` on **one row only** to highlight the next upcoming occurrence on the homepage; leave blank/`FALSE` otherwise
+- Events appear on the site in **date order** — no manual sort column needed
+
+#### Weekly recurring events
+
+1. Put the **first occurrence** in `start_datetime` and `end_datetime` (weekday + times).
+2. Set `recurrence` = `weekly`.
+3. Set `recurrence_until` = last calendar date the series should run (e.g. `2026-12-31`).
+4. Publish expands one row into individual dates on the site (up to ~6 months ahead).
+
+**Example:** Live music every Friday until end of year:
+
+| title | start_datetime | end_datetime | recurrence | recurrence_until | time_label |
+|-------|----------------|--------------|------------|------------------|------------|
+| Patio vinyl night | 2026-09-19 19:00 | 2026-09-19 22:00 | weekly | 2026-12-31 | Every Friday · 7–10pm · Free |
+
+### Formatting help in the sheet
+
+Google Sheets does not support Excel-style `?` hover tooltips. Use these instead:
+
+1. **Row 2 examples** — gray italic sample rows with `active` = `FALSE` (never published; see CSV template).
+2. **Notes on header cells** — hover the small triangle in the corner of each column header for format rules.
+3. **Format Events tab** (one time) — in the workbook menu: **Clara's Day Dive → Format Events tab**. Applies header notes and example-row styling automatically ([SetupEventsTab.gs](./sheets-publish/SetupEventsTab.gs)).
+
+### Staff quick reference
+
+| I want to… | Do this |
+|------------|---------|
+| Add a one-time event | Fill start/end datetimes; leave `recurrence` blank |
+| Add weekly programming | First occurrence + `recurrence` = `weekly` + `recurrence_until` |
+| Highlight a big event | `featured` = `TRUE` on **one row** (next upcoming occurrence shows on homepage) |
+| Hide an event | `active` = `FALSE` |
+| Change display order | Not needed — site sorts by date automatically |
+
+Suggested header notes:
+
+| Column | Note |
+|--------|------|
+| `start_datetime` | First date & start time. `YYYY-MM-DD HH:MM` Central. Example: `2026-09-19 19:00` |
+| `end_datetime` | End time same day. Must be after start. Example: `2026-09-19 22:00` |
+| `recurrence` | Blank = one-time. For weekly series type: `weekly` |
+| `recurrence_until` | Last date series runs. `YYYY-MM-DD`. Example: `2026-12-31` |
+| `time_label` | What guests see. Example: `Every Friday · 7–10pm · Free` |
+| `active` | `TRUE` to show, `FALSE` to hide |
 
 ---
 

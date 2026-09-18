@@ -6,11 +6,18 @@ import { writeKnowledge } from './generate-knowledge.mjs';
 import { fetchCalendarEvents, normalizeCalendarId } from './lib/google-calendar-events.mjs';
 import { filterUpcomingEvents } from './lib/filter-upcoming-events.mjs';
 import { buildGalleryJson } from './lib/optimize-gallery-images.mjs';
+import {
+  expandWeeklyEvent,
+  getRecurrenceConfig,
+  parseLocalDatetime,
+} from './lib/expand-recurring-events.mjs';
+import { resolveFeaturedEvent } from './lib/resolve-featured-event.mjs';
 import { readCsvAsSheetValues, readSettingsCsv } from './lib/parse-csv.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const contentDir = join(root, 'src/content');
 const LOCAL_PHOTOS_CSV = join(root, 'docs/sheets-template/csv/Photos.csv');
+const LOCAL_EVENTS_CSV = join(root, 'docs/sheets-template/csv/Events.csv');
 const LOCAL_SETTINGS_CSV = join(root, 'docs/sheets-template/csv/_Settings.csv');
 
 const TABS = ['_Settings', 'Hours', 'Drinks', 'Events', 'WhatsHere', 'Photos', 'FAQ', 'AskClara', 'Knowledge'];
@@ -584,8 +591,21 @@ function buildDrinksJson(rows, errors) {
   };
 }
 
+function sortEventRowsByStart(rows) {
+  return [...rows].sort((a, b) =>
+    String(a.start_datetime ?? '').localeCompare(String(b.start_datetime ?? '')),
+  );
+}
+
 function buildEventsJson(rows, settings, errors) {
-  const active = rows.filter(isActive).sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+  const active = sortEventRowsByStart(rows.filter(isActive));
+  const featuredRows = active.filter((row) => parseSheetBool(row.featured));
+  if (featuredRows.length > 1) {
+    console.warn(
+      `Events: ${featuredRows.length} rows marked featured (rows ${featuredRows.map((r) => r._row).join(', ')}) — site highlights the earliest upcoming occurrence only`,
+    );
+  }
+
   const items = [];
 
   for (const row of active) {
@@ -594,6 +614,19 @@ function buildEventsJson(rows, settings, errors) {
     requireField(errors, 'Events', row, 'end_datetime', row.end_datetime);
     requireField(errors, 'Events', row, 'tag', row.tag);
     requireField(errors, 'Events', row, 'description', row.description);
+
+    let startLocal;
+    let endLocal;
+    try {
+      startLocal = parseLocalDatetime(row.start_datetime);
+      endLocal = parseLocalDatetime(row.end_datetime);
+    } catch (err) {
+      errors.push(`Events row ${row._row}: ${err.message}`);
+      continue;
+    }
+
+    const recurrence = getRecurrenceConfig(row, startLocal, errors);
+    if (!recurrence) continue;
 
     let start;
     let end;
@@ -610,12 +643,7 @@ function buildEventsJson(rows, settings, errors) {
       continue;
     }
 
-    const { month, day } = deriveMonthDay(start);
-    const item = {
-      start,
-      end,
-      month,
-      day,
+    const baseFields = {
       tag: String(row.tag).trim(),
       title: String(row.title).trim(),
       timeLabel: String(row.time_label ?? row.timeLabel ?? '').trim(),
@@ -623,9 +651,27 @@ function buildEventsJson(rows, settings, errors) {
     };
 
     const ticketUrl = String(row.ticket_url ?? row.ticketUrl ?? '').trim();
-    if (ticketUrl) item.ticketUrl = ticketUrl;
+    if (ticketUrl) baseFields.ticketUrl = ticketUrl;
+    if (parseSheetBool(row.featured)) baseFields.featured = true;
 
-    items.push(item);
+    if (recurrence.type === 'weekly') {
+      items.push(
+        ...expandWeeklyEvent(
+          { ...baseFields, seriesId: `row-${row._row}` },
+          startLocal,
+          endLocal,
+          recurrence.until,
+          {
+            parseChicagoDatetime,
+            deriveMonthDay,
+          },
+        ),
+      );
+      continue;
+    }
+
+    const { month, day } = deriveMonthDay(start);
+    items.push({ ...baseFields, start, end, month, day });
   }
 
   return {
@@ -668,9 +714,13 @@ async function buildEvents(settings, eventRows, credentials, errors) {
     items = items.concat(calendarItems);
   }
 
-  items = filterUpcomingEvents(items);
+  return finalizeEventsPayload(items, hostNote);
+}
 
-  return { items, hostNote };
+function finalizeEventsPayload(items, hostNote) {
+  const upcoming = filterUpcomingEvents(items);
+  const { featured, items: resolvedItems } = resolveFeaturedEvent(upcoming);
+  return { items: resolvedItems, featured, hostNote };
 }
 
 function buildWhatsHereJson(rows, errors) {
@@ -806,6 +856,35 @@ function reportErrors(errors) {
   console.error(`\n${errors.length} error(s) — fix the sheet and re-run sync.\n`);
 }
 
+/** Dev-only: build events from docs/sheets-template/csv/Events.csv (LOCAL_EVENTS=1). */
+function syncEventsFromLocalCsv() {
+  const csvPath = process.env.LOCAL_EVENTS_CSV?.trim() || LOCAL_EVENTS_CSV;
+  if (!existsSync(csvPath)) {
+    console.log('No local Events.csv found — events unchanged');
+    return;
+  }
+
+  const rows = parseRows(readCsvAsSheetValues(csvPath));
+  if (rows.length === 0) {
+    console.log('Events.csv has no data rows — events unchanged');
+    return;
+  }
+
+  const errors = [];
+  const settingsPath = process.env.LOCAL_SETTINGS_CSV?.trim() || LOCAL_SETTINGS_CSV;
+  const settings = existsSync(settingsPath) ? readSettingsCsv(settingsPath) : {};
+  const built = buildEventsJson(rows, settings, errors);
+
+  if (errors.length) {
+    reportErrors(errors);
+    process.exit(1);
+  }
+
+  const events = finalizeEventsPayload(built.items, built.hostNote);
+  writeJson('events.json', events);
+  console.log(`Built events from ${csvPath} (${events.items.length} event(s))`);
+}
+
 /** Dev-only: build gallery from docs/sheets-template/csv/Photos.csv (LOCAL_PHOTOS=1). */
 async function syncGalleryFromLocalCsv() {
   const csvPath = process.env.LOCAL_PHOTOS_CSV?.trim() || LOCAL_PHOTOS_CSV;
@@ -849,6 +928,9 @@ async function syncFromSheets() {
     : '';
   if (!sheetId) {
     console.log('GOOGLE_SHEET_ID unset — skipping sheet sync, using existing JSON');
+    if (process.env.LOCAL_EVENTS === '1') {
+      syncEventsFromLocalCsv();
+    }
     if (process.env.LOCAL_PHOTOS === '1') {
       await syncGalleryFromLocalCsv();
     }

@@ -8,6 +8,16 @@ export interface SiteEvent {
   timeLabel: string;
   desc: string;
   ticketUrl?: string;
+  /** Set on expanded weekly series — homepage list shows next occurrence per series only. */
+  seriesId?: string;
+}
+
+export function eventKey(event: SiteEvent): string {
+  return `${event.start}|${event.title}`;
+}
+
+export function isUpcomingEvent(event: SiteEvent, now: Date = new Date()): boolean {
+  return new Date(event.end).getTime() > now.getTime();
 }
 
 /** Hide events once their end time has passed (America/Chicago ISO strings from sync). */
@@ -16,6 +26,26 @@ export function filterUpcomingEvents(items: SiteEvent[], now: Date = new Date())
   return items
     .filter((event) => new Date(event.end).getTime() > cutoff)
     .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+}
+
+/** Homepage list: one row per recurring series (next occurrence), one-offs unchanged. */
+export function collapseRecurringForList(items: SiteEvent[]): SiteEvent[] {
+  const bySeries = new Map<string, SiteEvent>();
+
+  for (const item of items) {
+    const key = item.seriesId ?? eventKey(item);
+    const existing = bySeries.get(key);
+    if (
+      !existing ||
+      new Date(item.start).getTime() < new Date(existing.start).getTime()
+    ) {
+      bySeries.set(key, item);
+    }
+  }
+
+  return [...bySeries.values()].sort(
+    (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime(),
+  );
 }
 
 export function toDateKey(iso: string): string {

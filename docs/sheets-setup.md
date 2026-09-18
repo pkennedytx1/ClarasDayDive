@@ -143,12 +143,15 @@ Row 1: `name` | `category` | `price` | `description` | `badge` | `sort_order` | 
 
 Use **one source** — sheet **or** Google Calendar, not both. To draft in Google Calendar but publish from the sheet, use **Import events from calendar** in the Apps Script menu (optional).
 
-**Sheet tab — row 1:** `title` | `start_datetime` | `end_datetime` | `tag` | `time_label` | `description` | `ticket_url` | `sort_order` | `active`
+**Sheet tab — row 1:** `title` | `start_datetime` | `end_datetime` | `tag` | `time_label` | `description` | `ticket_url` | `active` | `recurrence` | `recurrence_until` | `featured`
 
 - Set `_Settings` `events_source` to `sheet` (default) — omit `google_calendar_id`
 - Datetimes: `YYYY-MM-DD HH:MM` in **America/Chicago**
 - `month` / `day` on the site are derived at sync — do not enter them in the sheet
 - `ticket_url` optional → "Get tickets / RSVP →" when present
+- `recurrence` optional — `weekly` for repeating same weekday; requires `recurrence_until` (`YYYY-MM-DD`)
+- `featured` optional — `TRUE` on one row to highlight the next upcoming occurrence on the homepage
+- Events sort by date at publish — no `sort_order` column
 
 ---
 

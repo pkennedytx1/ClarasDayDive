@@ -18,6 +18,7 @@ function onOpen() {
     .createMenu(MENU_NAME)
     .addItem(MENU_ITEM, 'publishSite')
     .addSeparator()
+    .addItem('Format Events tab', 'formatEventsTab')
     .addItem('Import events from calendar', 'importEventsFromCalendar')
     .addToUi();
 }
@@ -53,6 +54,10 @@ function publishSite() {
   );
 
   if (confirm !== ui.Button.YES) {
+    return;
+  }
+
+  if (!validateEventsTabBeforePublish_()) {
     return;
   }
 

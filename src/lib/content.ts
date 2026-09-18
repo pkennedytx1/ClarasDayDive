@@ -10,7 +10,13 @@ import whatsHere from '@/content/whats-here.json';
 import gallery from '@/content/gallery.json';
 import faq from '@/content/faq.json';
 import legal from '@/content/legal.json';
-import { filterUpcomingEvents, type SiteEvent } from './events';
+import {
+  collapseRecurringForList,
+  eventKey,
+  filterUpcomingEvents,
+  isUpcomingEvent,
+  type SiteEvent,
+} from './events';
 
 export type { SiteEvent } from './events';
 
@@ -25,6 +31,7 @@ export type DrinkItem = {
 };
 export type EventsContent = {
   items: SiteEvent[];
+  featured: SiteEvent | null;
   hostNote: string;
 };
 export type WhatsHereContent = typeof whatsHere;
@@ -60,10 +67,26 @@ export function getDrinksContent(): { categories: string[]; items: DrinkItem[] }
 
 export function getEventsContent(): EventsContent {
   const data = events as EventsContent;
-  return {
-    ...data,
-    items: filterUpcomingEvents(data.items),
-  };
+  const items = filterUpcomingEvents(data.items);
+  const featured =
+    data.featured && isUpcomingEvent(data.featured) ? data.featured : null;
+  return { ...data, items, featured };
+}
+
+/** Upcoming events for the homepage list — excludes featured, collapses weekly series. */
+export function getEventsListItems(content: EventsContent): SiteEvent[] {
+  let items = content.items;
+
+  if (content.featured) {
+    if (content.featured.seriesId) {
+      items = items.filter((event) => event.seriesId !== content.featured!.seriesId);
+    } else {
+      const featuredKey = eventKey(content.featured);
+      items = items.filter((event) => eventKey(event) !== featuredKey);
+    }
+  }
+
+  return collapseRecurringForList(items);
 }
 
 export function getWhatsHereContent(): WhatsHereContent {
