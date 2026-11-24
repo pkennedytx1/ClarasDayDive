@@ -1,4 +1,5 @@
 import type { SiteEvent } from './events';
+import { toUtcCalendarDatetime } from './events';
 
 function escapeIcs(text: string): string {
   return text.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
@@ -10,8 +11,8 @@ export function buildIcsContent(events: SiteEvent[], location: string, calName: 
     'BEGIN:VEVENT',
     `UID:claras-${e.start}-${i}@clarasdaydive.com`,
     `DTSTAMP:${now}`,
-    `DTSTART:${e.start.replace(/[-:]/g, '').replace('.000', '')}`,
-    `DTEND:${e.end.replace(/[-:]/g, '').replace('.000', '')}`,
+    `DTSTART:${toUtcCalendarDatetime(e.start)}`,
+    `DTEND:${toUtcCalendarDatetime(e.end)}`,
     `SUMMARY:${escapeIcs(e.title)}`,
     `DESCRIPTION:${escapeIcs(e.desc)}`,
     `LOCATION:${escapeIcs(location)}`,

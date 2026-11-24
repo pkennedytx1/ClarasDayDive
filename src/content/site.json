@@ -65,10 +65,12 @@
     "coordinatorName": "Your event coordinator",
     "coordinatorRole": "Events & private bookings",
     "email": "events@clarasdaydive.com",
+    "phone": "",
     "responseTime": "We typically reply within a day."
   },
   "generalContact": {
     "email": "info@clarasdaydive.com",
+    "phone": "",
     "responseTime": "We typically reply within a day."
   },
   "search": {

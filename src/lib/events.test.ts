@@ -1,6 +1,37 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { collapseRecurringForList, eventKey } from './events.ts';
+import {
+  buildGoogleCalendarUrl,
+  collapseRecurringForList,
+  eventKey,
+  toUtcCalendarDatetime,
+} from './events.ts';
+
+describe('toUtcCalendarDatetime', () => {
+  it('converts Chicago offset to UTC for Google Calendar', () => {
+    assert.equal(toUtcCalendarDatetime('2026-07-18T19:00:00-05:00'), '20260719T000000Z');
+    assert.equal(toUtcCalendarDatetime('2026-07-18T22:00:00-05:00'), '20260719T030000Z');
+  });
+});
+
+describe('buildGoogleCalendarUrl', () => {
+  it('uses UTC datetimes in the dates query param', () => {
+    const url = buildGoogleCalendarUrl(
+      {
+        start: '2026-07-18T19:00:00-05:00',
+        end: '2026-07-18T22:00:00-05:00',
+        month: 'JUL',
+        day: '18',
+        tag: 'Live music',
+        title: 'Patio vinyl night',
+        timeLabel: '7–10pm',
+        desc: 'Soul & disco',
+      },
+      '10700 Menchaca Rd, Austin, TX 78748',
+    );
+    assert.match(url, /dates=20260719T000000Z%2F20260719T030000Z/);
+  });
+});
 
 describe('collapseRecurringForList', () => {
   it('keeps one upcoming occurrence per seriesId', () => {

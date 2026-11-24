@@ -2,6 +2,7 @@ import { Reveal } from '@/components/Reveal';
 import { useEventBooking } from '@/context/EventBookingContext';
 import { useGeneralContact } from '@/context/GeneralContactContext';
 import { getSiteContent } from '@/lib/content';
+import { phoneDigits } from '@/lib/phone-format';
 
 export function Contact() {
   const site = getSiteContent();
@@ -9,6 +10,8 @@ export function Contact() {
   const { openContact } = useGeneralContact();
   const general = site.sections.generalContactCard;
   const event = site.sections.eventContactCard;
+  const phone = site.generalContact.phone?.trim() || site.contact.phone?.trim() || '';
+  const phoneTel = phoneDigits(phone);
 
   return (
     <section id="contact-us" className="section section--contact" aria-labelledby="contact-heading">
@@ -20,6 +23,17 @@ export function Contact() {
               {site.sections.contactUs.title}
             </h2>
             <p className="lead contact-intro__lead">{site.sections.contactUs.lead}</p>
+            {phone ? (
+              <p className="contact-intro__phone">
+                {phoneTel.length === 10 ? (
+                  <a href={`tel:+1${phoneTel}`} className="contact-intro__phone-link">
+                    {phone}
+                  </a>
+                ) : (
+                  phone
+                )}
+              </p>
+            ) : null}
             <img
               src="/assets/scarf.jpg"
               alt="Vintage scarf illustration with Clara's Day Dive penguin and coupe glass artwork"

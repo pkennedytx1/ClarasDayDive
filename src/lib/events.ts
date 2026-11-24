@@ -65,12 +65,20 @@ export function formatDayHeading(isoDate: string): string {
   return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
+/** RFC5545 / Google Calendar URL datetime in UTC (events are stored with America/Chicago offset). */
+export function toUtcCalendarDatetime(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) {
+    throw new Error(`Invalid event datetime: "${iso}"`);
+  }
+  return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+}
+
 export function buildGoogleCalendarUrl(event: SiteEvent, location: string): string {
-  const fmt = (iso: string) => iso.replace(/[-:]/g, '').replace('.000', '').slice(0, 15) + 'Z';
   const params = new URLSearchParams({
     action: 'TEMPLATE',
     text: event.title,
-    dates: `${fmt(event.start)}/${fmt(event.end)}`,
+    dates: `${toUtcCalendarDatetime(event.start)}/${toUtcCalendarDatetime(event.end)}`,
     details: event.desc,
     location,
   });

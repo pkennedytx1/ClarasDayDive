@@ -2278,6 +2278,26 @@ button.here-item__link {
   max-width: 38ch;
 }
 
+.contact-intro__phone {
+  margin: 1rem 0 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--clr-cream);
+}
+
+.contact-intro__phone-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-intro__phone-link:hover,
+.contact-intro__phone-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .contact-scarf {
   display: block;
   width: min(100%, 20rem);

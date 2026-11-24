@@ -433,10 +433,12 @@ function buildSiteJson(settings, hoursRows, askClaraRows, errors) {
       coordinatorName: settings.contact_name ?? existing.contact?.coordinatorName ?? '',
       coordinatorRole: settings.contact_role ?? existing.contact?.coordinatorRole ?? '',
       email,
+      phone: settings.contact_phone?.trim() ?? existing.contact?.phone ?? '',
       responseTime: settings.contact_response_time ?? existing.contact?.responseTime ?? '',
     },
     generalContact: {
       email: settings.general_inquiry_from?.trim() || 'info@clarasdaydive.com',
+      phone: settings.contact_phone?.trim() ?? existing.generalContact?.phone ?? '',
       responseTime: settings.contact_response_time ?? existing.generalContact?.responseTime ?? '',
     },
     search: {
